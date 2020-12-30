@@ -1,3 +1,4 @@
 Rails.application.routes.draw do
-  get '/order', to: 'order#index'
+  devise_for :users, :controllers => { :sessions => "sessions" }
+  root to: 'order#index', as: 'order_index'
 end

@@ -3,15 +3,16 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.5.8'
 
-gem 'rails', '~> 6.0.0'
-gem 'sqlite3', '~> 1.4'
-gem 'puma', '~> 3.11'
-gem 'sass-rails', '~> 5'
-gem 'webpacker', '~> 4.0'
-gem 'turbolinks', '~> 5'
-gem 'jbuilder', '~> 2.7'
-gem 'mysql2'
+
 gem 'bootsnap', '>= 1.4.2', require: false
+gem 'devise'
+gem 'puma', '~> 3.11'
+gem 'mysql2'
+gem 'rails', '~> 6.0.0'
+gem 'sass-rails', '~> 5'
+gem 'turbolinks', '~> 5'
+gem 'webpacker', '~> 4.0'
+gem 'jbuilder', '~> 2.7'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

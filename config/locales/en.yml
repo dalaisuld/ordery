@@ -30,4 +30,16 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              blank: "Email ээ оруулна уу?"
+              taken: "Please use a different Email id"
+              invalid: "Please Specify a valid Email id"
+            first_name:
+              blank: "Нэрээ оруулна уу?"
+            last_name:
+              blank: "Овогоо оруулна уу?"

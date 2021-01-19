@@ -12,20 +12,15 @@ Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 
-require('@client-side-validations/client-side-validations');
-require('jquery')
 
 import "stylesheets/application"
-import('styles/application.css');
-import('styles/js_grid/jsgrid.min.css');
-import('styles/js_grid/jsgrid-theme.min.css');
 
 import $ from 'jquery'
 window.jQuery = $;
 window.$ = $;
 
 import cash from "cash-dom";
-import helper from "./theme/helper";
+import helper from "./helper";
 
 // Set plugins globally
 window.cash = cash;

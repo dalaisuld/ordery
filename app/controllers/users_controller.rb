@@ -2,6 +2,8 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
 
   def index
+    @page_users_active = true
+    @page_title = "Ажилтны жагсаалт"
     @users = User.all
   end
 

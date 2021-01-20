@@ -8,6 +8,7 @@ class UsersController < ApplicationController
   end
 
   def new
+    @page_users_active = true
     @user = User.new
   end
 

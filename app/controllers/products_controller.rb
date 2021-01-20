@@ -2,9 +2,14 @@ class ProductsController < ApplicationController
   before_action :authenticate_user!
 
   def index
+    @page_title = "Агуулхын бүртгэл"
+    @page_products_active = true
+  end
+
+  def list
     product = Product.search_by(params).page(params[:pageIndex]).per(params[:pageSize])
-      product_count = Product.search_by(params).count
-      render json: { data: product, itemsCount: product_count }
+    product_count = Product.search_by(params).count
+    render json: { data: product, itemsCount: product_count }
   end
 
   def create

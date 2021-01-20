@@ -8,12 +8,16 @@ import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
+require('@client-side-validations/client-side-validations');
+require('jquery')
+
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 
 
 import "stylesheets/application"
+
 
 import $ from 'jquery'
 window.jQuery = $;

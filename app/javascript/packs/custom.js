@@ -28,6 +28,6 @@ import "./show-code";
 import "./side-menu";
 import "./mobile-menu";
 import "./side-menu-tooltip";
-
+import "./common/grid";
 // Dark mode switcher
 import "./dark-mode-switcher";

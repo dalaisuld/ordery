@@ -7,21 +7,22 @@ class ProductsController < ApplicationController
   end
 
   def list
-    product = Product.search_by(params).page(params[:pageIndex]).per(params[:pageSize])
+    product = Product.select("products.id, products.name, price, total_amount, quantity, unit, category_id, products.created_at").joins(:category).search_by(params).page(params[:pageIndex]).per(params[:pageSize]).order(created_at: :desc)
     product_count = Product.search_by(params).count
-    render json: { data: product, itemsCount: product_count }
+    render json: { data: product, itemsCount: product_count}
   end
 
   def create
-    Product.create!({category_id: params[:category_id], user_id: params[:user_id], 
-    name: params[:name], price: params[:price], total_amount: params[:total_amount], quantity: params[:quantity], 
-    prev_quantity: params[:prev_quantity], unit: params[:unit]})
+    Product.create!({category_id: params[:category_id], user_id: current_user.id, 
+    name: params[:name], price: params[:price], total_amount: params[:quantity].to_i * params[:price].to_i, quantity: params[:quantity], 
+    unit: params[:unit]})
   end
 
   def update
-    Product.create!({category_id: params[:category_id], user_id: params[:user_id], 
-    name: params[:name], price: params[:price], total_amount: params[:total_amount], quantity: params[:quantity], 
-    prev_quantity: params[:prev_quantity], unit: params[:unit]})
+    product = Product.find(params[:id])
+    product.update({category_id: params[:category_id], user_id: current_user.id, 
+    name: params[:name], price: params[:price], total_amount: params[:quantity].to_i * params[:price].to_i, quantity: params[:quantity], 
+    unit: params[:unit]})
   end
 
   def destroy

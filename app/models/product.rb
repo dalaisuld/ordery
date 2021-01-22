@@ -1,4 +1,6 @@
 class Product < ApplicationRecord
+  belongs_to :category, optional: true
+
   def self.search_by(search)
     by_category(search['category_id'])
       .by_user(search['user_id'])
@@ -6,10 +8,10 @@ class Product < ApplicationRecord
   end
 
   def self.by_category(category)
-    if category.present?
-      where(category_id: category)
-    else
+    if category == "0"
       all
+    else
+      where(category_id: category)
     end
   end
 

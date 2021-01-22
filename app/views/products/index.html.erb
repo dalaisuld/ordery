@@ -59,14 +59,13 @@
                 }
             },
             fields: [
-                { name: "category_id", type: "text", width: 100, title: "Катагори Id" },
-                { name: "user_id", type: "text", width: 100, title: "Хэрэглэгчийн Id" },
-                { name: "name", type: "text", width: 200, title: "Барааны нэр" },
-                { name: "price", type: "text", title: "Барааны үнэ"},
-                { name: "total_amount", type: "text", title: "Нийт үнэ"},
-                { name: "quantity", type: "text", title: "Барааны тоо ширхэг"},
-                { name: "prev_quantity", type: "text", title: "Өмнөх барааны тоо ширхэг"},
-                { name: "unit", type: "text", title: "Барааны тоо ширхэг"},
+                { name: "category_id", title: "Ангилал", type: "select", width: 100, items: [{"id": 0, "name": "Ангилал сонгоно уу?"}, {"id": 1, "name": "Хүүхдийн хувцас"}, {"id": 2, "name": "Эрэгтэй хувцас"}, {"id": 3, "name": "Эмэгтэй хувцас"}, {"id": 4, "name": "Бэлэн хувцас"}, {"id": 5, "name": "Ширхэг хувцас"}, {"id": 6, "name": "Ажлын хувцас"} ], valueField: "id", textField: "name" },
+                { name: "name", type: "text", width: 200, title: "Бүтээгдэхүүн" },
+                { name: "quantity", type: "text", title: "Үлдэгдэл"},
+                { name: "unit", title: "Нэгж", type: "select", filtering: false, width: 100, items: [{"id": 0, "name": "Ангилал сонгоно уу?"}, {"id": 1, "name": "Ширхэг"}, {"id": 2, "name": "Боодол"}, {"id": 3, "name": "Литр"}], valueField: "id", textField: "name" },
+                { name: "price", type: "text", title: "Yнэ"},
+                { name: "total_amount", type: "text", title: "Нийт үнэ", editing: false, inserting: false},
+                { name: "created_at", type: "date", width: 120, title: "Огноо", editing: false, inserting: false},
                 { type: "control" }
             ]
         });

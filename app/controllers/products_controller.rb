@@ -7,7 +7,12 @@ class ProductsController < ApplicationController
   end
 
   def list
-    product = Product.select("products.id, products.name, price, total_amount, quantity, unit, category_id, products.created_at").joins(:category).search_by(params).page(params[:pageIndex]).per(params[:pageSize]).order(created_at: :desc)
+    order_by = "created_at desc"
+    if params[:sortField].present? && params[:sortOrder].present?
+      order_by = "#{params[:sortField]} #{params[:sortOrder]} "
+    end
+    product = Product.select("products.id, products.name, price, total_amount, quantity, unit, category_id, products.created_at").search_by(params)
+    .page(params[:pageIndex]).per(params[:pageSize]).order(order_by)
     product_count = Product.search_by(params).count
     render json: { data: product, itemsCount: product_count}
   end

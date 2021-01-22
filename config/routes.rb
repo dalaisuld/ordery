@@ -4,5 +4,6 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => { :sessions => "sessions" }
   resources :users
   resources :products
+  resources :orders
   post 'products/list', :to => 'products#list'
 end

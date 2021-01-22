@@ -69,6 +69,22 @@
           <div class="side-menu__title"> Агуулах </div>
         </a>
       </li>
+
+      <li>
+        <a href="<%= orders_path %>" class="side-menu <% if @page_orders_active %>side-menu--active <% end %>">
+          <div class="side-menu__icon"> <i data-feather="file-text"></i> </div>
+          <div class="side-menu__title"> Захиалга </div>
+        </a>
+      </li>
+
+
+      <li>
+        <a href="#" class="side-menu <% if @page_sms_active %>side-menu--active <% end %>">
+          <div class="side-menu__icon"> <i data-feather="file-text"></i> </div>
+          <div class="side-menu__title"> SMS LOG </div>
+        </a>
+      </li>
+
     </ul>
   </nav>
   <!-- END: Side Menu -->

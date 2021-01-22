@@ -3,6 +3,6 @@ class OrdersController < ApplicationController
 
   def index
     @page_title = "Захиалгийн жагсаалт"
-      @page_orders_active = true 
+    @page_orders_active = true
   end
 end

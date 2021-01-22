@@ -8,7 +8,7 @@ class Product < ApplicationRecord
   end
 
   def self.by_category(category)
-    if category == "0"
+    if category == "0" || !category.present?
       all
     else
       where(category_id: category)

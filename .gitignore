@@ -32,4 +32,13 @@
 /node_modules
 /yarn-error.log
 yarn-debug.log*
+
 .yarn-integrity
+.ruby-version
+config/database.yml
+db/schema.rb
+yarn.lock
+
+
+.DS_Store
+.idea/

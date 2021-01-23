@@ -1,55 +1,78 @@
 <div id="jsGrid"></div>
 <script>
-    $(function() {
+    $(function () {
         $("#jsGrid").jsGrid({
             width: "100%",
             filtering: true,
             autoload: true,
             paging: true,
             pageLoading: true,
-            pageSize: 10,
+            pageSize: 20,
             pageButtonCount: 5,
             editing: true,
             inserting: true,
             sorting: true,
-            pagerFormat: "Хуудасны тоо: {first} {prev} {pages} {next} {last}    Одоо байгаа хуудас: {pageIndex}  Нийт хуудас: {pageCount}",
-            pagePrevText: "Өмнөх хуудас",
-            pageNextText: "Дараагийн хуудас",
-            pageFirstText: "Эхний хуудас",
-            pageLastText: "Сүүлийн хуудас",
-            deleteConfirm: "Устгахдаа итгэлтэй байна уу?",
+            pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+            pagePrevText: "Prev",
+            pageNextText: "Next",
+            pageFirstText: "First",
+            pageLastText: "Last",
+            noDataContent: "Мэдээлэл байхгүй байна.",
+            pageNavigatorNextText: "...",
+            pageNavigatorPrevText: "...",
+            deleteConfirm: function(item) {
+                return "\"" + item.name + "\" бүтгээдэхүүнийг утгахдаа итгэлтэй байнуу?";
+            },
             controller: {
-                loadData: function(filter) {
+                loadData: function (filter) {
                     return $.ajax({
                         type: "POST",
                         url: "/products/list",
                         data: filter,
                         beforeSend: function (xhr) {
                             xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                        },
+                        success: function (data){
+                            console.log(data['sum'])
                         }
                     });
                 },
-                insertItem: function(item) {
+                insertItem: function (item) {
                     return $.ajax({
                         type: "POST",
                         url: "/products",
                         data: item,
                         beforeSend: function (xhr) {
                             xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
-                        }
+                        },
+                        success: function(data) {
+
+                        },
+                        error: function(xhr) { // if error occured
+                            alert("Error occured.please try again");
+                            $(placeholder).append(xhr.statusText + xhr.responseText);
+                            $(placeholder).removeClass('loading');
+                        },
+                        complete: function() {
+                            // $(placeholder).removeClass('loading');
+                        },
                     });
                 },
-                updateItem: function(item) {
+                updateItem: function (item) {
                     return $.ajax({
                         type: "PUT",
                         url: "/products/" + item.id,
                         data: item,
                         beforeSend: function (xhr) {
                             xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                        },
+                        success: function (data){
+                            var $grid = $("#jsGrid");
+                            $grid.jsGrid("loadData");
                         }
                     });
                 },
-                deleteItem: function(item) {
+                deleteItem: function (item) {
                     return $.ajax({
                         type: "DELETE",
                         url: "/products/" + item.id,
@@ -60,15 +83,91 @@
                 }
             },
             fields: [
-                { name: "category_id", title: "Ангилал", type: "select", width: 100, items: [{"id": 0, "name": "Ангилал сонгоно уу?"}, {"id": 1, "name": "Хүүхдийн хувцас"}, {"id": 2, "name": "Эрэгтэй хувцас"}, {"id": 3, "name": "Эмэгтэй хувцас"}, {"id": 4, "name": "Бэлэн хувцас"}, {"id": 5, "name": "Ширхэг хувцас"}, {"id": 6, "name": "Ажлын хувцас"} ], valueField: "id", textField: "name" },
-                { name: "name", type: "text", width: 200, title: "Бүтээгдэхүүн" },
-                { name: "quantity", type: "text", title: "Үлдэгдэл"},
-                { name: "unit", title: "Нэгж", type: "select", filtering: false, width: 100, items: [{"id": 0, "name": "Ангилал сонгоно уу?"}, {"id": 1, "name": "Ширхэг"}, {"id": 2, "name": "Боодол"}, {"id": 3, "name": "Литр"}], valueField: "id", textField: "name" },
-                { name: "price", type: "text", title: "Yнэ"},
-                { name: "total_amount", type: "text", title: "Нийт үнэ", editing: false, inserting: false},
-                { name: "created_at", type: "date", width: 120, title: "Огноо", editing: false, inserting: false},
-                { type: "control" }
+                {
+                    name: "category_id",
+                    title: "Ангилал",
+                    type: "select",
+                    width: 100,
+                    items: [
+                        {"id": 0, "name": "Бүх ангилал"},
+                        {"id": 1, "name": "Хүүхдийн хувцас"},
+                        {"id": 2, "name": "Эрэгтэй хувцас"},
+                        {"id": 3, "name": "Эмэгтэй хувцас"},
+                        {"id": 4, "name": "Бэлэн хувцас"},
+                        {"id": 5, "name": "Ширхэг хувцас"},
+                        {"id": 6, "name": "Ажлын хувцас"}],
+                    valueField: "id",
+                    textField: "name"
+                },
+                {
+                    name: "name",
+                    type: "text",
+                    width: 200,
+                    title: "Бүтээгдэхүүн",
+                },
+                {
+                    name: "quantity",
+                    type: "number",
+                    title: "Үлдэгдэл",
+                    filtering: false,
+                    validate: {
+                        validator: "range",
+                        message: function(value, item) {
+                            return "The client age should be between 21 and 80. Entered age is \"" + value + "\" is out of specified range.";
+                        },
+                        param: [0, 100000]
+                    }
+                },
+                {
+                    name: "unit",
+                    title: "Нэгж",
+                    type: "select",
+                    filtering: false,
+                    width: 100,
+                    items: [{"id": 0, "name": "Ангилал сонгоно уу?"}, {"id": 1, "name": "Ширхэг"}, {
+                        "id": 2,
+                        "name": "Боодол"
+                    }, {"id": 3, "name": "Литр"}],
+                    valueField: "id",
+                    textField: "name"
+                },
+                {
+                    name: "price", type: "text", title: "Yнэ", itemTemplate: function (value) {
+                        return formatNumberForDisplay(value)
+                    }
+                },
+                {
+                    name: "total_amount",
+                    type: "text",
+                    title: "Нийт үнэ",
+                    editing: false,
+                    inserting: false,
+                    filtering: false,
+                    itemTemplate: function (value) {
+                        return formatNumberForDisplay(value)
+                    }
+                },
+                {
+                    name: "created_at",
+                    type: "date",
+                    width: 120,
+                    title: "Огноо",
+                    editing: false,
+                    inserting: false
+                },
+                {type: "control"}
             ]
         });
     });
+
+    function formatNumberForDisplay(numberToFormat) {
+        var formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        });
+
+        return formatter.format(numberToFormat).replace('$', '₮ ');
+    }
 </script>

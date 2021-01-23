@@ -25,7 +25,7 @@ class Product < ApplicationRecord
 
   def self.by_name(name)
     if name.present?
-      where(name: name)
+      where('name LIKE ?', "%#{name}%")
     else
       all
     end

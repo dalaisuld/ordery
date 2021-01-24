@@ -1,4 +1,32 @@
-<div id="jsGrid"></div>
+<div class="intro-y flex flex-col sm:flex-row items-center mt-8">
+  <h2 class="text-lg font-medium mr-auto">
+    Захиалгийн жагсаалт
+  </h2>
+  <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
+
+
+    <button class="button mr-2 mb-2 flex items-center justify-center bg-theme-9 text-white">
+      <i data-feather="send" class="w-4 h-4 mr-2"></i> SMS Илгээх
+    </button>
+    <button class="button mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white">
+      <i data-feather="dollar-sign" class="w-4 h-4 mr-2"></i> Каргоны үнэ оруулах
+    </button>
+    <button class="button mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white">
+      <i data-feather="plus" class="w-4 h-4 mr-2"></i> Excel upload
+    </button>
+    <button class="button mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white">
+      <i data-feather="plus" class="w-4 h-4 mr-2"></i> Захиалга бүртгэх
+    </button>
+  </div>
+</div>
+
+
+<div class="intro-y  mt-5">
+  <div id="jsGrid"></div>
+</div>
+
+
+
 <script>
     $(function () {
         $("#jsGrid").jsGrid({
@@ -20,7 +48,7 @@
             noDataContent: "Мэдээлэл байхгүй байна.",
             pageNavigatorNextText: "...",
             pageNavigatorPrevText: "...",
-            deleteConfirm: function(item) {
+            deleteConfirm: function (item) {
                 return "\"" + item.name + "\" бүтгээдэхүүнийг утгахдаа итгэлтэй байнуу?";
             },
             controller: {
@@ -32,7 +60,7 @@
                         beforeSend: function (xhr) {
                             xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
                         },
-                        success: function (data){
+                        success: function (data) {
                             console.log(data['sum'])
                         }
                     });
@@ -40,7 +68,13 @@
             },
             fields: [
                 {
-                    name: "product_id",
+                  name: "id",
+                  type: "text",
+                  title: "ID",
+                  width: 30
+                },
+                {
+                    name: "name",
                     type: "text",
                     title: "Бүтээгдэхүүн",
                 },
@@ -52,7 +86,7 @@
                 {
                     name: "phone_number",
                     type: "text",
-                    title: "Утасны дугаар",
+                    title: "Утас",
                     width: 70,
                 },
                 {
@@ -65,12 +99,18 @@
                     name: "amount",
                     type: "number",
                     title: "Төлсөн дүн",
-                    width: 70
+                    width: 70,
+                    itemTemplate: function (value) {
+                        return formatNumberForDisplay(value)
+                    }
                 },
                 {
                     name: "cargo_price",
                     type: "number",
                     title: "Каргоны төлбөр",
+                    itemTemplate: function (value) {
+                        return formatNumberForDisplay(value)
+                    }
                 },
                 {
                     name: "status",
@@ -78,16 +118,37 @@
                     title: "Төлөв",
                 },
                 {
+                    name: "is_delivery_to_home",
+                    type: "checkbox",
+                    title: "Хүргэлт"
+                },
+                {
+                    name: "taking_confirm",
+                    type: "checkbox",
+                    title: "Агуулах"
+                },
+                {
                     name: "transition_date",
                     type: "text",
                     title: "Гүйлгээний огноо",
-                },
-                {
-                    name: "created_at",
-                    type: "text",
-                    title: "Үүсгэсэн огноо",
-                },
-            ]
+                }
+            ],
+            rowClick: function(args) {
+                console.log(args.item['id'])
+
+            }
         });
     });
+
+    function formatNumberForDisplay(numberToFormat) {
+        var formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        });
+
+        return formatter.format(numberToFormat).replace('$', '₮ ');
+    }
+
 </script>

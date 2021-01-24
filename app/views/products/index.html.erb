@@ -131,15 +131,20 @@
                     type: "select",
                     filtering: false,
                     width: 100,
-                    items: [{"id": 0, "name": "Ангилал сонгоно уу?"}, {"id": 1, "name": "Ширхэг"}, {
-                        "id": 2,
-                        "name": "Боодол"
-                    }, {"id": 3, "name": "Литр"}],
+                    items: [
+                        {"id": 0, "name": "Ангилал сонгоно уу?"},
+                        {"id": 1, "name": "Ширхэг"},
+                        {"id": 2, "name": "Боодол"},
+                        {"id": 3, "name": "Литр"}
+                    ],
                     valueField: "id",
                     textField: "name"
                 },
                 {
-                    name: "price", type: "text", title: "Yнэ", itemTemplate: function (value) {
+                    name: "price",
+                    type: "text",
+                    title: "Yнэ",
+                    itemTemplate: function (value) {
                         return formatNumberForDisplay(value)
                     }
                 },

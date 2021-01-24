@@ -1,6 +1,6 @@
 class Product < ApplicationRecord
   belongs_to :category, optional: true
-
+  has_many :order
   def self.search_by(search)
     by_category(search['category_id'])
       .by_user(search['user_id'])

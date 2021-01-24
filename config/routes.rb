@@ -5,5 +5,8 @@ Rails.application.routes.draw do
   resources :users
   resources :products
   resources :orders
+
   post 'products/list', :to => 'products#list'
+  post 'orders/list', :to => 'orders#list'
+
 end

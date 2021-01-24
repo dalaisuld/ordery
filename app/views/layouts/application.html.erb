@@ -37,6 +37,27 @@
       </a>
     </li>
 
+    <li>
+      <a href="<%= products_path %>" class="menu">
+        <div class="menu__icon"> <i data-feather="edit"></i> </div>
+        <div class="menu__title"> Агуулах </div>
+      </a>
+    </li>
+
+    <li>
+      <a href="<%= orders_path %>" class="menu">
+        <div class="menu__icon"> <i data-feather="file-text"></i> </div>
+        <div class="menu__title"> Захиалга </div>
+      </a>
+    </li>
+
+    <li>
+      <a href="#" class="menu">
+        <div class="menu__icon"> <i data-feather="message-circle"></i> </div>
+        <div class="menu__title"> Sms log </div>
+      </a>
+    </li>
+
   </ul>
 </div>
 <!-- END: Mobile Menu -->
@@ -80,8 +101,8 @@
 
       <li>
         <a href="#" class="side-menu <% if @page_sms_active %>side-menu--active <% end %>">
-          <div class="side-menu__icon"> <i data-feather="send"></i> </div>
-          <div class="side-menu__title"> SMS LOG </div>
+          <div class="side-menu__icon"> <i data-feather="message-circle"></i> </div>
+          <div class="side-menu__title"> Sms log </div>
         </a>
       </li>
 

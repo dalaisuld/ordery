@@ -1,1 +1,93 @@
-orders
+<div id="jsGrid"></div>
+<script>
+    $(function () {
+        $("#jsGrid").jsGrid({
+            width: "100%",
+            filtering: true,
+            autoload: true,
+            paging: true,
+            pageLoading: true,
+            pageSize: 20,
+            pageButtonCount: 5,
+            editing: false,
+            inserting: false,
+            sorting: true,
+            pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+            pagePrevText: "Prev",
+            pageNextText: "Next",
+            pageFirstText: "First",
+            pageLastText: "Last",
+            noDataContent: "Мэдээлэл байхгүй байна.",
+            pageNavigatorNextText: "...",
+            pageNavigatorPrevText: "...",
+            deleteConfirm: function(item) {
+                return "\"" + item.name + "\" бүтгээдэхүүнийг утгахдаа итгэлтэй байнуу?";
+            },
+            controller: {
+                loadData: function (filter) {
+                    return $.ajax({
+                        type: "POST",
+                        url: "/orders/list",
+                        data: filter,
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                        },
+                        success: function (data){
+                            console.log(data['sum'])
+                        }
+                    });
+                },
+            },
+            fields: [
+                {
+                    name: "product_id",
+                    type: "text",
+                    title: "Бүтээгдэхүүн",
+                },
+                {
+                    name: "account_number",
+                    type: "text",
+                    title: "Дансны дугаар",
+                },
+                {
+                    name: "phone_number",
+                    type: "text",
+                    title: "Утасны дугаар",
+                    width: 70,
+                },
+                {
+                    name: "quantity",
+                    type: "number",
+                    width: 30,
+                    title: "Т/Ш",
+                },
+                {
+                    name: "amount",
+                    type: "number",
+                    title: "Төлсөн дүн",
+                    width: 70
+                },
+                {
+                    name: "cargo_price",
+                    type: "number",
+                    title: "Каргоны төлбөр",
+                },
+                {
+                    name: "status",
+                    type: "text",
+                    title: "Төлөв",
+                },
+                {
+                    name: "transition_date",
+                    type: "text",
+                    title: "Гүйлгээний огноо",
+                },
+                {
+                    name: "created_at",
+                    type: "text",
+                    title: "Үүсгэсэн огноо",
+                },
+            ]
+        });
+    });
+</script>

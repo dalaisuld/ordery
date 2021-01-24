@@ -7,12 +7,14 @@ class OrdersController < ApplicationController
   end
 
   def list
-    order_by = "created_at desc"
+    order_by = "id desc"
     if params[:sortField].present? && params[:sortOrder].present?
       order_by = "#{params[:sortField]} #{params[:sortOrder]} "
     end
 
-    orders = Order.all
-    render json: { data: orders, itemsCount: orders.count}
+    orders = Order.all.page(params[:pageIndex]).per(params[:pageSize]).order(order_by)
+
+    order_count = Order.search_by(params).count
+    render json: { data: orders, itemsCount: order_count}
   end
 end

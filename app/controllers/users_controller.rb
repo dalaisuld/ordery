@@ -14,9 +14,10 @@ class UsersController < ApplicationController
 
   def create
     @user = User.create!(user_params)
+    render :index
   end
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email).merge(password: "password").merge(password_confirmation: "password")
+    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation).merge(role: 1)
   end
 end

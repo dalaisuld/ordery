@@ -37,9 +37,14 @@ en:
           attributes:
             email:
               blank: "Email ээ оруулна уу?"
-              taken: "Please use a different Email id"
-              invalid: "Please Specify a valid Email id"
+              taken: "Өөр Email хаяг оруулна уу?"
+              invalid: "Email тохирохгүй байна"
             first_name:
               blank: "Нэрээ оруулна уу?"
             last_name:
               blank: "Овогоо оруулна уу?"
+            password:
+              blank: "Нууц үг хоосон байна."
+              confirmation: "Нууц үгэээ зөв оруулна уу?"
+            password_confirmation:
+              blank: "Нууц үг хоосон байна."

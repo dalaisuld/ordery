@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :users
   resources :products
   resources :orders
-
+  post 'users/update_password', :to => 'users#update_password'
   post 'products/list', :to => 'products#list'
   post 'orders/list', :to => 'orders#list'
 

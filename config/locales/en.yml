@@ -45,6 +45,6 @@ en:
               blank: "Овогоо оруулна уу?"
             password:
               blank: "Нууц үг хоосон байна."
-              confirmation: "Нууц үгэээ зөв оруулна уу?"
+              confirmation: "Дахин оруулах нууц үг таарахгүй байна."
             password_confirmation:
               blank: "Нууц үг хоосон байна."

@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   def index
     @page_users_active = true
     @page_title = "Ажилтны жагсаалт"
-    @users = User.all
+    @users = User.where(delete_flag: 0)
   end
 
   def new
@@ -12,12 +12,47 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  def edit
+    @user = User.find(params[:id])
+  end
+
   def create
-    @user = User.create!(user_params)
+    @users = User.where(delete_flag: 0)
+    @user = User.new
+    if User.find_by(email: params[:user][:email]).present?
+      flash[:error] = "Эмайл хаяг давхцааад байна"
+      render :new
+    else
+      User.create!(user_params)
+      flash[:alert] = "Амжилттай бүртгэлээ"
+      render :index
+    end
+  end
+
+  def update
+    @user = User.find(params[:id])
+    @user.update!({first_name: params[:user][:first_name], last_name: params[:user][:last_name], email: params[:user][:email], role: params[:user][:role]})
+    @users = User.where(delete_flag: 0)
+    flash[:alert] = "Амжилттай Заслаа"
+    render :index
+  end
+
+  def update_password
+    @user = User.find(params[:user][:id])
+    @user.update!({password: params[:user][:password], password_confirmation: params[:password_confirmation]})
+    @users = User.where(delete_flag: 0)
+    flash[:alert] = "Амжилттай Заслаа"
+    render :index
+  end
+
+  def destroy
+    User.find(params[:id]).update!({delete_flag: 1})
+    @users = User.where(delete_flag: 0)
+    flash[:alert] = "Амжилттай Устгалаа"
     render :index
   end
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation).merge(role: 1)
+    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :role)
   end
 end

@@ -1,11 +1,15 @@
 <h2 class="intro-y text-lg font-medium mt-10">
   Ажилтны жагсаалт
 </h2>
+<% if flash[:alert].present?%>
+  <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-18 text-theme-9"> <i data-feather="alert-triangle" class="w-6 h-6 mr-2"></i> <%= flash[:alert]%> </div> 
+<% end %>
 <div class="grid grid-cols-12 gap-6 mt-5">
   <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
     <a href="<%= new_user_path %>" class="button text-white bg-theme-1 shadow-md mr-2">Шинэ ажилтан бүртгэх</a>
     <div class="hidden md:block mx-auto text-gray-600">Нийт <%= @users.count %> ажилтан бүртгэлтэй байна</div>
   </div>
+
   <!-- BEGIN: Users Layout -->
   <% @users.each do |user| %>
     <div class="intro-y col-span-12 md:col-span-6">
@@ -19,7 +23,10 @@
           <div class="text-gray-600 text-xs mt-0.5"><%= user.email%></div>
         </div>
         <div class="flex mt-4 lg:mt-0">
-          <button class="button button--sm text-gray-700 border border-gray-300 dark:border-dark-5 dark:text-gray-300">Profile</button>
+          <a href="<%= edit_user_path(user) %>" class = "button button--sm text-gray-700 border border-gray-300 dark:border-dark-5 dark:text-gray-300">Засах</a>
+        </div>
+        <div class="flex mt-4 lg:mt-0">
+          <a href="<%= user_path(user) %>" data-method="delete" rel="nofollow" class ="button button--sm text-gray-700 border border-gray-300 dark:border-dark-5 dark:text-gray-300">Устгах</a>
         </div>
       </div>
     </div>

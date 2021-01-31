@@ -13,9 +13,9 @@ class ProductsController < ApplicationController
     end
     product = Product.select("products.id, products.name, price, total_amount, quantity, unit, category_id, products.created_at").search_by(params)
     .page(params[:pageIndex]).per(params[:pageSize]).order(order_by)
-    product_count = Product.search_by(params).count
+    products = Product.search_by(params)
     puts "=======>>> Sum = #{product.sum(:total_amount)}"
-    render json: { data: product, itemsCount: product_count, sum: product.sum(:total_amount)}
+    render json: { data: product, itemsCount: products.count, sum: products.sum(:total_amount)}
   end
 
   def create

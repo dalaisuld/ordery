@@ -3,8 +3,8 @@ class UsersController < ApplicationController
 
   def index
     @page_users_active = true
-    @page_title = "Ажилтны жагсаалт"
-    @users = User.where(delete_flag: 0)
+    @page_title = 'Ажилтны жагсаалт'
+    @users = User.all
   end
 
   def new
@@ -20,11 +20,11 @@ class UsersController < ApplicationController
     @users = User.where(delete_flag: 0)
     @user = User.new
     if User.find_by(email: params[:user][:email]).present?
-      flash[:error] = "Эмайл хаяг давхцааад байна"
+      flash[:error] = 'Эмайл хаяг давхцааад байна'
       render :new
     else
       User.create!(user_params)
-      flash[:alert] = "Амжилттай бүртгэлээ"
+      flash[:alert] = 'Амжилттай бүртгэлээ'
       render :index
     end
   end
@@ -33,7 +33,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.update!({first_name: params[:user][:first_name], last_name: params[:user][:last_name], email: params[:user][:email], role: params[:user][:role]})
     @users = User.where(delete_flag: 0)
-    flash[:alert] = "Амжилттай Заслаа"
+    flash[:alert] = 'Амжилттай Заслаа'
     render :index
   end
 
@@ -41,14 +41,13 @@ class UsersController < ApplicationController
     @user = User.find(params[:user][:id])
     @user.update!({password: params[:user][:password], password_confirmation: params[:password_confirmation]})
     @users = User.where(delete_flag: 0)
-    flash[:alert] = "Амжилттай Заслаа"
+    flash[:alert] = 'Амжилттай Заслаа'
     render :index
   end
 
   def destroy
     User.find(params[:id]).update!({delete_flag: 1})
-    @users = User.where(delete_flag: 0)
-    flash[:alert] = "Амжилттай Устгалаа"
+    flash[:alert] = 'Амжилттай Устгалаа'
     render :index
   end
 

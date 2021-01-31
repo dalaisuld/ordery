@@ -182,4 +182,15 @@
 
         return formatter.format(numberToFormat).replace('$', '₮ ');
     }
+
+    Toastify({
+        text: "Registration failed, please check the fileld form.",
+        duration: 3000,
+        newWindow: true,
+        close: true,
+        gravity: "bottom",
+        position: "left",
+        backgroundColor: "#D32929",
+        stopOnFocus: true,
+    }).showToast();
 </script>

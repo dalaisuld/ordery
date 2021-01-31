@@ -48,7 +48,7 @@ class UsersController < ApplicationController
   def destroy
     User.find(params[:id]).update!({delete_flag: 1})
     flash[:alert] = 'Амжилттай Устгалаа'
-    render :index
+    redirect_to users_path
   end
 
   def user_params

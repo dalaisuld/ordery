@@ -46,7 +46,16 @@
                             xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
                         },
                         success: function(data) {
-
+                            Toastify({
+                                text: "Амжилттай бүртгэгдлээ",
+                                duration: 3000,
+                                newWindow: true,
+                                close: true,
+                                gravity: "bottom",
+                                position: "right",
+                                backgroundColor: "#91C714",
+                                stopOnFocus: true,
+                            }).showToast();
                         },
                         error: function(xhr) { // if error occured
                             alert("Error occured.please try again");
@@ -69,6 +78,16 @@
                         success: function (data){
                             var $grid = $("#jsGrid");
                             $grid.jsGrid("loadData");
+                            Toastify({
+                                text: "Амжилттай засагдлаа",
+                                duration: 3000,
+                                newWindow: true,
+                                close: true,
+                                gravity: "bottom",
+                                position: "right",
+                                backgroundColor: "#91C714",
+                                stopOnFocus: true,
+                            }).showToast();
                         }
                     });
                 },
@@ -78,6 +97,20 @@
                         url: "/products/" + item.id,
                         beforeSend: function (xhr) {
                             xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                        },
+                        success: function (data){
+                            var $grid = $("#jsGrid");
+                            $grid.jsGrid("loadData");
+                            Toastify({
+                                text: "Амжилттай устгагдлаа",
+                                duration: 3000,
+                                newWindow: true,
+                                close: true,
+                                gravity: "bottom",
+                                position: "right",
+                                backgroundColor: "#91C714",
+                                stopOnFocus: true,
+                            }).showToast();
                         }
                     });
                 }
@@ -182,15 +215,4 @@
 
         return formatter.format(numberToFormat).replace('$', '₮ ');
     }
-
-    Toastify({
-        text: "Registration failed, please check the fileld form.",
-        duration: 3000,
-        newWindow: true,
-        close: true,
-        gravity: "bottom",
-        position: "left",
-        backgroundColor: "#D32929",
-        stopOnFocus: true,
-    }).showToast();
 </script>

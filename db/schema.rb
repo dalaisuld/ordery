@@ -18,6 +18,25 @@ ActiveRecord::Schema.define(version: 2021_01_22_051434) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "orders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "product_id", default: 1, null: false
+    t.string "phone_number"
+    t.string "account_number", null: false
+    t.integer "amount", null: false
+    t.string "transition_date"
+    t.integer "quantity", default: 1, null: false
+    t.integer "total_amount", null: false
+    t.integer "user_id", null: false
+    t.integer "is_upload", limit: 2, default: 0
+    t.string "address"
+    t.integer "status", default: 0
+    t.integer "cargo_price"
+    t.boolean "is_delivery_to_home"
+    t.boolean "taking_confirm"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "category_id", default: 1, null: false
     t.integer "user_id", default: 1, null: false
@@ -25,8 +44,8 @@ ActiveRecord::Schema.define(version: 2021_01_22_051434) do
     t.integer "price", null: false
     t.integer "total_amount", null: false
     t.integer "quantity", null: false
-    t.integer "prev_quantity", null: false
-    t.integer "unit", limit: 1, null: false
+    t.integer "prev_quantity"
+    t.integer "unit"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -51,10 +70,12 @@ ActiveRecord::Schema.define(version: 2021_01_22_051434) do
     t.string "first_name", default: "", null: false
     t.string "last_name", default: "", null: false
     t.string "email", default: "", null: false
+    t.integer "role", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.integer "delete_flag", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_users_on_email", unique: true

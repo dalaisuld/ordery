@@ -5,7 +5,6 @@ class CreateSmsLogs < ActiveRecord::Migration[6.0]
       t.string :operator
       t.string :sms
       t.boolean :is_send
-
       t.timestamps
     end
   end

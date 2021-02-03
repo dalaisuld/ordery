@@ -1,0 +1,14 @@
+<h1>Excel import хийх</h1>
+
+<%= form_for @items_import do |f| %>
+  <% if @items_import.errors.any? %>
+    <%= pluralize(@items_import.errors.count, "error") %> Excel file оруулна уу?<ul>
+      <% @items_import.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <%= f.file_field :file %>
+  <%= f.submit "Import File" %>
+<% end %>

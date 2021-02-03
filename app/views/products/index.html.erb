@@ -1,4 +1,32 @@
-<div id="jsGrid"></div>
+<div class="grid grid-cols-12 gap-6 mt-5">
+  <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+    <div class="report-box zoom-in">
+      <div class="box p-5">
+        <div class="flex">
+          <i data-feather="shopping-cart" class="report-box__icon text-theme-10"></i>
+        </div>
+        <div class="text-3xl font-bold leading-8 mt-6" id="item_count">0</div>
+        <div class="text-base text-gray-600 mt-1">Бүтээгдэхүүний тоо</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+    <div class="report-box zoom-in">
+      <div class="box p-5">
+        <div class="flex">
+          <i data-feather="credit-card" class="report-box__icon text-theme-11"></i>
+        </div>
+        <div class="text-3xl font-bold leading-8 mt-6" id="total_amount">0</div>
+        <div class="text-base text-gray-600 mt-1">Нийт үнэ</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="grid grid-cols-12 mt-10">
+  <div class="col-span-12">
+    <div id="jsGrid"></div>
+  </div>
+</div>
 <script>
     $(function () {
         $("#jsGrid").jsGrid({
@@ -33,6 +61,8 @@
                             xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
                         },
                         success: function (data){
+                            $('#item_count').text(formatNumberForDisplay(data['itemsCount']));
+                            $('#total_amount').text(formatNumberForDisplay(data['sum']));
                             console.log(data['sum'])
                         }
                     });
@@ -46,7 +76,16 @@
                             xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
                         },
                         success: function(data) {
-
+                            Toastify({
+                                text: "Амжилттай бүртгэгдлээ",
+                                duration: 3000,
+                                newWindow: true,
+                                close: true,
+                                gravity: "bottom",
+                                position: "right",
+                                backgroundColor: "#91C714",
+                                stopOnFocus: true,
+                            }).showToast();
                         },
                         error: function(xhr) { // if error occured
                             alert("Error occured.please try again");
@@ -69,6 +108,16 @@
                         success: function (data){
                             var $grid = $("#jsGrid");
                             $grid.jsGrid("loadData");
+                            Toastify({
+                                text: "Амжилттай засагдлаа",
+                                duration: 3000,
+                                newWindow: true,
+                                close: true,
+                                gravity: "bottom",
+                                position: "right",
+                                backgroundColor: "#91C714",
+                                stopOnFocus: true,
+                            }).showToast();
                         }
                     });
                 },
@@ -78,6 +127,20 @@
                         url: "/products/" + item.id,
                         beforeSend: function (xhr) {
                             xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                        },
+                        success: function (data){
+                            var $grid = $("#jsGrid");
+                            $grid.jsGrid("loadData");
+                            Toastify({
+                                text: "Амжилттай устгагдлаа",
+                                duration: 3000,
+                                newWindow: true,
+                                close: true,
+                                gravity: "bottom",
+                                position: "right",
+                                backgroundColor: "#91C714",
+                                stopOnFocus: true,
+                            }).showToast();
                         }
                     });
                 }

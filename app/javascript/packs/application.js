@@ -10,7 +10,7 @@ import "channels"
 
 require('@client-side-validations/client-side-validations');
 require('jquery')
-
+global.Toastify = require("toastify-js")
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()

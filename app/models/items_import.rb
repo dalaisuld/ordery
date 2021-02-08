@@ -1,7 +1,7 @@
 class ItemsImport
     include ActiveModel::Model
     require 'roo'
-  
+
     attr_accessor :file
   
     def initialize(attributes={})
@@ -21,37 +21,21 @@ class ItemsImport
       end
     end
   
-    def load_imported_items
+    def save(user_id)
       spreadsheet = open_spreadsheet
-      header = spreadsheet.row(1)
-      (2..spreadsheet.last_row).map do |i|
+      header = spreadsheet.row(2)
+      (3..spreadsheet.last_row).map do |i|
         row = Hash[[header, spreadsheet.row(i)].transpose]
-        puts "+++++++++start++++++++++="
-        puts i.inspect
-        puts row.inspect
-        puts "+++++++++++end+++++++++"
-        #item = Item.find_by_id(row["id"]) || Item.new
-        #item.attributes = row.to_hash
-      end
-    end
-  
-    def imported_items
-      @imported_items ||= load_imported_items
-    end
-  
-    def save
-      if imported_items.map(&:valid?).all?
-        imported_items.each(&:save!)
-        true
-      else
-        imported_items.each_with_index do |item, index|
-          item.errors.full_messages.each do |msg|
-            errors.add :base, "Row #{index + 6}: #{msg}"
+        if spreadsheet.row(i)[1] != 0
+          ActiveRecord::Base.transaction do
+            Order.create({transition_date: spreadsheet.row(i)[0],
+                          user_id: user_id,
+                          total_amount: spreadsheet.row(i)[1] * 1,
+                          amount: spreadsheet.row(i)[1], 
+                          description: spreadsheet.row(i)[2], 
+                          account_number: spreadsheet.row(i)[3]})
           end
         end
-        false
       end
     end
-  
   end
-  

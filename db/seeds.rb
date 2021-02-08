@@ -7,9 +7,9 @@ Category.create(name: "Ажлын хувцас")
 admin = User.create!(email: 'admin@example.com', first_name: 'Admin', last_name: 'Super', role: 1, password: 'password', password_confirmation: 'password')
 user1 = User.create!(email: 'user1@example.com', first_name: 'Member', last_name: 'Medium', role: 2, password: 'password', password_confirmation: 'password')
 user2 = User.create!(email: 'user2@example.com', first_name: 'User', last_name: 'Medium', role: 3, password: 'password', password_confirmation: 'password')
-product = Product.create!(category_id: 1, user_id: 1, name: 'product 1', price: 300000, total_amount: 500000, quantity: 1000, prev_quantity: 1000, unit: 1)
-product1 = Product.create!(category_id: 1, user_id: 1, name: 'product 1', price: 300000, total_amount: 500000, quantity: 1000, prev_quantity: 1000, unit: 1)
-product2 = Product.create!(category_id: 1, user_id: 1, name: 'product 1', price: 300000, total_amount: 500000, quantity: 1000, prev_quantity: 1000, unit: 1)
+product = Product.create!(category_id: 1, user_id: 1, name: 'product 1', price: 45000, total_amount: 45000, quantity: 23, prev_quantity: 1000, unit: 1)
+product1 = Product.create!(category_id: 2, user_id: 1, name: 'product 2', price: 300000, total_amount: 300000, quantity: 34, prev_quantity: 1000, unit: 1)
+product2 = Product.create!(category_id: 3, user_id: 1, name: 'product 3', price: 100, total_amount: 100, quantity: 10, prev_quantity: 1000, unit: 1)
 
 
 sms_prefix1 = SmsPrefix.create!(prefix: '99', operator: 'MOBICOM')

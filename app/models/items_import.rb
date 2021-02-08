@@ -37,5 +37,6 @@ class ItemsImport
           end
         end
       end
+      false
     end
   end

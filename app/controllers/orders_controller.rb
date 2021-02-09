@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
   def index
     @page_title = 'Захиалгийн жагсаалт'
     @page_orders_active = true
-    @orders = Product.select("products.name as name, orders.id as id").joins("INNER JOIN orders ON products.id=orders.product_id").group("products.name")
+    @orders = Product.select("products.name as name, orders.id as id").joins("INNER JOIN orders ON products.id=orders.product_id").group("products.name").where("orders.status = 0")
   end
 
   def list

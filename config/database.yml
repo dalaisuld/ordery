@@ -6,7 +6,7 @@ development:
   database: ordery
   pool: 5
   username: root
-  password: 'dellF912;'
+  password: root
   socket: /tmp/mysql.sock
 
 test:

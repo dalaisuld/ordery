@@ -8,11 +8,13 @@
     <button class="button mr-2 mb-2 flex items-center justify-center bg-theme-9 text-white">
       <i data-feather="send" class="w-4 h-4 mr-2"></i> SMS Илгээх
     </button>
-    <a href="javascript:;" data-toggle="modal" data-target="#basic-modal-preview" >
-        <button class="button mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white">
-        <i data-feather="dollar-sign" class="w-4 h-4 mr-2"></i> Каргоны үнэ оруулах
-        </button>
-    </a>
+    <% if @orders.present? %>
+        <a href="javascript:;" data-toggle="modal" data-target="#basic-modal-preview" >
+            <button class="button mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white">
+            <i data-feather="dollar-sign" class="w-4 h-4 mr-2"></i> Каргоны үнэ оруулах
+            </button>
+        </a>
+    <% end %>
     <a href ="/items_imports/new">
     <button class="button mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white">
       <i data-feather="plus" class="w-4 h-4 mr-2"></i> Excel upload

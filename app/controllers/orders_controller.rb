@@ -4,6 +4,7 @@ class OrdersController < ApplicationController
   def index
     @page_title = 'Захиалгийн жагсаалт'
     @page_orders_active = true
+    @orders = Product.select("products.name as name, orders.id as id").joins("INNER JOIN orders ON products.id=orders.product_id").group("products.name")
   end
 
   def list
@@ -15,5 +16,15 @@ class OrdersController < ApplicationController
     orders = Order.joins('LEFT JOIN products ON products.id = orders.product_id').select('orders.*, products.name, products.price').page(params[:pageIndex]).per(params[:pageSize]).order(order_by)
     orders = orders.search_by(params)
     render json: { data: orders, itemsCount: order_count }
+  end
+
+  def add_cargo
+    orders = Order.where(product_id: params[:product])
+    begin
+      orders.update_all(status: 1, cargo_price: params[:payment])
+      render json:{ message: "амжиллтай хийлээ"}, status: 200
+    rescue => e
+      render json:{ message: "амжиллгүй хийлээ"}, status: 422
+    end
   end
 end

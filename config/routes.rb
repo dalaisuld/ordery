@@ -11,5 +11,6 @@ Rails.application.routes.draw do
   post 'users/update_password', :to => 'users#update_password'
   post 'products/list', :to => 'products#list'
   post 'orders/list', :to => 'orders#list'
+  post 'orders/add_cargo', :to => 'orders#add_cargo'
 
 end

@@ -4,7 +4,11 @@ class OrdersController < ApplicationController
   def index
     @page_title = 'Захиалгийн жагсаалт'
     @page_orders_active = true
-    @orders = Product.select("products.name as name, orders.id as id").joins("INNER JOIN orders ON products.id=orders.product_id").group("products.name").where("orders.status = 0")
+    if Order.where(status: 0).present?
+      @orders = Product.select('products.name as name, orders.id as id').joins('INNER JOIN orders ON products.id=orders.product_id').group('products.name').where('orders.status = 0')
+    else
+      @orders = nil
+    end
   end
 
   def list
@@ -21,10 +25,10 @@ class OrdersController < ApplicationController
   def add_cargo
     orders = Order.where(product_id: params[:product])
     begin
-      orders.update_all(status: 1, cargo_price: params[:payment])
-      render json:{ message: "амжиллтай хийлээ"}, status: 200
+      orders.update_all(status: 0, cargo_price: params[:payment])
+      render json:{ message: 'амжиллтай хийлээ' }, status: 200
     rescue => e
-      render json:{ message: "амжиллгүй хийлээ"}, status: 422
+      render json:{ message: 'амжиллгүй хийлээ' }, status: 422
     end
   end
 end

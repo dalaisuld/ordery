@@ -36,8 +36,10 @@
              <div class="text-3xl mt-5">Каргоны үнэ оруулах</div>
          </div>
          <div>
+           <% if @orders.present? %>
             <label>Бүтээгдэхүүн</label>
             <%= select_tag "product", options_from_collection_for_select(@orders, "id", "name") %>
+             <% end %>
          </div>
             <div class="mt-3">
                 <label>Үнэ</label>

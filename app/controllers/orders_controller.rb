@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_model, only: %i[show update]
 
   def index
     @page_title = 'Захиалгийн жагсаалт'
@@ -9,6 +10,20 @@ class OrdersController < ApplicationController
       puts "======>>> #{@products.inspect}"
     else
       @products = nil
+    end
+  end
+
+  def show
+    @page_orders_active = true
+  end
+
+  def update
+    if params[:update]
+      respond_to do |format|
+        if @order.update(order_params)
+          format.html { redirect_to orders_path }
+        end
+      end
     end
   end
 
@@ -32,4 +47,14 @@ class OrdersController < ApplicationController
       render json:{ message: 'амжиллгүй хийлээ' }, status: 422
     end
   end
+
+  private
+  def set_model
+    @order = Order.find(params[:id])
+  end
+
+  def order_params
+    params.require(:order).permit(:phone_number)
+  end
+
 end

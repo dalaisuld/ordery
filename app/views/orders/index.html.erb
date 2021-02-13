@@ -47,7 +47,7 @@
         </div>
       </div>
       <div class="col-span-12 sm:col-span-12"><label>Каргоны үнэ</label>
-        <input type="number" id="cargo_price" required class="input w-full border mt-2 flex-1" placeholder="картгоны үнэ"></div>
+        <input type="number" id="cargo_price" required min="1000" class="input w-full border mt-2 flex-1" placeholder="картгоны үнэ"></div>
     </div>
     <div class="px-5 py-3 text-right border-t border-gray-200 dark:border-dark-5">
       <button type="button" data-dismiss="modal" class="button w-20 border text-gray-700 dark:border-dark-5 dark:text-gray-300 mr-1">Болих</button>
@@ -164,6 +164,7 @@
                 }
             ],
             rowClick: function(args) {
+                location.href="/orders/"+args.item['id']
                 console.log(args.item['id'])
 
             }
@@ -182,38 +183,52 @@
     }
 
     $("#submit_cargo_price").click(function(){
-        console.log('asdf');
-        console.log(cash('#cargo_product').val())
-        $.ajax({
-            url: "/orders/add_cargo",
-            type: "POST",
-            data:{
-                product: $('#cargo_product').val(),
-                payment: $("#cargo_price").val(),
-            },
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
-            },
-            success: function(data) {
-                $("#cargo_price").val("");
-                cash("#set_cargo_price").modal("hide");
-                var $grid = $("#jsGrid");
-                $grid.jsGrid("loadData");
-                Toastify({
-                    text: "Каргоны үнэ амжилттай орууллаа",
-                    duration: 3000,
-                    newWindow: true,
-                    close: true,
-                    gravity: "bottom",
-                    position: "right",
-                    backgroundColor: "#91C714",
-                    stopOnFocus: true,
-                }).showToast();
-            },
-            error: function(data){
-                alert(data.message)
-            }
-        });
+        if($("#cargo_price").val() > 0){
+            $.ajax({
+                url: "/orders/add_cargo",
+                type: "POST",
+                data:{
+                    product: $('#cargo_product').val(),
+                    payment: $("#cargo_price").val(),
+                },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                },
+                success: function(data) {
+                    $("#cargo_price").val("");
+                    cash("#set_cargo_price").modal("hide");
+                    var $grid = $("#jsGrid");
+                    $grid.jsGrid("loadData");
+                    Toastify({
+                        text: "Каргоны үнэ амжилттай орууллаа",
+                        duration: 3000,
+                        newWindow: true,
+                        close: true,
+                        gravity: "bottom",
+                        position: "right",
+                        backgroundColor: "#91C714",
+                        stopOnFocus: true,
+                    }).showToast();
+                },
+                error: function(data){
+                    alert(data.message)
+                }
+            });
+        }
+        else{
+            Toastify({
+                text: "Каргоны үнэ оруулна уу",
+                duration: 3000,
+                newWindow: true,
+                close: true,
+                gravity: "bottom",
+                position: "right",
+                backgroundColor: "#D32929",
+                stopOnFocus: true,
+            }).showToast();
+            return
+        }
+
     });
 
 </script>

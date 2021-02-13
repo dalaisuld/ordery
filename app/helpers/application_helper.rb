@@ -28,4 +28,8 @@ module ApplicationHelper
       Rails.logger.error "---Sms failde--->phone number lengh error--->"
     end
   end
+
+  def self.format_currency(amount)
+    return "₮ %.2f" % amount
+  end
 end

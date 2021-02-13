@@ -1,4 +1,4 @@
-import helper from "./helper";
+import helper from "../helper";
 import chart, { helpers } from "chart.js";
 
 (function (cash) {

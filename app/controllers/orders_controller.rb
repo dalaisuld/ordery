@@ -5,9 +5,10 @@ class OrdersController < ApplicationController
     @page_title = 'Захиалгийн жагсаалт'
     @page_orders_active = true
     if Order.where(status: 0).present?
-      @orders = Product.select('products.name as name, orders.id as id').joins('INNER JOIN orders ON products.id=orders.product_id').group('products.name').where('orders.status = 0')
+      @products = Order.joins('LEFT JOIN products ON products.id = orders.product_id').select('products.id, products.name').group('products.id, products.name')
+      puts "======>>> #{@products.inspect}"
     else
-      @orders = nil
+      @products = nil
     end
   end
 
@@ -23,9 +24,9 @@ class OrdersController < ApplicationController
   end
 
   def add_cargo
-    orders = Order.where(product_id: params[:product])
+    orders = Order.where(product_id: params[:product], status: 0)
     begin
-      orders.update_all(status: 0, cargo_price: params[:payment])
+      orders.update_all(cargo_price: params[:payment])
       render json:{ message: 'амжиллтай хийлээ' }, status: 200
     rescue => e
       render json:{ message: 'амжиллгүй хийлээ' }, status: 422

@@ -1,4 +1,4 @@
-import helper from "./helper";
+import helper from "../helper";
 import hljs from "highlight.js";
 import jsBeautify from "js-beautify";
 

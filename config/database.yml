@@ -5,8 +5,8 @@ development:
   reconnect: false
   database: ordery
   pool: 5
-  username: root
-  password: root
+  username: 'root'
+  password: 'dellF912;'
   socket: /tmp/mysql.sock
 
 test:

@@ -103,8 +103,7 @@
                     name: "id",
                     type: "text",
                     title: "ID",
-                    filtering: false,
-                    width: 30
+                    width: 40
                 },
                 {
                     name: "name",
@@ -150,11 +149,6 @@
                     }
                 },
                 {
-                    name: "status",
-                    type: "text",
-                    title: "Төлөв",
-                },
-                {
                     name: "is_delivery_to_home",
                     type: "checkbox",
                     filtering: false,
@@ -170,6 +164,14 @@
                     name: "transition_date",
                     type: "text",
                     title: "Гүйлгээний огноо",
+                },
+                {
+                    name: "status",
+                    type: "text",
+                    title: "Төлөв",
+                    itemTemplate: function (value) {
+                        return formatStatus(value)
+                    }
                 }
             ],
             rowClick: function(args) {
@@ -189,6 +191,21 @@
         });
 
         return formatter.format(numberToFormat).replace('$', '₮ ');
+    }
+
+
+    function formatStatus(status) {
+        if (status === 'in_progress'){
+            return "<span class='text-theme-12 block font-medium'>Хүлээгдэж байгаа</span>"
+        }else if (status === 'delivery'){
+            return "<span class='text-theme-1 block font-medium'>Хүргэлтэнд гарсан</span>"
+        }else if (status === 'cancel'){
+            return "<span class='text-theme-6 block font-medium'>Цуцалсан</span>"
+        }else if (status === 'finish'){
+            return "<span class='text-theme-9 block font-medium'>Дууссан</span>"
+        }else{
+            return "--"
+        }
     }
 
     $("#submit_cargo_price").click(function(){

@@ -5,7 +5,19 @@ class Order < ApplicationRecord
 
 
   def self.search_by(search)
-    by_name(search['name']).by_account_number(search['account_number']).by_phone_number(search['phone_number']).by_is_delivery_to_home(search['is_delivery_to_home'])
+    by_name(search['name'])
+        .by_account_number(search['account_number'])
+        .by_phone_number(search['phone_number'])
+        .by_is_delivery_to_home(search['is_delivery_to_home'])
+        .by_id(search['id'])
+  end
+
+  def self.by_id(id)
+    if id.present?
+      where('orders.id = ?', "#{id}")
+    else
+      all
+    end
   end
 
   def self.by_name(name)

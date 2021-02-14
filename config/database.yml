@@ -14,10 +14,12 @@ test:
 
 production:
   adapter: mysql2
-  pool: 5
+  encoding: utf8
   host: '139.59.247.112'
-  database: "ordery"
+  reconnect: false
+  database: 'ordery'
+  pool: 5
   username: 'playhouse'
   password: 'dellF912;'
-
+  socket: /tmp/mysql.sock
 

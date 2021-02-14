@@ -13,4 +13,9 @@ test:
   database: ordery
 
 production:
-  url: <%= ENV['DATABASE_URL'] %>
+  url: '139.59.247.112'
+  database: "ordery"
+  username: 'playhouse'
+  password: 'dellF912;'
+
+

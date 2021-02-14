@@ -21,7 +21,9 @@ class OrdersController < ApplicationController
     if params[:update]
       respond_to do |format|
         if @order.update(order_params)
-          format.html { redirect_to orders_path }
+          format.html { redirect_to orders_path, notice: 'Захиалгийн мэдээлэл амжилттай өөрчлөгдлөө' }
+        else
+          format.html { render :show }
         end
       end
     end
@@ -54,7 +56,7 @@ class OrdersController < ApplicationController
   end
 
   def order_params
-    params.require(:order).permit(:phone_number)
+    params.require(:order).permit(:phone_number, :address, :status, :is_delivery_to_home, :taking_confirm)
   end
 
 end

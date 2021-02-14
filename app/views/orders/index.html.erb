@@ -40,8 +40,10 @@
       <div class="col-span-12 sm:col-span-12"><label>Бүтээгдэхүүн</label>
         <div class="mt-2">
           <select data-search="true" data-placeholder="бараа хайх" class="tail-select w-full" id="cargo_product">
-            <% @products.each do |product|%>
-              <option value="<%= product.id %>"><%= product.name %></option>
+            <% if @products.present? %>
+              <% @products.each do |product|%>
+                <option value="<%= product.id %>"><%= product.name %></option>
+              <% end %>
             <% end %>
           </select>
         </div>
@@ -101,11 +103,13 @@
                     name: "id",
                     type: "text",
                     title: "ID",
+                    filtering: false,
                     width: 30
                 },
                 {
                     name: "name",
                     type: "text",
+                    filtering: false,
                     title: "Бүтээгдэхүүн",
                 },
                 {
@@ -123,12 +127,14 @@
                     name: "quantity",
                     type: "number",
                     width: 30,
+                    filtering: false,
                     title: "Т/Ш",
                 },
                 {
                     name: "amount",
                     type: "number",
                     title: "Төлсөн дүн",
+                    filtering: false,
                     width: 70,
                     itemTemplate: function (value) {
                         return formatNumberForDisplay(value)
@@ -138,6 +144,7 @@
                     name: "cargo_price",
                     type: "number",
                     title: "Каргоны төлбөр",
+                    filtering: false,
                     itemTemplate: function (value) {
                         return formatNumberForDisplay(value)
                     }
@@ -150,11 +157,13 @@
                 {
                     name: "is_delivery_to_home",
                     type: "checkbox",
+                    filtering: false,
                     title: "Хүргэлт"
                 },
                 {
                     name: "taking_confirm",
                     type: "checkbox",
+                    filtering: false,
                     title: "Агуулах"
                 },
                 {

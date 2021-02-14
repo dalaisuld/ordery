@@ -9,10 +9,12 @@ class UsersController < ApplicationController
 
   def new
     @page_users_active = true
+    @page_users_active = true
     @user = User.new
   end
 
   def edit
+    @page_users_active = true
     @user = User.find(params[:id])
   end
 

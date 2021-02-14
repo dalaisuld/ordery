@@ -1,11 +1,11 @@
 development:
   adapter: mysql2
   encoding: utf8
-  host: 127.0.0.1
+  host: '139.59.247.112'
   reconnect: false
-  database: ordery
+  database: 'ordery'
   pool: 5
-  username: 'root'
+  username: 'playhouse'
   password: 'dellF912;'
   socket: /tmp/mysql.sock
 

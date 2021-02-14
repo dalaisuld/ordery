@@ -1,11 +1,11 @@
 default: &default
   adapter: mysql2
   encoding: utf8
-  pool: <%= ENV["DB_POOL"] || 5  %>
-  database: <%= ENV['DB_NAME'] || 'ordery' %>
-  username: <%= ENV['DB_USER'] || 'playhouse' %>
-  password: <%= ENV['DB_PASS'] || 'dellF912;'%>
-  host: <%= ENV['DB_HOST'] || '139.59.247.112'%>
+  pool: 5
+  database: ordery
+  username:playhouse
+  password: 'dellF912;'
+  host: '139.59.247.112'
   reconnect: true
 development:
   <<: *default

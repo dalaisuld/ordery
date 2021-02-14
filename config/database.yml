@@ -15,7 +15,7 @@ test:
 production:
   adapter: mysql2
   pool: 5
-  url: '139.59.247.112'
+  host: '139.59.247.112'
   database: "ordery"
   username: 'playhouse'
   password: 'dellF912;'

@@ -2,16 +2,16 @@ class ProductsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @page_title = "Агуулхын бүртгэл"
+    @page_title = 'Агуулхын бүртгэл'
     @page_products_active = true
   end
 
   def list
-    order_by = "created_at desc"
+    order_by = 'created_at desc'
     if params[:sortField].present? && params[:sortOrder].present?
       order_by = "#{params[:sortField]} #{params[:sortOrder]} "
     end
-    product = Product.select("products.id, products.name, price, total_amount, quantity, unit, category_id, products.created_at").search_by(params)
+    product = Product.select('products.id, products.name, price, total_amount, quantity, unit, category_id, products.created_at').search_by(params)
     .page(params[:pageIndex]).per(params[:pageSize]).order(order_by)
     products = Product.search_by(params)
     puts "=======>>> Sum = #{product.sum(:total_amount)}"

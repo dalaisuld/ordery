@@ -15,21 +15,21 @@ module ApplicationHelper
       if ops.present? && ops.count == 1
         op = ops.first
         if op.operator == 'MOBICOM'
-          puts "Mobi"
+          puts 'Mobi'
         elsif op.operator == 'UNITEL'
-          puts "UNITEL"
+          puts 'UNITEL'
         elsif op.operator == 'SKYTEL'
-          puts "SKYTEL"
+          puts 'SKYTEL'
         elsif op.operator == 'GMOBILE'
-          puts "GMOBILE"
+          puts 'GMOBILE'
         end
       end
     else
-      Rails.logger.error "---Sms failde--->phone number lengh error--->"
+      Rails.logger.error '---Sms failde--->phone number lengh error--->'
     end
   end
 
   def self.format_currency(amount)
-    return "₮ %.2f" % amount
+    return '₮ %.2f' % amount
   end
 end

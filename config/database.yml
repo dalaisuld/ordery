@@ -2,15 +2,28 @@ default: &default
   adapter: mysql2
   encoding: utf8
   pool: 5
-  database: ordery
-  username:playhouse
+  database: 'ordery'
+  username: 'playhouse'
   password: 'dellF912;'
   host: '139.59.247.112'
   reconnect: true
 development:
-  <<: *default
-  database: <%= ENV['DB_NAME'] || 'ordery' %>
+  adapter: mysql2
+  encoding: utf8
+  pool: 5
+  database: 'ordery'
+  username: 'playhouse'
+  password: 'dellF912;'
+  host: '139.59.247.112'
+  reconnect: true
 
 production:
-  <<: *default
+  adapter: mysql2
+  encoding: utf8
+  pool: 5
+  database: 'ordery'
+  username: 'playhouse'
+  password: 'dellF912;'
+  host: '139.59.247.112'
+  reconnect: true
 

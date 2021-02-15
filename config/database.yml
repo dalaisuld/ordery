@@ -15,4 +15,4 @@ development:
 production:
   <<: *default
   database: ordery
-  url: 'mysql2://playhouse:delF912;@139.59.247.112/ordery'
+  url: 'mysql2://playhouse:dellF912;@139.59.247.112/ordery'

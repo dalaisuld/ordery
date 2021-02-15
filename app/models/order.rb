@@ -55,4 +55,12 @@ class Order < ApplicationRecord
       all
     end
   end
+
+  def self.by_histories(searchKeyword)
+    if searchKeyword.present?
+      where("account_number LIKE ? or phone_number LIKE ?", "%#{searchKeyword}%", "%#{searchKeyword}%")
+    else
+      all
+    end
+  end
 end

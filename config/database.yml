@@ -1,29 +1,18 @@
 default: &default
   adapter: mysql2
-  encoding: utf8
-  pool: 5
-  database: 'ordery'
-  username: 'playhouse'
-  password: 'dellF912;'
-  host: '139.59.247.112'
+  encoding: utf8mb4
+  pool: <%= ENV["DB_POOL"] || 5  %>
+  database: <%= ENV['DB_NAME'] || 'ordery' %>
+  username: <%= ENV['DB_USER'] || 'playhouse' %>
+  password: <%= ENV['DB_PASS'] || 'dellF912;'%>
+  host: <%= ENV['DB_HOST'] || '139.59.247.112'%>
+  url: <%= ENV['DB_URL'] %>
   reconnect: true
 development:
-  adapter: mysql2
-  encoding: utf8
-  pool: 5
-  database: 'ordery'
-  username: 'playhouse'
-  password: 'dellF912;'
-  host: '139.59.247.112'
-  reconnect: true
+  <<: *default
+  database: <%= ENV['D=B_NAME'] || 'ordery' %>
 
 production:
-  adapter: mysql2
-  encoding: utf8
-  pool: 5
-  database: 'ordery'
-  username: 'playhouse'
-  password: 'dellF912;'
-  host: '139.59.247.112'
-  reconnect: true
-
+  <<: *default
+  database: ordery
+  url: 'mysql2://playhouse:delF912;@139.59.247.112/ordery'

@@ -39,9 +39,9 @@ class ItemsImport
             product_id = spreadsheet.row(i)[4] if Product.find(spreadsheet.row(i)[4]).present?
             Order.create({ transition_date: transition_date,
                            user_id: user_id, amount: amount,
-                           total_amount: total_amount.strip,
-                           description: description.strip,
-                           account_number: account_number.strip,
+                           total_amount: total_amount,
+                           description: description,
+                           account_number: account_number,
                            phone_number: phone_number, product_id: product_id })
           end
         end

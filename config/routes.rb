@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :products
   resources :orders
   resources :sms_logs
+  resources :histories
   resources :items_imports, only: [:new, :create]
   post 'users/update_password', :to => 'users#update_password'
   post 'products/list', :to => 'products#list'

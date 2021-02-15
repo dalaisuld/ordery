@@ -140,7 +140,7 @@
       <!-- BEGIN: Search -->
       <div class="intro-x relative mr-3 sm:mr-6">
         <div class="search hidden sm:block">
-          <input type="text" class="search__input input placeholder-theme-13" placeholder="Хэрэглэгч хайх">
+          <input type="text" class="search__input input placeholder-theme-13" name="search-number" placeholder="Дугаараар хайх">
           <i data-feather="search" class="search__icon dark:text-gray-300"></i>
         </div>
         <a class="notification sm:hidden" href=""> <i data-feather="search" class="notification__icon dark:text-gray-300"></i> </a>
@@ -200,5 +200,16 @@
       <% end %>
   </script>
 <% end %>
+<script>
+  $('input[name="search-number"]').keypress(function (e) {
+    var key = e.which;
+    var searchKeyword = $(this).val();
+    if(key == 13)
+     {
+        href= "/histories?search_keyword=" + $(this).val()
+        window.location.href = href
+     }
+  });
+</script>
 </body>
 </html>

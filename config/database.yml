@@ -2,15 +2,16 @@ default: &default
   adapter: mysql2
   encoding: utf8mb4
   pool: <%= ENV["DB_POOL"] || 5  %>
-  database: <%= ENV['DB_NAME'] || 'ordery' %>
+  database: <%= ENV['DB_NAME'] || 'ordery-dev' %>
   username: <%= ENV['DB_USER'] || 'playhouse' %>
   password: <%= ENV['DB_PASS'] || 'dellF912;'%>
   host: <%= ENV['DB_HOST'] || '139.59.247.112'%>
   url: <%= ENV['DB_URL'] %>
   reconnect: true
+  
 development:
   <<: *default
-  database: <%= ENV['D=B_NAME'] || 'ordery' %>
+  database: <%= ENV['D=B_NAME'] || 'ordery-dev' %>
 
 production:
   <<: *default

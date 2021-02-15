@@ -30,4 +30,21 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              blank: "Email ээ оруулна уу?"
+              taken: "Өөр Email хаяг оруулна уу?"
+              invalid: "Email тохирохгүй байна"
+            first_name:
+              blank: "Нэрээ оруулна уу?"
+            last_name:
+              blank: "Овогоо оруулна уу?"
+            password:
+              blank: "Нууц үг хоосон байна."
+              confirmation: "Дахин оруулах нууц үг таарахгүй байна."
+            password_confirmation:
+              blank: "Нууц үг хоосон байна."

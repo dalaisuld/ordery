@@ -1,0 +1,2 @@
+class SmsPrefix < ApplicationRecord
+end

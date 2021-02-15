@@ -1,0 +1,247 @@
+<div class="grid grid-cols-12 gap-6 mt-5">
+  <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+    <div class="report-box zoom-in">
+      <div class="box p-5">
+        <div class="flex">
+          <i data-feather="shopping-cart" class="report-box__icon text-theme-10"></i>
+        </div>
+        <div class="text-3xl font-bold leading-8 mt-6" id="item_count">0</div>
+        <div class="text-base text-gray-600 mt-1">Бүтээгдэхүүний тоо</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+    <div class="report-box zoom-in">
+      <div class="box p-5">
+        <div class="flex">
+          <i data-feather="credit-card" class="report-box__icon text-theme-11"></i>
+        </div>
+        <div class="text-3xl font-bold leading-8 mt-6" id="total_amount">0</div>
+        <div class="text-base text-gray-600 mt-1">Нийт үнэ</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="grid grid-cols-12 mt-10">
+  <div class="col-span-12">
+    <div id="jsGrid"></div>
+  </div>
+</div>
+<script>
+    $(function () {
+        $("#jsGrid").jsGrid({
+            width: "100%",
+            filtering: true,
+            autoload: true,
+            paging: true,
+            pageLoading: true,
+            pageSize: 20,
+            pageButtonCount: 5,
+            editing: true,
+            inserting: true,
+            sorting: true,
+            pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+            pagePrevText: "Prev",
+            pageNextText: "Next",
+            pageFirstText: "First",
+            pageLastText: "Last",
+            noDataContent: "Мэдээлэл байхгүй байна.",
+            pageNavigatorNextText: "...",
+            pageNavigatorPrevText: "...",
+            deleteConfirm: function(item) {
+                return "\"" + item.name + "\" бүтгээдэхүүнийг утгахдаа итгэлтэй байнуу?";
+            },
+            controller: {
+                loadData: function (filter) {
+                    return $.ajax({
+                        type: "POST",
+                        url: "/products/list",
+                        data: filter,
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                        },
+                        success: function (data){
+                            $('#item_count').text(formatNumberForDisplay(data['itemsCount']));
+                            $('#total_amount').text(formatNumberForDisplay(data['sum']));
+                            console.log(data['sum'])
+                        }
+                    });
+                },
+                insertItem: function (item) {
+                    return $.ajax({
+                        type: "POST",
+                        url: "/products",
+                        data: item,
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                        },
+                        success: function(data) {
+                            Toastify({
+                                text: "Амжилттай бүртгэгдлээ",
+                                duration: 3000,
+                                newWindow: true,
+                                close: true,
+                                gravity: "bottom",
+                                position: "right",
+                                backgroundColor: "#91C714",
+                                stopOnFocus: true,
+                            }).showToast();
+                        },
+                        error: function(xhr) { // if error occured
+                            alert("Error occured.please try again");
+                            $(placeholder).append(xhr.statusText + xhr.responseText);
+                            $(placeholder).removeClass('loading');
+                        },
+                        complete: function() {
+                            // $(placeholder).removeClass('loading');
+                        },
+                    });
+                },
+                updateItem: function (item) {
+                    return $.ajax({
+                        type: "PUT",
+                        url: "/products/" + item.id,
+                        data: item,
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                        },
+                        success: function (data){
+                            var $grid = $("#jsGrid");
+                            $grid.jsGrid("loadData");
+                            Toastify({
+                                text: "Амжилттай засагдлаа",
+                                duration: 3000,
+                                newWindow: true,
+                                close: true,
+                                gravity: "bottom",
+                                position: "right",
+                                backgroundColor: "#91C714",
+                                stopOnFocus: true,
+                            }).showToast();
+                        }
+                    });
+                },
+                deleteItem: function (item) {
+                    return $.ajax({
+                        type: "DELETE",
+                        url: "/products/" + item.id,
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                        },
+                        success: function (data){
+                            var $grid = $("#jsGrid");
+                            $grid.jsGrid("loadData");
+                            Toastify({
+                                text: "Амжилттай устгагдлаа",
+                                duration: 3000,
+                                newWindow: true,
+                                close: true,
+                                gravity: "bottom",
+                                position: "right",
+                                backgroundColor: "#91C714",
+                                stopOnFocus: true,
+                            }).showToast();
+                        }
+                    });
+                }
+            },
+            fields: [
+                {
+                  name: "id",
+                  title: "ID",
+                  width: 20,
+                  type: "text",
+                  inserting: false
+                },
+                {
+                    name: "category_id",
+                    title: "Ангилал",
+                    type: "select",
+                    width: 100,
+                    items: [
+                        {"id": 0, "name": "Бүх ангилал"},
+                        {"id": 1, "name": "Хүүхдийн тоглоом"},
+                        {"id": 2, "name": "Хүүхдийн хувцас"},
+                        {"id": 3, "name": "Хувцас"},
+                        {"id": 4, "name": "Гэр ахуйн бүтээгдэхүүн"},
+                        {"id": 5, "name": "Тавилга"}],
+                    valueField: "id",
+                    textField: "name"
+                },
+                {
+                    name: "name",
+                    type: "text",
+                    width: 200,
+                    title: "Бүтээгдэхүүн",
+                },
+                {
+                    name: "quantity",
+                    type: "number",
+                    title: "Үлдэгдэл",
+                    filtering: false,
+                    validate: {
+                        validator: "range",
+                        message: function(value, item) {
+                            return "The client age should be between 21 and 80. Entered age is \"" + value + "\" is out of specified range.";
+                        },
+                        param: [0, 100000]
+                    }
+                },
+                {
+                    name: "unit",
+                    title: "Нэгж",
+                    type: "select",
+                    filtering: false,
+                    width: 100,
+                    items: [
+                        {"id": 0, "name": "Ангилал сонгоно уу?"},
+                        {"id": 1, "name": "Ширхэг"},
+                        {"id": 2, "name": "Боодол"},
+                        {"id": 3, "name": "Хайрцаг"}
+                    ],
+                    valueField: "id",
+                    textField: "name"
+                },
+                {
+                    name: "price",
+                    type: "text",
+                    title: "Yнэ",
+                    itemTemplate: function (value) {
+                        return formatNumberForDisplay(value)
+                    }
+                },
+                {
+                    name: "total_amount",
+                    type: "text",
+                    title: "Нийт үнэ",
+                    editing: false,
+                    inserting: false,
+                    filtering: false,
+                    itemTemplate: function (value) {
+                        return formatNumberForDisplay(value)
+                    }
+                },
+                {
+                    name: "created_at",
+                    type: "date",
+                    width: 120,
+                    title: "Огноо",
+                    editing: false,
+                    inserting: false
+                },
+                {type: "control"}
+            ]
+        });
+    });
+
+    function formatNumberForDisplay(numberToFormat) {
+        var formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        });
+
+        return formatter.format(numberToFormat).replace('$', '₮ ');
+    }
+</script>

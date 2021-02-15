@@ -1,0 +1,98 @@
+<div class="intro-y flex items-center mt-8">
+  <h2 class="text-lg font-medium mr-auto">
+    Ажилтныг засах
+  </h2>
+</div>
+<% if flash[:error].present?%>
+  <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-31 text-theme-6"> <i data-feather="alert-octagon" class="w-6 h-6 mr-2"></i> <%= flash[:error]%></div>
+<% end %>
+<div class="grid grid-cols-12 gap-6 mt-5">
+  <div class="intro-y col-span-12 lg:col-span-6">
+    <!-- BEGIN: Input -->
+    <div class="intro-y box">
+      <div class="flex flex-col sm:flex-row items-center p-5 border-b border-gray-200 dark:border-dark-5">
+        <h2 class="font-medium text-base mr-auto">
+          Ажилтны бүртгэлийг оруулна уу?
+        </h2>
+      </div>
+      <div class="p-5" id="input">
+        <div class="preview">
+          <%= form_for @user, html: {class: "nifty_form"}, validate: true do |f| %>
+            <div>
+              <label>Овог</label>
+              <%= f.text_field :first_name, class: "input w-full border mt-2" %>
+            </div>
+            <div>
+              <label>Нэр</label>
+              <%= f.text_field :last_name, class: "input w-full border mt-2" %>
+            </div>
+            <div>
+              <label>Email</label>
+              <%= f.text_field :email, class: "input w-full border mt-2" %>
+            </div>
+            <div>
+              <label>Хэрэглэгчийн төрөл</label><br>
+              <%= f.select :role, options_for_select([["Admin", 1], ["Member", 2], ["User", 3]], selected: f.object.role), include_blank: true, class: "input w-full border mt-2" %>
+            </div>
+            <div class="sm:ml-20 sm:pl-5 mt-5">
+              <%= f.submit "Ажилтан засах", class: "button bg-theme-1 text-white"%>
+            </div>
+          <% end %>
+        </div>
+        <div class="source-code hidden">
+          <button data-target="#copy-input" class="copy-code button button--sm border flex items-center text-gray-700 dark:border-dark-5 dark:text-gray-300"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file w-4 h-4 mr-2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg> Copy example code </button>
+          <div class="overflow-y-auto h-64 mt-3">
+                        <pre class="source-preview" id="copy-input"> <code class="text-xs p-0 rounded-md html pl-5 pt-8 pb-4 -mb-10 -mt-10 hljs xml"> <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>Input Text<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"input w-full border mt-2"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Input text"</span>&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"mt-3"</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>Rounded<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"input w-full rounded-full border mt-2"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Rounded"</span>&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"mt-3"</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>With Help<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"input w-full border mt-2"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"With help"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"text-xs text-gray-600 mt-2"</span>&gt;</span>Lorem Ipsum is simply dummy text of the printing and typesetting industry.<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"mt-3"</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>Password<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"password"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"input w-full border mt-2"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Password"</span>&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"mt-3"</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>Disabled<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"input w-full border mt-2 bg-gray-100 cursor-not-allowed"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Disabled"</span> <span class="hljs-attr">disabled</span>&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></code> <textarea style="margin-left: 1000000px;" class="fixed w-1 h-1"></textarea></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="grid grid-cols-12 gap-6 mt-5">
+  <div class="intro-y col-span-12 lg:col-span-6">
+    <!-- BEGIN: Input -->
+    <div class="intro-y box">
+      <div class="flex flex-col sm:flex-row items-center p-5 border-b border-gray-200 dark:border-dark-5">
+        <h2 class="font-medium text-base mr-auto">
+          Нууц үгийн солих бол оруулна уу?
+        </h2>
+      </div>
+      <div class="p-5" id="input">
+        <div class="preview">
+          <%= form_for @user, url: "/users/update_password", method: :post, html: {class: "nifty_form"}, validate: true do |f| %>
+            <input type="hidden" id="custId" name="user[id]" value="<%= @user.id %>">
+            <div>
+              <%= f.password_field :password, class: "input w-full border mt-2" %>
+            </div>
+            <div>
+              <label>Нууц үгээ дахин оруулна уу?</label>
+              <%= f.password_field :password_confirmation, class: "input w-full border mt-2" %>
+            </div>
+            <div class="sm:ml-20 sm:pl-5 mt-5">
+              <%= f.submit "Ажилтны нууц үг солих", class: "button bg-theme-1 text-white"%>
+            </div>
+          <% end %>
+        </div>
+        <div class="source-code hidden">
+          <button data-target="#copy-input" class="copy-code button button--sm border flex items-center text-gray-700 dark:border-dark-5 dark:text-gray-300"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file w-4 h-4 mr-2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg> Copy example code </button>
+          <div class="overflow-y-auto h-64 mt-3">
+                        <pre class="source-preview" id="copy-input"> <code class="text-xs p-0 rounded-md html pl-5 pt-8 pb-4 -mb-10 -mt-10 hljs xml"> <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>Input Text<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"input w-full border mt-2"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Input text"</span>&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"mt-3"</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>Rounded<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"input w-full rounded-full border mt-2"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Rounded"</span>&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"mt-3"</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>With Help<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"input w-full border mt-2"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"With help"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"text-xs text-gray-600 mt-2"</span>&gt;</span>Lorem Ipsum is simply dummy text of the printing and typesetting industry.<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"mt-3"</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>Password<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"password"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"input w-full border mt-2"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Password"</span>&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"mt-3"</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>Disabled<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"input w-full border mt-2 bg-gray-100 cursor-not-allowed"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Disabled"</span> <span class="hljs-attr">disabled</span>&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></code> <textarea style="margin-left: 1000000px;" class="fixed w-1 h-1"></textarea></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

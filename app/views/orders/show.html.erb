@@ -1,0 +1,156 @@
+<%= form_with model: @order, local: true do |f| %>
+  <div class="grid grid-cols-12 gap-6">
+    <div class="col-span-12 xxl:col-span-9 grid grid-cols-12 gap-6">
+      <div class="col-span-12 lg:col-span-12 mt-5">
+        <div class="intro-y box p-5">
+          <div class="mt-3">
+            <div class="grid grid-cols-12 gap-2">
+              <div class="col-span-4">
+                <label>Захиалгын дугаар</label>
+                <input class="input w-full border mt-2" value="<%= @order.id %>" disabled>
+              </div>
+              <div class="col-span-4">
+                <label>Захиалга бүртгэсэн огноо</label>
+                <input class="input w-full border mt-2" value="<%= @order.created_at.strftime('%Y-%m-%d %H:%M:%S') %>" disabled>
+              </div>
+              <div class="col-span-4">
+                <label>Ажилтан</label>
+                <input class="input w-full border mt-2" value="<%= User.find_by_id(@order.user_id).email %>" disabled>
+              </div>
+            </div>
+          </div>
+          <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed mt-3"></div>
+          <div class="mt-3">
+            <div class="grid grid-cols-12 gap-2">
+              <div class="col-span-4">
+                <label>Дансны дугаар</label>
+                <input class="input w-full border mt-2" value="<%= @order.account_number %>" disabled>
+              </div>
+              <div class="col-span-4">
+                <label>Гүйлгээний утга</label>
+                <input class="input w-full border mt-2" value="<%= @order.description %>" disabled>
+              </div>
+              <div class="col-span-4">
+                <label>Гүйлгээний огноо</label>
+                <input class="input w-full border mt-2" value="<%= @order.transition_date %>" disabled>
+              </div>
+            </div>
+          </div>
+          <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed mt-3"></div>
+          <div class="mt-3">
+            <label>Утасны дугаар</label>
+            <%= f.text_field :phone_number, class: "input w-full border mt-2"%>
+          </div>
+
+          <div class="mt-3">
+            <label>Бүтээгдэхүүн</label>
+            <input class="input w-full border mt-2" value="<%= @order.product.name %>" disabled>
+          </div>
+
+
+          <div class="mt-3">
+            <div class="grid grid-cols-12 gap-2">
+              <div class="col-span-4">
+                <label for="">Шилжүүлсэн үнэ</label>
+                <input type="text" class="input w-full border mt-2" value="<%= number_to_currency(@order.amount, unit: "₮", strip_insignificant_zeros: true) %>" disabled>
+              </div>
+              <div class="col-span-4">
+                <label for="">Бүтээгдэхүүний үнэ</label>
+                <input type="text" class="input w-full border mt-2" value="<%= number_to_currency(@order.product.price, unit: "₮", strip_insignificant_zeros: true) %>" disabled>
+              </div>
+              <div class="col-span-4">
+                <label for="">Каргоны төлбөр</label>
+                <input type="text" class="input w-full border mt-2" value="<%= number_to_currency(@order.cargo_price, unit: "₮", strip_insignificant_zeros: true)%>" disabled>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-3">
+            <label>Хүргүүлэх хаяг</label>
+            <%= f.text_area :address, class: "input w-full border mt-2", placeholder: 'Хүргүүлэх хаяг', :rows => 4 %>
+          </div>
+          <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed mt-3"></div>
+
+          <div class="mt-3"><label>Захиалгийн төлөв</label>
+            <div class="flex flex-col sm:flex-row mt-2">
+
+              <div class="flex items-center text-gray-700 dark:text-gray-500 mr-2">
+                <input type="radio" class="input border mr-2" id="in_progress" name="order[status]" value="in_progress" <%if @order.status == 'in_progress' %>checked<% end %>>
+                <label class="cursor-pointer select-none" for="in_progress">Хүлээгдэж байгаа</label>
+              </div>
+
+              <div class="flex items-center text-gray-700 dark:text-gray-500 mr-2 mt-2 sm:mt-0">
+                <input type="radio" class="input border mr-2" id="delivery" name="order[status]" value="delivery" <%if @order.status == 'delivery' %>checked<% end %>>
+                <label class="cursor-pointer select-none" for="delivery">Хүргэлтэнд гарсан</label>
+              </div>
+
+              <div class="flex items-center text-gray-700 dark:text-gray-500 mr-2 mt-2 sm:mt-0">
+                <input type="radio" class="input border mr-2" id="cancel" name="order[status]" value="cancel" <%if @order.status == 'cancel' %>checked<% end %>>
+                <label class="cursor-pointer select-none" for="cancel">Цуцалсан</label>
+              </div>
+
+              <div class="flex items-center text-gray-700 dark:text-gray-500 mr-2 mt-2 sm:mt-0">
+                <input type="radio" class="input border mr-2" id="finish" name="order[status]" value="finish" <%if @order.status == 'finish' %>checked<% end %>>
+                <label class="cursor-pointer select-none" for="finish">Дууссан</label>
+              </div>
+            </div>
+          </div>
+          <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed mt-3"></div>
+
+          <div class="mt-3">
+            <div class="flex items-center text-gray-700 dark:text-gray-500 mt-5">
+              <%= f.check_box :is_delivery_to_home, :class => 'input border mr-2' %>
+              <%= f.label :is_delivery_to_home, "Хүргүүлж авах", :class=> 'cursor-pointer select-none'%>
+            </div>
+          </div>
+          <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed mt-3"></div>
+          <div class="mt-3">
+            <div class="flex items-center text-gray-700 dark:text-gray-500 mt-5">
+              <%= f.check_box :taking_confirm, :class => 'input border mr-2' %>
+              <%= f.label :taking_confirm, "Агуулхаас авах зөвшөөрөл", :class=> 'cursor-pointer select-none'%>
+            </div>
+          </div>
+          <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed mt-3"></div>
+          <%= f.submit "Хадгалах", :class => 'button bg-theme-1 w-full text-white mt-5', name: 'update' %>
+        </div>
+      </div>
+    </div>
+    <div class="col-span-12 xxl:col-span-3 xxl:border-l border-theme-5 -mb-10 pb-10">
+      <div class="xxl:pl-6 grid grid-cols-12 gap-6">
+        <div class="col-span-12 md:col-span-6 xl:col-span-4 xxl:col-span-12">
+          <div class="mt-5">
+            <div id="printcontent">
+              <div class="box intro-y p-3">
+                <img src="/images/logo.png" alt="Playhouse" class="mb-5">
+                <div class="font-medium">Захиалгын дугаар: <%= @order.id %></div>
+                <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
+                <div class="font-medium">Захиалга бүртгэсэн огноо: <%= @order.created_at.strftime('%Y-%m-%d %H:%M:%S') %></div>
+                <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
+                <div class="font-medium">Дансны дугаар: <%= @order.account_number %></div>
+                <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
+                <div class="font-medium">Гүйлгээний утга: <%= @order.description %></div>
+                <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
+                <div class="font-medium">Утасны дугаар: <%= @order.phone_number %></div>
+                <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
+                <div class="font-medium">Гүйлгээний огноо: <%= @order.transition_date %></div>
+                <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
+                <div class="font-medium">Шилжүүлсэн мөнгөн дүн: <%= number_to_currency(@order.amount, unit: "₮", strip_insignificant_zeros: true) %></div>
+                <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
+                <div class="font-medium">Бүтээгдэхүүний үнэ: <%= number_to_currency(@order.product.price, unit: "₮", strip_insignificant_zeros: true) %></div>
+                <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
+                <div class="font-medium">Каргоны үнэ: <%= number_to_currency(@order.cargo_price, unit: "₮", strip_insignificant_zeros: true) %></div>
+                <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
+
+                <div class="font-medium">Нийт төлөх дүн:<% if @order.cargo_price.present? %>  <%= number_to_currency(@order.amount + @order.cargo_price || 0, unit: "₮", strip_insignificant_zeros: true) %><% end %></div>
+                <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
+                <div>
+                  <button class="button bg-theme-1 w-full text-white mt-5">Хэвлэх</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

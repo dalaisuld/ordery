@@ -1,0 +1,84 @@
+<div class="grid grid-cols-12 mt-10">
+  <div class="col-span-12">
+    <div id="jsGrid"></div>
+  </div>
+</div>
+
+<script>
+    $(function () {
+        $("#jsGrid").jsGrid({
+            width: "100%",
+            filtering: true,
+            autoload: true,
+            paging: true,
+            pageLoading: true,
+            pageSize: 20,
+            pageButtonCount: 5,
+            sorting: true,
+            pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+            pagePrevText: "Prev",
+            pageNextText: "Next",
+            pageFirstText: "First",
+            pageLastText: "Last",
+            noDataContent: "Мэдээлэл байхгүй байна.",
+            pageNavigatorNextText: "...",
+            pageNavigatorPrevText: "...",
+            controller: {
+                loadData: function (filter) {
+                    return $.ajax({
+                        type: "POST",
+                        url: "/sms_logs/list",
+                        data: filter,
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                        },
+                        success: function (data){
+
+                        }
+                    });
+                },
+            },
+            fields: [
+                {
+                    name: "id",
+                    title: "ID",
+                    type: "text",
+                    width: 30,
+                    filtering: false,
+                },
+                {
+                    name: "phone",
+                    type: "text",
+                    title: "Утасны дугаар",
+                    width: 70,
+                },
+                {
+                    name: "operator",
+                    type: "text",
+                    title: "Оператор",
+                    width: 70,
+                },
+                {
+                    name: "sms",
+                    type: "text",
+                    title: "SMS",
+                    width: 200,
+                },
+                {
+                    name: "is_send",
+                    type: "checkbox",
+                    title: "Төлөв",
+                    width: 40,
+                },
+                {
+                    name: "created_at",
+                    type: "text",
+                    title: "Огноо",
+                    filtering: false,
+                    width: 70,
+                },
+            ]
+        });
+    });
+
+</script>

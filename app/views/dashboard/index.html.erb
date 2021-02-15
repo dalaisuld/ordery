@@ -1,0 +1,114 @@
+<div class="grid grid-cols-12 gap-6">
+  <div class="col-span-12 xxl:col-span-9 grid grid-cols-12 gap-6">
+    <!-- BEGIN: General Report -->
+    <div class="col-span-12 mt-8">
+      <div class="intro-y flex items-center h-10">
+        <h2 class="text-lg font-medium truncate mr-5">
+          PlayHouse-Үйлдвэрийн үнээр хэрэгцээт бараа захиалгын групп
+        </h2>
+        <a href="" class="ml-auto flex text-theme-1 dark:text-theme-10"> <i data-feather="refresh-ccw" class="w-4 h-4 mr-3"></i> Reload Data </a>
+      </div>
+      <div class="grid grid-cols-12 gap-6 mt-5">
+        <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+          <div class="report-box zoom-in">
+            <div class="box p-5">
+              <div class="flex">
+                <i data-feather="shopping-bag" class="report-box__icon text-theme-10"></i>
+              </div>
+              <div class="text-3xl font-bold leading-8 mt-6"><%= @waiting_order %></div>
+              <div class="text-base text-gray-600 mt-1">Хүлээгдэж буй</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+          <div class="report-box zoom-in">
+            <div class="box p-5">
+              <div class="flex">
+                <i data-feather="truck" class="report-box__icon text-theme-11"></i>
+              </div>
+              <div class="text-3xl font-bold leading-8 mt-6"><%= @delivery_order %></div>
+              <div class="text-base text-gray-600 mt-1">Хүргэлтэнд гарсан</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+          <div class="report-box zoom-in">
+            <div class="box p-5">
+              <div class="flex">
+                <i data-feather="slash" class="report-box__icon text-theme-6"></i>
+              </div>
+              <div class="text-3xl font-bold leading-8 mt-6"><%= @canceled_order %></div>
+              <div class="text-base text-gray-600 mt-1">Цуцалсан</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+          <div class="report-box zoom-in">
+            <div class="box p-5">
+              <div class="flex">
+                <i data-feather="archive" class="report-box__icon text-theme-9"></i>
+              </div>
+              <div class="text-3xl font-bold leading-8 mt-6"><%= @finished_order %></div>
+              <div class="text-base text-gray-600 mt-1">Дууссан захиалга</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+          <div class="report-box zoom-in">
+            <div class="box p-5">
+              <div class="flex">
+                <i data-feather="shopping-cart" class="report-box__icon text-theme-9"></i>
+              </div>
+              <div class="text-3xl font-bold leading-8 mt-6"><%=@products %></div>
+              <div class="text-base text-gray-600 mt-1">Бараа бүтээгдэхүүн</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+          <div class="report-box zoom-in">
+            <div class="box p-5">
+              <div class="flex">
+                <i data-feather="users" class="report-box__icon text-theme-9"></i>
+              </div>
+              <div class="text-3xl font-bold leading-8 mt-6"><%= @customers %></div>
+              <div class="text-base text-gray-600 mt-1">Хэрэглэгчийн тоо</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END: General Report -->
+
+  </div>
+  <div class="col-span-12 xxl:col-span-3 xxl:border-l border-theme-5 -mb-10 pb-10">
+    <div class="xxl:pl-6 grid grid-cols-12 gap-6">
+      <!-- BEGIN: Transactions -->
+      <div class="col-span-12 md:col-span-6 xl:col-span-4 xxl:col-span-12 mt-3 xxl:mt-8">
+        <div class="intro-x flex items-center h-10">
+          <h2 class="text-lg font-medium truncate mr-5">
+            Ажилтны жагсаалт
+          </h2>
+        </div>
+        <div class="mt-5">
+          <% @users.each do |user| %>
+            <div class="intro-x">
+              <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
+                <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
+                  <img alt="Midone Tailwind HTML Admin Template" src="/images/profile-14.jpg">
+                </div>
+                <div class="ml-4 mr-auto">
+                  <div class="font-medium"><%= user.first_name %> <%= user.last_name %></div>
+                  <div class="text-gray-600 text-xs mt-0.5"><%= user.email %></div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+
+          <a href="<%= users_path %>" class="intro-x w-full block text-center rounded-md py-3 border border-dotted border-theme-15 dark:border-dark-5 text-theme-16 dark:text-gray-600">Бүх ажилтан</a>
+        </div>
+      </div>
+      <!-- END: Transactions -->
+
+    </div>
+  </div>
+</div>

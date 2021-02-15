@@ -8,7 +8,7 @@ default: &default
   host: <%= ENV['DB_HOST'] || '139.59.247.112'%>
   url: <%= ENV['DB_URL'] %>
   reconnect: true
-  
+
 development:
   <<: *default
   database: <%= ENV['D=B_NAME'] || 'ordery-dev' %>

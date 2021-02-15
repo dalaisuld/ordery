@@ -21,6 +21,11 @@ class OrdersController < ApplicationController
     if params[:update]
       respond_to do |format|
         if @order.update(order_params)
+          if @order.status == 'finish'
+            product = @order.product
+            product.quantity = product.quantity - 1
+            product.save
+          end
           format.html { redirect_to orders_path, notice: 'Захиалгийн мэдээлэл амжилттай өөрчлөгдлөө' }
         else
           format.html { render :show }

@@ -1,2 +1,66 @@
-<h1>Hello world</h1>
-<p><%=@history.inspect%></p>
+<% if @histories.count > 0 %>
+  <h2 class="intro-y text-lg font-medium mt-10">
+    Хайсан утга <%= params[:search_keyword] %>
+  </h2>
+  <div class="grid grid-cols-12 gap-6 mt-5">
+    <!-- BEGIN: Data List -->
+    <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
+      <table class="table table-report -mt-2">
+        <thead>
+        <tr>
+          <th class="whitespace-nowrap">ID</th>
+          <th class="whitespace-nowrap">Бүтээгдэхүүн</th>
+          <th class="text-center whitespace-nowrap">Дасны дугаар</th>
+          <th class="text-center whitespace-nowrap">Утасны дугаар</th>
+          <th class="text-center whitespace-nowrap">Төлөв</th>
+          <th class="text-center whitespace-nowrap">#</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @histories.each do |history| %>
+          <tr class="intro-x">
+            <td class="w-10">
+              <%= history.id %>
+            </td>
+            <td>
+              <a href="" class="font-medium whitespace-nowrap"><%= history.product.name %></a>
+              <div class="text-gray-600 text-xs whitespace-nowrap mt-0.5"><%= history.description %></div>
+            </td>
+            <td class="text-center"><%= history.account_number %></td>
+            <td class="text-center"><%= history.phone_number %></td>
+            <td class="w-64">
+              <% if history.status == 'in_progress' %>
+                <div class="flex items-center justify-center text-theme-12"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> Хүлээгдэж байгаа </div>
+              <% elsif history.status == 'delivery' %>
+                <div class="flex items-center justify-center text-theme-1"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> Хүргэлтэнд гарсан </div>
+              <% elsif history.status == 'cancel' %>
+                <div class="flex items-center justify-center text-theme-6"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> Цуцалсан </div>
+              <% elsif history.status == 'finish' %>
+                <div class="flex items-center justify-center text-theme-9"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> Дууссан </div>
+              <% end %>
+            </td>
+            <td class="table-report__action w-56">
+              <div class="flex justify-center items-center">
+                <a class="flex items-center mr-3" href="/orders/<%= history.id %>"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Дэлгэрэнгүй </a>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+    <!-- END: Data List -->
+  </div>
+<% else %>
+  <div class="error-page flex flex-col lg:flex-row items-center justify-center h-screen text-center lg:text-left">
+    <div class="-intro-x lg:mr-20">
+      <img alt="Midone Tailwind HTML Admin Template" class="h-48 lg:h-auto" src="https://midone.left4code.com/dist/images/error-illustration.svg">
+    </div>
+    <div class="text-gray-700 mt-10 lg:mt-0">
+      <div class="intro-x text-8xl font-medium">Өө ...</div>
+      <div class="intro-x text-xl lg:text-3xl font-medium mt-5">Хайлт олдсонгүй ...</div>
+      <div class="intro-x text-lg mt-3">Та зөвхөн утасны дугаар болон дансны дугаараар хайр боломжтой</div>
+      <button onclick="location.href='/orders'" class="button mr-2 mb-2 mt-10 flex items-center justify-center bg-theme-1 text-white"> <i data-feather="corner-down-left" class="w-4 h-4 mr-2"></i> Захиалгийн жагсаалт руу буцах </button>
+    </div>
+  </div>
+<% end %>

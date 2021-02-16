@@ -4,6 +4,7 @@ class ProductsController < ApplicationController
   def index
     @page_title = 'Агуулхын бүртгэл'
     @page_products_active = true
+    @categoris = Category.order('id desc')
   end
 
   def list

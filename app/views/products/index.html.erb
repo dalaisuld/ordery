@@ -27,6 +27,7 @@
     <div id="jsGrid"></div>
   </div>
 </div>
+
 <script>
     $(function () {
         $("#jsGrid").jsGrid({
@@ -158,13 +159,7 @@
                     title: "Ангилал",
                     type: "select",
                     width: 100,
-                    items: [
-                        {"id": 0, "name": "Бүх ангилал"},
-                        {"id": 1, "name": "Хүүхдийн тоглоом"},
-                        {"id": 2, "name": "Хүүхдийн хувцас"},
-                        {"id": 3, "name": "Хувцас"},
-                        {"id": 4, "name": "Гэр ахуйн бүтээгдэхүүн"},
-                        {"id": 5, "name": "Тавилга"}],
+                    items: <%= @categoris.to_json.html_safe %>,
                     valueField: "id",
                     textField: "name"
                 },

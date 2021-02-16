@@ -56,7 +56,7 @@
               </div>
               <div class="col-span-4">
                 <label for="">Бүтээгдэхүүний үнэ</label>
-                <input type="text" class="input w-full border mt-2" value="<%= number_to_currency(@order.product.price, unit: "₮", strip_insignificant_zeros: true) %>" disabled>
+                <input type="text" class="input w-full border mt-2" value="<%= number_to_currency(@order.product.price, unit: "₮", strip_insignificant_zeros: true) %> x <%= @order.quantity %> = <%= number_to_currency(@order.product.price * @order.quantity, unit: "₮", strip_insignificant_zeros: true) %>" disabled>
               </div>
               <div class="col-span-4">
                 <label for="">Каргоны төлбөр</label>

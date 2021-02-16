@@ -4,10 +4,11 @@
   </h2>
   <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
 
-
-    <button class="button mr-2 mb-2 flex items-center justify-center bg-theme-9 text-white">
-      <i data-feather="send" class="w-4 h-4 mr-2"></i> SMS Илгээх
-    </button>
+    <a href="javascript:;" data-toggle="modal" data-target="#send_sms">
+      <button class="button mr-2 mb-2 flex items-center justify-center bg-theme-9 text-white">
+        <i data-feather="send" class="w-4 h-4 mr-2"></i> SMS Илгээх
+      </button>
+    </a>
     <% if @products.present? %>
       <a href="javascript:;" data-toggle="modal" data-target="#set_cargo_price" >
         <button class="button mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white">
@@ -20,9 +21,9 @@
         <i data-feather="plus" class="w-4 h-4 mr-2"></i> Excel upload
       </button>
     </a>
-    <button class="button mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white">
-      <i data-feather="plus" class="w-4 h-4 mr-2"></i> Захиалга бүртгэх
-    </button>
+<!--    <button class="button mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white">-->
+<!--      <i data-feather="plus" class="w-4 h-4 mr-2"></i> Захиалга бүртгэх-->
+<!--    </button>-->
   </div>
 </div>
 
@@ -58,207 +59,247 @@
   </div>
 </div>
 
-
-<script>
-    $(function () {
-        $("#jsGrid").jsGrid({
-            width: "100%",
-            filtering: true,
-            autoload: true,
-            paging: true,
-            pageLoading: true,
-            pageSize: 20,
-            pageButtonCount: 5,
-            editing: false,
-            inserting: false,
-            sorting: true,
-            pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
-            pagePrevText: "Prev",
-            pageNextText: "Next",
-            pageFirstText: "First",
-            pageLastText: "Last",
-            noDataContent: "Мэдээлэл байхгүй байна.",
-            pageNavigatorNextText: "...",
-            pageNavigatorPrevText: "...",
-            deleteConfirm: function (item) {
-                return "\"" + item.name + "\" бүтгээдэхүүнийг утгахдаа итгэлтэй байнуу?";
-            },
-            controller: {
-                loadData: function (filter) {
-                    return $.ajax({
-                        type: "POST",
-                        url: "/orders/list",
-                        data: filter,
-                        beforeSend: function (xhr) {
-                            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
-                        },
-                        success: function (data) {
-                            console.log(data['sum'])
-                        }
-                    });
-                },
-            },
-            fields: [
-                {
-                    name: "id",
-                    type: "text",
-                    title: "ID",
-                    width: 40
-                },
-                {
-                    name: "name",
-                    type: "text",
-                    filtering: false,
-                    title: "Бүтээгдэхүүн",
-                    width: 160,
-                },
-                {
-                    name: "account_number",
-                    type: "text",
-                    title: "Дансны дугаар",
-                },
-                {
-                    name: "phone_number",
-                    type: "text",
-                    title: "Утас",
-                    width: 70,
-                },
-                {
-                    name: "quantity",
-                    type: "number",
-                    width: 30,
-                    filtering: false,
-                    title: "Т/Ш",
-                },
-                {
-                    name: "amount",
-                    type: "number",
-                    title: "Төлсөн дүн",
-                    filtering: false,
-                    width: 70,
-                    itemTemplate: function (value) {
-                        return formatNumberForDisplay(value)
-                    }
-                },
-                {
-                    name: "cargo_price",
-                    type: "number",
-                    title: "Карго",
-                    filtering: false,
-                    itemTemplate: function (value) {
-                        return formatNumberForDisplay(value)
-                    }
-                },
-                {
-                    name: "is_delivery_to_home",
-                    type: "checkbox",
-                    filtering: false,
-                    title: "Хүргэлт"
-                },
-                {
-                    name: "taking_confirm",
-                    type: "checkbox",
-                    filtering: false,
-                    title: "Агуулах"
-                },
-                {
-                    name: "transition_date",
-                    type: "text",
-                    title: "Гүйлгээний огноо",
-                },
-
-                {
-                    name: "status",
-                    type: "text",
-                    title: "Төлөв",
-                    itemTemplate: function (value) {
-                        return formatStatus(value)
-                    }
-                }
-            ],
-            rowClick: function(args) {
-                location.href="/orders/"+args.item['id']
-                console.log(args.item['id'])
-
-            }
-        });
-    });
-
-    function formatNumberForDisplay(numberToFormat) {
-        var formatter = new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0
-        });
-
-        return formatter.format(numberToFormat).replace('$', '₮ ');
-    }
+<div class="modal" id="send_sms">
+  <div class="modal__content">
+    <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
+      <h2 class="font-medium text-base mr-auto">SMS Илгээх</h2>
+    </div>
+    <div class="p-5 grid grid-cols-12 gap-4 gap-y-3">
+      <div class="col-span-12 sm:col-span-12"><label>Төлөв</label>
+        <div class="mt-2">
+          <select class="tail-select w-full" id="order_status">
+            <option value="0">--------</option>
+            <option value="in_progess">Хүлээгдэж байгаа</option>
+            <option value="delivery">Хүргэлтэнд гарсан</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-span-12 sm:col-span-12"><label>SMS</label>
+        <textarea class="input w-full border mt-2 flex-1" name="" id="" cols="30" rows="3"></textarea>
+      </div>
+    </div>
+    <div class="px-5 py-3 text-right border-t border-gray-200 dark:border-dark-5">
+      <button type="button" data-dismiss="modal" class="button w-20 border text-gray-700 dark:border-dark-5 dark:text-gray-300 mr-1">Болих</button>
+      <button type="button" class="button w-20 bg-theme-1 text-white" id="submit_send_sms">Илгээх</button>
+    </div>
+  </div>
+</div>
 
 
-    function formatStatus(status) {
-        if (status === 'in_progress'){
-            return "<span class='text-theme-12 block font-medium'>Хүлээгдэж байгаа</span>"
-        }else if (status === 'delivery'){
-            return "<span class='text-theme-1 block font-medium'>Хүргэлтэнд гарсан</span>"
-        }else if (status === 'cancel'){
-            return "<span class='text-theme-6 block font-medium'>Цуцалсан</span>"
-        }else if (status === 'finish'){
-            return "<span class='text-theme-9 block font-medium'>Дууссан</span>"
-        }else{
-            return "--"
-        }
-    }
+  <script>
+      $(function () {
+          $("#jsGrid").jsGrid({
+              width: "100%",
+              filtering: true,
+              autoload: true,
+              paging: true,
+              pageLoading: true,
+              pageSize: 20,
+              pageButtonCount: 5,
+              editing: false,
+              inserting: false,
+              sorting: true,
+              pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+              pagePrevText: "Prev",
+              pageNextText: "Next",
+              pageFirstText: "First",
+              pageLastText: "Last",
+              noDataContent: "Мэдээлэл байхгүй байна.",
+              pageNavigatorNextText: "...",
+              pageNavigatorPrevText: "...",
+              deleteConfirm: function (item) {
+                  return "\"" + item.name + "\" бүтгээдэхүүнийг утгахдаа итгэлтэй байнуу?";
+              },
+              controller: {
+                  loadData: function (filter) {
+                      return $.ajax({
+                          type: "POST",
+                          url: "/orders/list",
+                          data: filter,
+                          beforeSend: function (xhr) {
+                              xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                          },
+                          success: function (data) {
+                              console.log(data['sum'])
+                          }
+                      });
+                  },
+              },
+              fields: [
+                  {
+                      name: "id",
+                      type: "text",
+                      title: "ID",
+                      width: 40
+                  },
+                  {
+                      name: "name",
+                      type: "text",
+                      filtering: false,
+                      title: "Бүтээгдэхүүн",
+                      width: 160,
+                  },
+                  {
+                      name: "account_number",
+                      type: "text",
+                      title: "Дансны дугаар",
+                  },
+                  {
+                      name: "phone_number",
+                      type: "text",
+                      title: "Утас",
+                      width: 70,
+                  },
+                  {
+                      name: "quantity",
+                      type: "number",
+                      width: 30,
+                      filtering: false,
+                      title: "Т/Ш",
+                  },
+                  {
+                      name: "amount",
+                      type: "number",
+                      title: "Төлсөн дүн",
+                      filtering: false,
+                      width: 70,
+                      itemTemplate: function (value) {
+                          return formatNumberForDisplay(value)
+                      }
+                  },
+                  {
+                      name: "cargo_price",
+                      type: "number",
+                      title: "Карго",
+                      filtering: false,
+                      itemTemplate: function (value) {
+                          return formatNumberForDisplay(value)
+                      }
+                  },
+                  {
+                      name: "is_delivery_to_home",
+                      type: "checkbox",
+                      filtering: false,
+                      title: "Хүргэлт"
+                  },
+                  {
+                      name: "taking_confirm",
+                      type: "checkbox",
+                      filtering: false,
+                      title: "Агуулах"
+                  },
+                  {
+                      name: "transition_date",
+                      type: "text",
+                      title: "Гүйлгээний огноо",
+                  },
 
-    $("#submit_cargo_price").click(function(){
-        if($("#cargo_price").val() > 0){
-            $.ajax({
-                url: "/orders/add_cargo",
-                type: "POST",
-                data:{
-                    product: $('#cargo_product').val(),
-                    payment: $("#cargo_price").val(),
-                },
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
-                },
-                success: function(data) {
-                    $("#cargo_price").val("");
-                    cash("#set_cargo_price").modal("hide");
-                    var $grid = $("#jsGrid");
-                    $grid.jsGrid("loadData");
-                    Toastify({
-                        text: "Каргоны үнэ амжилттай орууллаа",
-                        duration: 3000,
-                        newWindow: true,
-                        close: true,
-                        gravity: "bottom",
-                        position: "right",
-                        backgroundColor: "#91C714",
-                        stopOnFocus: true,
-                    }).showToast();
-                },
-                error: function(data){
-                    alert(data.message)
-                }
-            });
-        }
-        else{
-            Toastify({
-                text: "Каргоны үнэ оруулна уу",
-                duration: 3000,
-                newWindow: true,
-                close: true,
-                gravity: "bottom",
-                position: "right",
-                backgroundColor: "#D32929",
-                stopOnFocus: true,
-            }).showToast();
-            return
-        }
+                  {
+                      name: "status",
+                      type: "text",
+                      title: "Төлөв",
+                      itemTemplate: function (value) {
+                          return formatStatus(value)
+                      }
+                  }
+              ],
+              rowClick: function(args) {
+                  location.href="/orders/"+args.item['id']
+                  console.log(args.item['id'])
 
-    });
+              }
+          });
+      });
 
-</script>
+      function formatNumberForDisplay(numberToFormat) {
+          var formatter = new Intl.NumberFormat('en-US', {
+              style: 'currency',
+              currency: 'USD',
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 0
+          });
 
-<%= javascript_pack_tag 'orders'%>
+          return formatter.format(numberToFormat).replace('$', '₮ ');
+      }
+
+
+      function formatStatus(status) {
+          if (status === 'in_progress'){
+              return "<span class='text-theme-12 block font-medium'>Хүлээгдэж байгаа</span>"
+          }else if (status === 'delivery'){
+              return "<span class='text-theme-1 block font-medium'>Хүргэлтэнд гарсан</span>"
+          }else if (status === 'cancel'){
+              return "<span class='text-theme-6 block font-medium'>Цуцалсан</span>"
+          }else if (status === 'finish'){
+              return "<span class='text-theme-9 block font-medium'>Дууссан</span>"
+          }else{
+              return "--"
+          }
+      }
+
+      $("#submit_send_sms").click(function(){
+          Toastify({
+              text: "SMS илгээх боломжгүй байна",
+              duration: 3000,
+              newWindow: true,
+              close: true,
+              gravity: "bottom",
+              position: "right",
+              backgroundColor: "#D32929",
+              stopOnFocus: true,
+          }).showToast();
+          return
+      });
+
+      $("#submit_cargo_price").click(function(){
+          if($("#cargo_price").val() > 0){
+              $.ajax({
+                  url: "/orders/add_cargo",
+                  type: "POST",
+                  data:{
+                      product: $('#cargo_product').val(),
+                      payment: $("#cargo_price").val(),
+                  },
+                  beforeSend: function (xhr) {
+                      xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                  },
+                  success: function(data) {
+                      $("#cargo_price").val("");
+                      cash("#set_cargo_price").modal("hide");
+                      var $grid = $("#jsGrid");
+                      $grid.jsGrid("loadData");
+                      Toastify({
+                          text: "Каргоны үнэ амжилттай орууллаа",
+                          duration: 3000,
+                          newWindow: true,
+                          close: true,
+                          gravity: "bottom",
+                          position: "right",
+                          backgroundColor: "#91C714",
+                          stopOnFocus: true,
+                      }).showToast();
+                  },
+                  error: function(data){
+                      alert(data.message)
+                  }
+              });
+          }
+          else{
+              Toastify({
+                  text: "Каргоны үнэ оруулна уу",
+                  duration: 3000,
+                  newWindow: true,
+                  close: true,
+                  gravity: "bottom",
+                  position: "right",
+                  backgroundColor: "#D32929",
+                  stopOnFocus: true,
+              }).showToast();
+              return
+          }
+
+      });
+
+  </script>
+
+  <%= javascript_pack_tag 'orders'%>

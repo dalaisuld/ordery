@@ -99,7 +99,7 @@
               editing: false,
               inserting: false,
               sorting: true,
-              pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+              pagerFormat: "Page: {first} {prev} {pages} {next} {last}     (showing {pageIndex} to {pageCount} of  {itemCount} entries)",
               pagePrevText: "Prev",
               pageNextText: "Next",
               pageFirstText: "First",
@@ -120,7 +120,7 @@
                               xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
                           },
                           success: function (data) {
-                              console.log(data['sum'])
+                              console.log(data['itemsCount'])
                           }
                       });
                   },
@@ -133,10 +133,12 @@
                       width: 40
                   },
                   {
-                      name: "name",
-                      type: "text",
-                      filtering: false,
+                      name: "product_id",
                       title: "Бүтээгдэхүүн",
+                      type: "select",
+                      items: [{"id": 0, "name": "Бүх бараа"}, <%= @products.to_json.gsub('[','').gsub(']','').html_safe %>],
+                      valueField: "id",
+                      textField: "name",
                       width: 160
                   },
                   {

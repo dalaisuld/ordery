@@ -11,5 +11,9 @@ class DashboardController < ApplicationController
     @finished_order = Order.where(status: 3).count
     @products = Product.count
     @customers = Order.select('phone_number').group('phone_number').uniq.count
+    @ordered_products = Order.joins('LEFT JOIN products ON products.id = orders.product_id')
+                            .select('products.id, products.name, products.quantity, products.price')
+                            .group('products.id, products.name, products.quantity, products.price')
+
   end
 end

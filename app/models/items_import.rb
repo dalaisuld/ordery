@@ -32,11 +32,12 @@ class ItemsImport
 
             transition_date = spreadsheet.row(i)[0].gsub('.', '/')
             amount = spreadsheet.row(i)[1]
-            total_amount = spreadsheet.row(i)[1] * 1
             description = spreadsheet.row(i)[2]
             account_number = spreadsheet.row(i)[3].strip
+            quantity = spreadsheet.row(i)[4]
             phone_number = description[/[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]/]
-            product_id = spreadsheet.row(i)[4] if Product.find(spreadsheet.row(i)[4]).present?
+            total_amount = amount * quantity
+            product_id = spreadsheet.row(i)[5] if Product.find(spreadsheet.row(i)[5]).present?
             Order.create({ transition_date: transition_date,
                            user_id: user_id, amount: amount,
                            total_amount: total_amount,

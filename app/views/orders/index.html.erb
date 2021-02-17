@@ -136,7 +136,7 @@
                       name: "product_id",
                       title: "Бүтээгдэхүүн",
                       type: "select",
-                      items: [{"id": 0, "name": "Бүх бараа"}, <%= @products.to_json.gsub('[','').gsub(']','').html_safe %>],
+                      items: [{"id": 0, "name": "Бүх бараа"} <% if @products.present? %>, <%= @products.to_json.gsub('[','').gsub(']','').html_safe %> <% end %>],
                       valueField: "id",
                       textField: "name",
                       width: 160

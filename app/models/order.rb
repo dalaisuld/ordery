@@ -5,9 +5,9 @@ class Order < ApplicationRecord
 
 
   def self.search_by(search)
-    by_name(search['name'])
-        .by_account_number(search['account_number'])
+         by_account_number(search['account_number'])
         .by_phone_number(search['phone_number'])
+        .by_product(search['product_id'])
         .by_is_delivery_to_home(search['is_delivery_to_home'])
         .by_id(search['id'])
   end
@@ -20,9 +20,9 @@ class Order < ApplicationRecord
     end
   end
 
-  def self.by_name(name)
-    if name.present?
-      where('name LIKE ?', "%#{name}%")
+  def self.by_product(product_id)
+    if product_id.present? && product_id != '0'
+      where('product_id = ?', "#{product_id}")
     else
       all
     end

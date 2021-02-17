@@ -200,6 +200,7 @@
                     name: "price",
                     type: "text",
                     title: "Yнэ",
+                    align: "center",
                     itemTemplate: function (value) {
                         return formatNumberForDisplay(value)
                     }
@@ -211,6 +212,7 @@
                     editing: false,
                     inserting: false,
                     filtering: false,
+                    align: "center",
                     itemTemplate: function (value) {
                         return formatNumberForDisplay(value)
                     }
@@ -218,12 +220,19 @@
                 {
                     name: "created_at",
                     type: "date",
-                    width: 160,
+                    width: 100,
                     title: "Огноо",
                     editing: false,
-                    inserting: false
+                    inserting: false,
+                    align: "center",
+                    itemTemplate: function (value) {
+                        return convertDatetimeToDate(value)
+                    }
                 },
-                {type: "control"}
+                {
+                    type: "control",
+                    deleteButton: false,
+                }
             ]
         });
     });
@@ -237,5 +246,9 @@
         });
 
         return formatter.format(numberToFormat).replace('$', '₮ ');
+    }
+
+    function convertDatetimeToDate(date){
+        return date.substr(0,10)
     }
 </script>

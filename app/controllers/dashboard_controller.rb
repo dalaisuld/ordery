@@ -11,9 +11,10 @@ class DashboardController < ApplicationController
     @finished_order = Order.where(status: 3).count
     @products = Product.count
     @customers = Order.select('phone_number').group('phone_number').uniq.count
-    @ordered_products = Order.joins('LEFT JOIN products ON products.id = orders.product_id')
-                            .select('products.id, products.name, products.quantity, products.price')
-                            .group('products.id, products.name, products.quantity, products.price')
+      @ordered_products = Order.joins('AS o INNER JOIN order_details AS order_detail ON o.id = order_detail.order_id INNER JOIN products AS pr ON order_detail.product_id = pr.id')
+                              .select('order_detail.product_id, pr.name, pr.price, pr.quantity')
+                              .where('o.status = 0').group('order_detail.product_id')
+
 
   end
 end

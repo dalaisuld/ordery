@@ -133,31 +133,22 @@
                       width: 40
                   },
                   {
-                      name: "product_id",
-                      title: "Бүтээгдэхүүн",
-                      type: "select",
-                      items: [{"id": 0, "name": "Бүх бараа"} <% if @products.present? %>, <%= @products.to_json.gsub('[','').gsub(']','').html_safe %> <% end %>],
-                      valueField: "id",
-                      textField: "name",
-                      width: 160
-                  },
-                  {
                       name: "account_number",
                       type: "text",
                       title: "Дансны дугаар"
                   },
                   {
+                      name: "description",
+                      type: "text",
+                      title: "Гүйлгээний утга",
+                      width: 300,
+                  },
+                  {
                       name: "phone_number",
                       type: "text",
                       title: "Утас",
+                      align: "center",
                       width: 70,
-                  },
-                  {
-                      name: "quantity",
-                      type: "number",
-                      width: 30,
-                      filtering: false,
-                      title: "Т/Ш",
                   },
                   {
                       name: "amount",
@@ -165,45 +156,17 @@
                       title: "Төлсөн дүн",
                       filtering: false,
                       width: 70,
+                      align: "center",
                       itemTemplate: function (value) {
                           return formatNumberForDisplay(value)
                       }
-                  },
-                  {
-                      name: "cargo_price",
-                      type: "number",
-                      title: "Карго",
-                      filtering: false,
-                      itemTemplate: function (value) {
-                          return formatNumberForDisplay(value)
-                      }
-                  },
-                  {
-                      name: "is_delivery_to_home",
-                      type: "checkbox",
-                      filtering: false,
-                      title: "Хүргэлт"
-                  },
-                  {
-                      name: "taking_confirm",
-                      type: "checkbox",
-                      filtering: false,
-                      title: "Агуулах"
                   },
                   {
                       name: "transition_date",
                       type: "text",
+                      align: "center",
                       title: "Гүйлгээний огноо",
                   },
-
-                  {
-                      name: "status",
-                      type: "text",
-                      title: "Төлөв",
-                      itemTemplate: function (value) {
-                          return formatStatus(value)
-                      }
-                  }
               ],
               rowClick: function(args) {
                   location.href="/orders/"+args.item['id']

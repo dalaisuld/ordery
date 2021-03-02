@@ -1,0 +1,153 @@
+<div class="grid grid-cols-12 gap-6 mt-5">
+  <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+    <div class="report-box zoom-in">
+      <div class="box p-5">
+        <div class="flex">
+          <i data-feather="user-check" class="report-box__icon text-theme-10"></i>
+        </div>
+        <div class="text-3xl font-bold leading-8 mt-6" id="clients_count">0</div>
+        <div class="text-base text-gray-600 mt-1">Хэрэглэгчийн тоо</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="grid grid-cols-12 mt-10">
+  <div class="col-span-12">
+    <div id="jsGrid"></div>
+  </div>
+</div>
+
+<script>
+    $(function () {
+        $("#jsGrid").jsGrid({
+            width: "100%",
+            filtering: true,
+            autoload: true,
+            paging: true,
+            pageLoading: true,
+            pageSize: 20,
+            pageButtonCount: 5,
+            sorting: true,
+            pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+            pagePrevText: "Prev",
+            pageNextText: "Next",
+            pageFirstText: "First",
+            pageLastText: "Last",
+            noDataContent: "Мэдээлэл байхгүй байна.",
+            pageNavigatorNextText: "...",
+            pageNavigatorPrevText: "...",
+            controller: {
+                loadData: function (filter) {
+                    return $.ajax({
+                        type: "POST",
+                        url: "/clients/list",
+                        data: filter,
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                        },
+                        success: function (data){
+                            $('#clients_count').text(data['itemsCount']);
+                        }
+                    });
+                },
+            },
+            fields: [
+                {
+                    name: "id",
+                    title: "ID",
+                    width: 15,
+                    align: "center",
+                    type: "text",
+                },
+                {
+                    name: "phone_number",
+                    title: "Утасны дугаар",
+                    width: 50,
+                    type: "text",
+                    align: "center"
+                },
+                {
+                    name: "address",
+                    title: "Хаяг",
+                    width: 200,
+                    type: "text",
+                },
+                {
+                    name: "is_delivery_to_home",
+                    type: "checkbox",
+                    filtering: false,
+                    title: "Dlvr",
+                    width: 30,
+                },
+                {
+                    name: "all_product",
+                    title: "Бүх",
+                    filtering: false,
+                    type: "text",
+                    align: "center",
+                    width: 20,
+                },
+                {
+                    name: "is_waiting",
+                    title: "Х/Б",
+                    filtering: false,
+                    type: "text",
+                    align: "center",
+                    width: 20,
+                    itemTemplate: function (value) {
+                        return formatWaitingStatus(value)
+                    }
+                },
+                {
+                    name: "is_willing",
+                    title: "Бэлэн",
+                    filtering: false,
+                    type: "text",
+                    align: "center",
+                    width: 20,
+                    itemTemplate: function (value) {
+                        return formatWillingStatus(value)
+                    }
+                },
+                {
+                    name: "is_delivery",
+                    title: "Хүргэлт",
+                    filtering: false,
+                    type: "text",
+                    align: "center",
+                    width: 20,
+                },
+                {
+                    name: "is_finish",
+                    title: "Дууссан",
+                    filtering: false,
+                    type: "text",
+                    align: "center",
+                    width: 20,
+                },
+            ],
+            rowClick: function(args) {
+                location.href="/clients/"+args.item['id']
+            }
+        });
+    });
+
+    function convertDatetimeToDate(date){
+        return date.substr(0,10)
+    }
+
+    function formatWaitingStatus(value){
+        if (value > 0)
+          return "<span class='text-theme-12 block font-medium'>"+value+"</span>"
+        else
+            return value
+    }
+
+    function formatWillingStatus(value){
+        if (value > 0)
+            return "<span class='text-theme-6 block font-medium'>"+value+"</span>"
+        else
+            return value
+    }
+
+</script>

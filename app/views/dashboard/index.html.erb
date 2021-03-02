@@ -110,11 +110,11 @@
                 <div class="text-gray-600 text-xs whitespace-nowrap mt-0.5"><%= number_to_currency(product.price, unit: "₮", strip_insignificant_zeros: true)%></div>
               </td>
               <td class="text-center"><%= product.quantity %></td>
-              <td class="text-center"><%= DashboardHelper.order_count_by_product(product.id) %></td>
+              <td class="text-center"><%= DashboardHelper.order_count_by_product(product.product_id) %></td>
               <td class="text-center"><%= DashboardHelper.order_count_by_waiting(product.id) %></td>
-              <td class="text-center"><%= DashboardHelper.order_count_by_delivery(product.id) %></td>
-              <td class="text-center"><%= DashboardHelper.order_count_by_cancel(product.id) %></td>
-              <td class="text-center"><%= DashboardHelper.order_count_by_finish(product.id) %></td>
+<!--              <td class="text-center"><%#= DashboardHelper.order_count_by_delivery(product.id) %></td>-->
+<!--              <td class="text-center"><%#= DashboardHelper.order_count_by_cancel(product.id) %></td>-->
+<!--              <td class="text-center"><%#= DashboardHelper.order_count_by_finish(product.id) %></td>-->
             </tr>
           <% end %>
           </tbody>

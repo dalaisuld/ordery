@@ -1,28 +1,18 @@
 class Order < ApplicationRecord
   belongs_to :category, optional: true
   belongs_to :product, optional: true
-  enum status: { in_progress: 0, delivery: 1, cancel: 2, finish: 3 }
-
+  has_many :order_detail
 
   def self.search_by(search)
-         by_account_number(search['account_number'])
-        .by_phone_number(search['phone_number'])
-        .by_product(search['product_id'])
-        .by_is_delivery_to_home(search['is_delivery_to_home'])
-        .by_id(search['id'])
+    by_account_number(search['account_number'])
+   .by_phone_number(search['phone_number'])
+   .by_is_delivery_to_home(search['is_delivery_to_home'])
+   .by_id(search['id'])
   end
 
   def self.by_id(id)
     if id.present?
       where('orders.id = ?', "#{id}")
-    else
-      all
-    end
-  end
-
-  def self.by_product(product_id)
-    if product_id.present? && product_id != '0'
-      where('product_id = ?', "#{product_id}")
     else
       all
     end

@@ -5,12 +5,7 @@ class OrdersController < ApplicationController
   def index
     @page_title = 'Захиалгийн жагсаалт'
     @page_orders_active = true
-    if Order.where(status: 0).present?
-      @products = Order.joins('LEFT JOIN products ON products.id = orders.product_id').select('products.id, products.name').group('products.id, products.name')
-      puts "======>>> #{@products.inspect}"
-    else
-      @products = nil
-    end
+    @products = Product.all
   end
 
   def show
@@ -21,10 +16,8 @@ class OrdersController < ApplicationController
     if params[:update]
       respond_to do |format|
         if @order.update(order_params)
-          if @order.status == 'finish'
-            product = @order.product
-            product.quantity = product.quantity - 1
-            product.save
+          if @order.phone_number.present?
+            Client.create!(phone_number: @order.phone_number) if Client.where(phone_number: @order.phone_number).count == 0
           end
           format.html { redirect_to orders_path, notice: 'Захиалгийн мэдээлэл амжилттай өөрчлөгдлөө' }
         else
@@ -40,13 +33,13 @@ class OrdersController < ApplicationController
       order_by = "#{params[:sortField]} #{params[:sortOrder]} "
     end
     order_count = Order.search_by(params).count
-    orders = Order.joins('LEFT JOIN products ON products.id = orders.product_id').select('orders.*, products.name, products.price').page(params[:pageIndex]).per(params[:pageSize]).order(order_by)
+    orders = Order.page(params[:pageIndex]).per(params[:pageSize]).order(order_by)
     orders = orders.search_by(params)
     render json: { data: orders, itemsCount: order_count }
   end
 
   def add_cargo
-    orders = Order.where(product_id: params[:product], status: 0)
+    orders = OrderDetail.where(product_id: params[:product])
     begin
       orders.update_all(cargo_price: params[:payment])
       render json:{ message: 'амжиллтай хийлээ' }, status: 200
@@ -55,9 +48,45 @@ class OrdersController < ApplicationController
     end
   end
 
+  def set_delivery
+    order_details_ids =params[:orderDetailIDs]
+    order_details_ids.each do |order_detail_id|
+      order_detail = OrderDetail.find_by(id: order_detail_id)
+      if order_detail
+        product = Product.find_by(id: order_detail.product_id)
+        product.quantity = product.quantity - order_detail.quantity
+        product.save
+        order_detail.status = IS_DELIVERY
+        order_detail.delivery_date = Time.now.strftime('%Y-%m-%d')
+        order_detail.save
+      end
+    end
+    render json:{ message: 'амжиллтай хийлээ' }, status: 200
+  end
+
+  def set_take_confirm
+    order_details_ids =params[:orderDetailIDs]
+    order_details_ids.each do |order_detail_id|
+      order_detail = OrderDetail.find_by(id: order_detail_id)
+      if order_detail
+        product = Product.find_by(id: order_detail.product_id)
+        product.quantity = product.quantity - order_detail.quantity
+        product.save
+        order_detail.status = IS_FINISH
+        order_detail.delivery_date = Time.now.strftime('%Y-%m-%d')
+        order_detail.save
+      end
+    end
+    render json:{ message: 'амжиллтай хийлээ' }, status: 200
+  end
+
   private
   def set_model
     @order = Order.find(params[:id])
+    @products = Product.where(status: 1)
+    @order_details = OrderDetail.where(order_id: params[:id])
+    @total_cargo_price = OrderDetail.where(order_id: params[:id]).sum('cargo_price * quantity')
+    @total_product_price = OrderDetail.where(order_id: params[:id]).sum('price * quantity')
   end
 
   def order_params

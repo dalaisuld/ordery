@@ -3,7 +3,7 @@ class OrdersController < ApplicationController
   before_action :set_model, only: %i[show update]
 
   def index
-    @page_title = 'Захиалгийн жагсаалт'
+    @page_title = 'Захиалгын жагсаалт'
     @page_orders_active = true
     @products = Product.all
   end
@@ -19,7 +19,7 @@ class OrdersController < ApplicationController
           if @order.phone_number.present?
             Client.create!(phone_number: @order.phone_number) if Client.where(phone_number: @order.phone_number).count == 0
           end
-          format.html { redirect_to orders_path, notice: 'Захиалгийн мэдээлэл амжилттай өөрчлөгдлөө' }
+          format.html { redirect_to orders_path, notice: 'Захиалгын мэдээлэл амжилттай өөрчлөгдлөө' }
         else
           format.html { render :show }
         end

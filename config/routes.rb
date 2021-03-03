@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
+  root to: 'home#index'
+  get 'dashboard/index'
   get 'items_imports/new'
   get 'items_imports/create'
   get 'dashboard/index'
-  root to: 'dashboard#index'
   devise_for :users, :controllers => { :sessions => "sessions" }
   resources :users
   resources :clients

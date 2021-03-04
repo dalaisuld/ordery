@@ -34,10 +34,10 @@ class ItemsImport
 
           transition_date = spreadsheet.row(i)[0].gsub('.', '/')
           amount = spreadsheet.row(i)[1]
-          description = spreadsheet.row(i)[2]
+          description = spreadsheet.row(i)[2].to_s
           puts description
           phone_number = description[/[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]/]
-          account_number = spreadsheet.row(i)[4].strip
+          account_number = spreadsheet.row(i)[4].to_s.strip
           product_id_quantities = spreadsheet.row(i)[3].split(',')
           order = Order.new
           order.transition_date = transition_date

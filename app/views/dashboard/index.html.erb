@@ -104,7 +104,7 @@
               </div>
               <div class="flex items-center mt-4">
                 <div class="w-2 h-2 bg-theme-1 rounded-full mr-3"></div>
-                <span class="truncate"><%= Date.today.prev_day.strftime('%Y-%m-%d') %></span>
+                <span class="truncate"><%= Date.today.prev_day.prev_day.strftime('%Y-%m-%d') %></span>
                 <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
                 <span class="font-medium xl:ml-auto"><% if @cargo_yesterday.present? %><%= number_to_currency(@cargo_yesterday.total, unit: "₮", strip_insignificant_zeros: true)%><% else %>-<% end %></span>
                 <span class="font-medium xl:ml-auto"><% if @cargo_yesterday.present? %><%= number_to_currency(@cargo_yesterday.transfer, unit: "₮", strip_insignificant_zeros: true)%><% else %>-<% end %></span>

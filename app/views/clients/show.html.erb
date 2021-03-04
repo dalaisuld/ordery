@@ -25,7 +25,15 @@
           </div>
 
           <div class="mt-3">
-            <label>Хүргүүлэх хаяг (<% if @client.is_delivery_to_home %> <span class='text-theme-12 font-medium'>Хүлээгдэж байгаа</span><% end %>)</label>
+            <label>Хүргүүлэх хаяг
+              <% if @client.is_delivery_to_home.present? && @client.is_delivery_to_home == false %>
+                <span class='text-theme-1 font-medium'>(Агуулхаас ирж авна)</span>
+              <% elsif @client.is_delivery_to_home.present? && @client.is_delivery_to_home == true %>
+                <span class='text-theme-1 font-medium'>(Гэртээ хүргүүлж авна)</span>
+              <% else %>
+                <span class='text-theme-6 font-medium'>(Мэдээлэл оруулаагүй)</span>
+              <% end %>
+            </label>
             <%= f.text_area :address, class: "input w-full border mt-2", placeholder: 'Хүргүүлэх хаяг', :rows => 4 %>
           </div>
           <button id="change_address" class="button button--sm mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white">Хаяг өөрчлөх</button>

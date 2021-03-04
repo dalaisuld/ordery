@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root to: 'home#index'
-  get 'dashboard/index'
+  get 'admin', to: 'dashboard#index'
   get 'items_imports/new'
   get 'items_imports/create'
   get 'dashboard/index'

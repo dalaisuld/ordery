@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   get 'items_imports/new'
   get 'items_imports/create'
   get 'dashboard/index'
+  get 'home/:phone_number', :to => 'home#show'
+  put 'home', :to => 'home#update'
   devise_for :users, :controllers => { :sessions => "sessions" }
   resources :users
   resources :clients
@@ -18,7 +20,6 @@ Rails.application.routes.draw do
   post 'sms_logs/list', :to => 'sms_logs#list'
   post 'orders/list', :to => 'orders#list'
   post 'orders/add_cargo', :to => 'orders#add_cargo'
-
   post 'orders/set_delivery', :to => 'orders#set_delivery'
 
 end

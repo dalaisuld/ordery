@@ -5,16 +5,29 @@ class DashboardController < ApplicationController
     @page_title = "Хянах самбар"
     @page_dashboard_active = true
     @users = User.all
-    @waiting_order = Order.where(status: 0).count
-    @delivery_order = Order.where(status: 1).count
-    @canceled_order = Order.where(status: 2).count
-    @finished_order = Order.where(status: 3).count
+    @waiting_order = OrderDetail.where(status: IS_WAITING).count
+    @willing_order = OrderDetail.where(status: IS_WILLING).count
+    @delivery_order = OrderDetail.where(status: IS_DELIVERY).count
+    @finished_order = OrderDetail.where(status: IS_FINISH).count
+    @canceled_order = OrderDetail.where(status: IS_CANCELED).count
     @products = Product.count
-    @customers = Order.select('phone_number').group('phone_number').uniq.count
-      @ordered_products = Order.joins('AS o INNER JOIN order_details AS order_detail ON o.id = order_detail.order_id INNER JOIN products AS pr ON order_detail.product_id = pr.id')
-                              .select('order_detail.product_id, pr.name, pr.price, pr.quantity')
-                              .where('o.status = 0').group('order_detail.product_id')
+    @customers = Client.count
+    @ordered_products = OrderDetail.joins('as od inner join products as p on p.id = od.product_id')
+                                      .select('p.id, p.name, p.price, p.quantity, count(od.status) as all_product,
+                          SUM(case when od.status = 0 then 1 else 0 end) as is_waiting,
+                          SUM(case when od.status = 1 then 1 else 0 end) as is_willing,
+                          SUM(case when od.status = 2 then 1 else 0 end) as is_delivery,
+                          SUM(case when od.status = 3 then 1 else 0 end) as is_finish,
+                          SUM(case when od.status = 4 then 1 else 0 end) as is_cancelled')
+                                      .group('p.id, p.name')
 
+    @cargo_today = OrderDetail.select('SUM(cargo_price) AS total,
+    SUM(CASE WHEN is_cash = 0 THEN cargo_price ELSE 0 END) AS cash,
+    SUM(CASE WHEN is_cash = 1 THEN cargo_price ELSE 0 END) AS transfer').where('delivery_date = :q or finish_date = :q', q: "#{Time.now.strftime('%Y-%m-%d')}").group('cargo_price').order('cargo_price').first
+
+    @cargo_yesterday = OrderDetail.select('SUM(cargo_price) AS total,
+    SUM(CASE WHEN is_cash = 0 THEN cargo_price ELSE 0 END) AS cash,
+    SUM(CASE WHEN is_cash = 1 THEN cargo_price ELSE 0 END) AS transfer').where('delivery_date = :q or finish_date = :q', q: "#{Date.today.prev_day.strftime('%Y-%m-%d')}").group('cargo_price').order('cargo_price').first
 
   end
 end

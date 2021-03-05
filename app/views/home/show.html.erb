@@ -33,6 +33,7 @@
         <div class="intro-x mt-8">
             <input type="radio" name="is_delivery_to_home" value="1">Гэртээ хүргүүлж авах<br>
             <input type="radio" name="is_delivery_to_home" value="0">Агуулхаас ирж авах
+            <textarea class="input w-full border mt-2" placeholder="Хүргүүлэх хаяг" rows="4" name="address" id="address"></textarea>
         </div>
             <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left ">
             <button class="button button--lg w-full xl:w-32 text-white bg-theme-1 xl:mr-3 align-top" id = "update_button">Хадгалах</button>
@@ -103,12 +104,14 @@ $("#update_button").click(function(){
             type: "PUT",
             data:{
             is_delivery_to_home: $("input[name=is_delivery_to_home]:checked").val(),
-            phone_number: phone_number
+            phone_number: phone_number,
+            address: $('textarea#address').val()
             },
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
             },
             success: function(data) {
+                $('textarea#address').val('')
                 alert("success");
             },
             error: function(data){

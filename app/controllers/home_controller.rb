@@ -27,7 +27,7 @@ class HomeController < ApplicationController
   def update
     begin
       clients = Client.find_by(phone_number: params[:phone_number])
-      clients.update(is_delivery_to_home: params[:is_delivery_to_home])
+      clients.update(is_delivery_to_home: params[:is_delivery_to_home], address: params[:address])
       render json: { message: "success"}, status: 200
     rescue
       render json: { message: "error"}, status: 400

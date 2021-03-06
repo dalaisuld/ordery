@@ -48,6 +48,7 @@ class OrdersController < ApplicationController
     end
   end
 
+  # Хүргэлтэнд гаргах
   def set_delivery
     order_details_ids =params[:orderDetailIDs]
     order_details_ids.each do |order_detail_id|
@@ -58,11 +59,47 @@ class OrdersController < ApplicationController
         product.save
         order_detail.status = IS_DELIVERY
         order_detail.delivery_date = Time.now.strftime('%Y-%m-%d')
+        order_detail.is_cash = params[:cargo_is_cash]
         order_detail.save
       end
     end
     render json:{ message: 'амжиллтай хийлээ' }, status: 200
   end
+
+  #Бараа хүлээлгэн өгөх
+  def take_products
+    order_details_ids = params[:orderDetailIDs]
+    order_details_ids.each do |order_detail_id|
+      order_detail = OrderDetail.find_by(id: order_detail_id)
+      if order_detail
+        product = Product.find_by(id: order_detail.product_id)
+        product.quantity = product.quantity - order_detail.quantity
+        product.save
+        order_detail.status = IS_FINISH
+        order_detail.finish_date = Time.now.strftime('%Y-%m-%d')
+        order_detail.is_cash = params[:cargo_is_cash]
+        order_detail.save
+      end
+    end
+    render json:{ message: 'амжиллтай' }, status: 200
+  end
+
+  #Бараа цуцлах
+  def cancel_products
+    order_details_ids = params[:orderDetailIDs]
+    order_details_ids.each do |order_detail_id|
+      order_detail = OrderDetail.find_by(id: order_detail_id)
+      if order_detail
+        product = Product.find_by(id: order_detail.product_id)
+        product.save
+        order_detail.status = IS_CANCELED
+        order_detail.save
+      end
+    end
+    render json:{ message: 'амжиллтай' }, status: 200
+  end
+
+
 
   def set_take_confirm
     order_details_ids =params[:orderDetailIDs]

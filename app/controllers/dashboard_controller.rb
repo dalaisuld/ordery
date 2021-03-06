@@ -23,11 +23,15 @@ class DashboardController < ApplicationController
 
     @cargo_today = OrderDetail.select('SUM(cargo_price) AS total,
     SUM(CASE WHEN is_cash = 0 THEN cargo_price ELSE 0 END) AS cash,
-    SUM(CASE WHEN is_cash = 1 THEN cargo_price ELSE 0 END) AS transfer').where('delivery_date = :q or finish_date = :q', q: "#{Time.now.strftime('%Y-%m-%d')}").group('cargo_price').order('cargo_price').first
+    SUM(CASE WHEN is_cash = 1 THEN cargo_price ELSE 0 END) AS transfer').where('delivery_date = :q or finish_date = :q', q: "#{Time.now.strftime('%Y-%m-%d')}").first
 
     @cargo_yesterday = OrderDetail.select('SUM(cargo_price) AS total,
     SUM(CASE WHEN is_cash = 0 THEN cargo_price ELSE 0 END) AS cash,
-    SUM(CASE WHEN is_cash = 1 THEN cargo_price ELSE 0 END) AS transfer').where('delivery_date = :q or finish_date = :q', q: "#{Date.today.prev_day.strftime('%Y-%m-%d')}").group('cargo_price').order('cargo_price').first
+    SUM(CASE WHEN is_cash = 1 THEN cargo_price ELSE 0 END) AS transfer').where('delivery_date = :q or finish_date = :q', q: "#{Date.today.prev_day.strftime('%Y-%m-%d')}").first
+
+    @cargo_day_before_yesterday = OrderDetail.select('SUM(cargo_price) AS total,
+    SUM(CASE WHEN is_cash = 0 THEN cargo_price ELSE 0 END) AS cash,
+    SUM(CASE WHEN is_cash = 1 THEN cargo_price ELSE 0 END) AS transfer').where('delivery_date = :q or finish_date = :q', q: "#{Date.today.prev_day.prev_day.strftime('%Y-%m-%d')}").first
 
   end
 end

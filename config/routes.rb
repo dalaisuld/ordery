@@ -21,5 +21,7 @@ Rails.application.routes.draw do
   post 'orders/list', :to => 'orders#list'
   post 'orders/add_cargo', :to => 'orders#add_cargo'
   post 'orders/set_delivery', :to => 'orders#set_delivery'
+  post 'orders/take_products', :to => 'orders#take_products'
+  post 'orders/cancel_products', :to => 'orders#cancel_products'
 
 end

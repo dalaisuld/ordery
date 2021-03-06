@@ -35,7 +35,6 @@ class ProductsController < ApplicationController
     puts "neeedz ===>#{ordere_pr_count.total.to_s.to_i} "
     puts "quantity ===> #{quantity.to_s.to_i}"
     if quantity.to_s.to_i >= ordere_pr_count.total.to_s.to_i
-      product.update_all(status: IS_WAITING)
       products.each do |product|
         product.status = IS_WILLING
         product.save

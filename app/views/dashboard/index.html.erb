@@ -14,6 +14,9 @@
             <div class="box p-5">
               <div class="flex">
                 <i data-feather="shopping-bag" class="report-box__icon text-theme-10"></i>
+                <div class="ml-auto">
+                  <div class="report-box__indicator bg-theme-6 tooltip cursor-pointer" title="Бараа бэлэн болсон"> <%= @willing_order %> </div>
+                </div>
               </div>
               <div class="text-3xl font-bold leading-8 mt-6"><%= @waiting_order %></div>
               <div class="text-base text-gray-600 mt-1">Хүлээгдэж буй</div>
@@ -106,9 +109,9 @@
                 <div class="w-2 h-2 bg-theme-1 rounded-full mr-3"></div>
                 <span class="truncate"><%= Date.today.prev_day.prev_day.strftime('%Y-%m-%d') %></span>
                 <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-                <span class="font-medium xl:ml-auto"><% if @cargo_yesterday.present? %><%= number_to_currency(@cargo_yesterday.total, unit: "₮", strip_insignificant_zeros: true)%><% else %>-<% end %></span>
-                <span class="font-medium xl:ml-auto"><% if @cargo_yesterday.present? %><%= number_to_currency(@cargo_yesterday.transfer, unit: "₮", strip_insignificant_zeros: true)%><% else %>-<% end %></span>
-                <span class="font-medium xl:ml-auto"><% if @cargo_yesterday.present? %><%= number_to_currency(@cargo_yesterday.cash, unit: "₮", strip_insignificant_zeros: true)%><% else %>-<% end %></span>
+                <span class="font-medium xl:ml-auto"><% if @cargo_day_before_yesterday.present? %><%= number_to_currency(@cargo_day_before_yesterday.total, unit: "₮", strip_insignificant_zeros: true)%><% else %>-<% end %></span>
+                <span class="font-medium xl:ml-auto"><% if @cargo_day_before_yesterday.present? %><%= number_to_currency(@cargo_day_before_yesterday.transfer, unit: "₮", strip_insignificant_zeros: true)%><% else %>-<% end %></span>
+                <span class="font-medium xl:ml-auto"><% if @cargo_day_before_yesterday.present? %><%= number_to_currency(@cargo_day_before_yesterday.cash, unit: "₮", strip_insignificant_zeros: true)%><% else %>-<% end %></span>
               </div>
             </div>
           </div>

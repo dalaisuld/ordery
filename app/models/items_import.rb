@@ -68,8 +68,7 @@ class ItemsImport
         end
       end
       true
-    rescue => e
-      flash[:alert] = e
+    rescue
       false
     end
   end

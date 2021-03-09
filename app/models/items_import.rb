@@ -43,23 +43,23 @@ class ItemsImport
             order.phone_number = phone_number
             order.account_number = account_number
             order.save!
-            product_id_quantities.each do |product_id_quantity|
-              product_id = product_id_quantity.split('-')[0]
-              quantity = product_id_quantity.split('-')[1]
-              product = Product.find(product_id)
-              if product.present?
-                order_detail = OrderDetail.new
-                order_detail.order = order
-                order_detail.product = product
-                order_detail.quantity = quantity
-                order_detail.price = product.price
-                is_willing_cnt = OrderDetail.where(status: IS_WILLING).count
-                product.quantity - is_willing_cnt  >= quantity.to_i ? (order_detail.status = IS_WILLING) : (order_detail.status = IS_WAITING)
-                order_detail.save!
-              end
-            end
-            #  Хэрэглэгчийн бүртгэл үүсгэх хэсэг
-            Client.create!(phone_number: phone_number) if Client.where(phone_number: phone_number).count == 0 && phone_number.present?
+            # product_id_quantities.each do |product_id_quantity|
+            #   product_id = product_id_quantity.split('-')[0]
+            #   quantity = product_id_quantity.split('-')[1]
+            #   product = Product.find(product_id)
+            #   if product.present?
+            #     order_detail = OrderDetail.new
+            #     order_detail.order = order
+            #     order_detail.product = product
+            #     order_detail.quantity = quantity
+            #     order_detail.price = product.price
+            #     is_willing_cnt = OrderDetail.where(status: IS_WILLING).count
+            #     product.quantity - is_willing_cnt  >= quantity.to_i ? (order_detail.status = IS_WILLING) : (order_detail.status = IS_WAITING)
+            #     order_detail.save!
+            #   end
+            # end
+            # #  Хэрэглэгчийн бүртгэл үүсгэх хэсэг
+            # Client.create!(phone_number: phone_number) if Client.where(phone_number: phone_number).count == 0 && phone_number.present?
           end
         end
       end

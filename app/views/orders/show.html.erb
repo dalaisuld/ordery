@@ -1,3 +1,23 @@
+<style type="text/css">
+
+    @media print
+    {
+        body * { visibility: hidden; }
+        #printcontent * { visibility: visible; }
+        #printcontent {
+            background-color: white;
+            height: 100%;
+            width: 400px;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index:1500;
+            visibility: visible;
+        }
+    }
+</style>
 <%= form_with model: @order, local: true do |f| %>
   <div class="grid grid-cols-12 gap-6">
     <div class="col-span-12 xxl:col-span-9 grid grid-cols-12 gap-6">
@@ -32,7 +52,14 @@
               </div>
               <div class="col-span-3">
                 <label>Утасны дугаар</label>
-                <%= f.text_field :phone_number, class: "input w-full border mt-2"%>
+                <div class="relative mt-2">
+                  <a href="/clients/<%= Client.find_by_phone_number(@order.phone_number).id %>" target="_blank">
+                    <div class="absolute rounded-l  w-10 h-full flex items-center justify-center bg-gray-100 dark:bg-dark-1 dark:border-dark-4 border text-gray-600">
+                      <i data-feather="external-link"></i>
+                    </div>
+                  </a>
+                  <%= f.text_field :phone_number, class: "input pl-12 w-full border col-span-4" %>
+                </div>
               </div>
               <div class="col-span-6">
                 <label>Гүйлгээний утга</label>

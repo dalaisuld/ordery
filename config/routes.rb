@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'deliveries/index'
   root to: 'home#index'
   get 'admin', to: 'dashboard#index'
   get 'items_imports/new'
@@ -11,6 +12,7 @@ Rails.application.routes.draw do
   resources :clients
   resources :products
   resources :orders
+  resources :deliveries
   resources :sms_logs
   resources :histories
   resources :items_imports, only: [:new, :create]

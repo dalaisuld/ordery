@@ -42,7 +42,6 @@ class ItemsImport
             order.description = description
             order.phone_number = phone_number
             order.account_number = account_number
-            order.save!
             product_id_quantities.each do |product_id_quantity|
               product_id = product_id_quantity.split('-')[0]
               quantity = product_id_quantity.split('-')[1]
@@ -58,6 +57,7 @@ class ItemsImport
                 order_detail.save!
               end
             end
+            order.save!
             #  Хэрэглэгчийн бүртгэл үүсгэх хэсэг
             Client.create!(phone_number: phone_number) if Client.where(phone_number: phone_number).count == 0 && phone_number.present?
           end

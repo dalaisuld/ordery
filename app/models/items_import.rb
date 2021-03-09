@@ -48,27 +48,24 @@ class ItemsImport
               quantity = product_id_quantity.split('-')[1]
               product = Product.find(product_id)
               if product.present?
-                ActiveRecord::Base.transaction do
-                  order_detail = OrderDetail.new
-                  order_detail.order = order
-                  order_detail.product = product
-                  order_detail.quantity = quantity
-                  order_detail.price = product.price
-                  is_willing_cnt = OrderDetail.where(status: IS_WILLING).count
-                  product.quantity - is_willing_cnt  >= quantity.to_i ? (order_detail.status = IS_WILLING) : (order_detail.status = IS_WAITING)
-                  order_detail.save!
-                end
+                order_detail = OrderDetail.new
+                order_detail.order = order
+                order_detail.product = product
+                order_detail.quantity = quantity
+                order_detail.price = product.price
+                is_willing_cnt = OrderDetail.where(status: IS_WILLING).count
+                product.quantity - is_willing_cnt  >= quantity.to_i ? (order_detail.status = IS_WILLING) : (order_detail.status = IS_WAITING)
+                order_detail.save!
               end
             end
             #  Хэрэглэгчийн бүртгэл үүсгэх хэсэг
-            ActiveRecord::Base.transaction do
-              Client.create!(phone_number: phone_number) if Client.where(phone_number: phone_number).count == 0 && phone_number.present?
-            end
+            Client.create!(phone_number: phone_number) if Client.where(phone_number: phone_number).count == 0 && phone_number.present?
           end
         end
       end
       true
     rescue
+      raise ActiveRecord::Rollback
       false
     end
   end

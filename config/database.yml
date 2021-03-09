@@ -16,4 +16,4 @@ development:
 production:
   <<: *default
   database: ordery
-  url: <%= ENV['DATABASE_URL'] %>
+  url: 'mysql2://deploy:dellF912;@188.166.185.184/ordery'

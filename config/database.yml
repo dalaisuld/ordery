@@ -2,18 +2,18 @@ default: &default
   adapter: mysql2
   encoding: utf8mb4
   pool: <%= ENV["DB_POOL"] || 5  %>
-  database: <%= ENV['DB_NAME'] || 'ordery-dev' %>
-  username: <%= ENV['DB_USER'] || 'playhouse' %>
+  database: <%= ENV['DB_NAME'] || 'ordery' %>
+  username: <%= ENV['DB_USER'] || 'deploy' %>
   password: <%= ENV['DB_PASS'] || 'dellF912;'%>
-  host: <%= ENV['DB_HOST'] || '139.59.247.112'%>
+  host: <%= ENV['DB_HOST'] || '188.166.185.184'%>
   url: <%= ENV['DB_URL'] %>
   reconnect: true
 
 development:
   <<: *default
-  database: <%= ENV['D=B_NAME'] || 'ordery-dev' %>
+  database: <%= ENV['D=B_NAME'] || 'ordery' %>
 
 production:
   <<: *default
   database: ordery
-  url: 'mysql2://playhouse:dellF912;@139.59.247.112/ordery'
+  url: 'mysql2://deploy:dellF912;@188.166.185.184/ordery'

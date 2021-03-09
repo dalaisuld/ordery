@@ -65,7 +65,7 @@ class ItemsImport
       end
       true
     rescue
-      raise ActiveRecord::Rollback
+      false
     end
   end
 end

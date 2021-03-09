@@ -28,7 +28,7 @@ class ItemsImport
       (3..spreadsheet.last_row).map do |i|
         row = Hash[[header, spreadsheet.row(i)].transpose]
         if spreadsheet.row(i)[1] != 0
-          ActiveRecord::Base.transaction do
+          ActiveRecord::Base.transaction(requires_new: true) do
             transition_date = spreadsheet.row(i)[0].gsub('.', '/')
             amount = spreadsheet.row(i)[1]
             description = spreadsheet.row(i)[2].to_s
@@ -59,7 +59,7 @@ class ItemsImport
               end
             end
             #  Хэрэглэгчийн бүртгэл үүсгэх хэсэг
-            # Client.create!(phone_number: phone_number) if Client.where(phone_number: phone_number).count == 0 && phone_number.present?
+            Client.create!(phone_number: phone_number) if Client.where(phone_number: phone_number).count == 0 && phone_number.present?
           end
         end
       end

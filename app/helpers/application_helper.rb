@@ -30,9 +30,9 @@ module ApplicationHelper
           puts "Unitel"
           smslog.operator = op.operator
           req_params = {
-            'uname': 'MMO',
-            'upass': 'FlXrqZx7UT',
-            'from': '134143',
+            'uname': 'Yalalt',
+            'upass': 'OaeCrv@P7R',
+            'from': '132050',
             'sms': sms,
             'mobile': phone_number
           }

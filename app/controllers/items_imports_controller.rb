@@ -5,7 +5,7 @@ class ItemsImportsController < ApplicationController
 
   def create
     @items_import = ItemsImport.new(params[:items_import])
-    if @items_import.save!(current_user.id)
+    if @items_import.save(current_user.id)
       flash[:notice] = 'Амжилттай upload хийлээ.'
       redirect_to orders_path
     else

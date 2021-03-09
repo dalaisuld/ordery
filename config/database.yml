@@ -11,7 +11,7 @@ default: &default
 
 development:
   <<: *default
-  database: <%= ENV['D=B_NAME'] || 'ordery' %>
+  database: <%= ENV['DB_NAME'] || 'ordery' %>
 
 production:
   <<: *default

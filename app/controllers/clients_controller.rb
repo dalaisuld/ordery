@@ -11,6 +11,12 @@ class ClientsController < ApplicationController
     @page_clients_active = true
   end
 
+  def change_address
+    @client = Client.find(params[:id])
+    @client.address = Client.find(params[:address])
+    @client.save!
+  end
+
 
   def list
     order_by = 'id desc'
@@ -22,7 +28,8 @@ class ClientsController < ApplicationController
                                 SUM(case when od.status = 0 then 1 else 0 end) as is_waiting,
                                 SUM(case when od.status = 1 then 1 else 0 end) as is_willing,
                                 SUM(case when od.status = 2 then 1 else 0 end) as is_delivery,
-                                SUM(case when od.status = 3 then 1 else 0 end) as is_finish')
+                                SUM(case when od.status = 3 then 1 else 0 end) as is_finish,
+                                SUM(case when od.status = 4 then 1 else 0 end) as is_cancelled')
                        .group('c.id, c.phone_number, c.address, c.is_delivery_to_home').search_by(params).length
 
     clients = Client.joins('As c left join orders as o on c.phone_number = o.phone_number left join order_details as od on od.order_id = o.id')
@@ -30,7 +37,8 @@ class ClientsController < ApplicationController
                           SUM(case when od.status = 0 then 1 else 0 end) as is_waiting,
                           SUM(case when od.status = 1 then 1 else 0 end) as is_willing,
                           SUM(case when od.status = 2 then 1 else 0 end) as is_delivery,
-                          SUM(case when od.status = 3 then 1 else 0 end) as is_finish')
+                          SUM(case when od.status = 3 then 1 else 0 end) as is_finish,
+                          SUM(case when od.status = 4 then 1 else 0 end) as is_cancelled')
                   .group('c.id, c.phone_number, c.address, c.is_delivery_to_home')
                   .page(params[:pageIndex]).per(params[:pageSize]).order(order_by)
     clients = clients.search_by(params)

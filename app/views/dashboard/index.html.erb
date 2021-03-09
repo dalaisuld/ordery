@@ -14,6 +14,9 @@
             <div class="box p-5">
               <div class="flex">
                 <i data-feather="shopping-bag" class="report-box__icon text-theme-10"></i>
+                <div class="ml-auto">
+                  <div class="report-box__indicator bg-theme-6 tooltip cursor-pointer" title="Бараа бэлэн болсон"> <%= @willing_order %> </div>
+                </div>
               </div>
               <div class="text-3xl font-bold leading-8 mt-6"><%= @waiting_order %></div>
               <div class="text-base text-gray-600 mt-1">Хүлээгдэж буй</div>
@@ -75,6 +78,44 @@
             </div>
           </div>
         </div>
+        <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y">
+          <div class="intro-y box p-5">
+            <div class="mt-1">
+              <div class="flex items-center">
+                <div class="w-2 h-2 bg-theme-11 rounded-full mr-3"></div>
+                <span class="truncate">Каргоны төлбөр</span>
+                <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+                <span class="font-medium xl:ml-auto">Нийт</span>
+                <span class="font-medium xl:ml-auto">Дансаар</span>
+                <span class="font-medium xl:ml-auto">Бэлнээр</span>
+              </div>
+              <div class="flex items-center mt-4">
+                <div class="w-2 h-2 bg-theme-1 rounded-full mr-3"></div>
+                <span class="truncate"><%= Time.now.strftime('%Y-%m-%d') %></span>
+                <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+                <span class="font-medium xl:ml-auto"><% if @cargo_today.present? %><%= number_to_currency(@cargo_today.total, unit: "₮", strip_insignificant_zeros: true)%><% else %>-<% end %></span>
+                <span class="font-medium xl:ml-auto"><% if @cargo_today.present? %><%= number_to_currency(@cargo_today.transfer, unit: "₮", strip_insignificant_zeros: true)%><% else %>-<% end %></span>
+                <span class="font-medium xl:ml-auto"><% if @cargo_today.present? %><%= number_to_currency(@cargo_today.cash, unit: "₮", strip_insignificant_zeros: true)%><% else %>-<% end %></span>
+              </div>
+              <div class="flex items-center mt-4">
+                <div class="w-2 h-2 bg-theme-1 rounded-full mr-3"></div>
+                <span class="truncate"><%= Date.today.prev_day.strftime('%Y-%m-%d') %></span>
+                <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+                <span class="font-medium xl:ml-auto"><% if @cargo_yesterday.present? %><%= number_to_currency(@cargo_yesterday.total, unit: "₮", strip_insignificant_zeros: true)%><% else %>-<% end %></span>
+                <span class="font-medium xl:ml-auto"><% if @cargo_yesterday.present? %><%= number_to_currency(@cargo_yesterday.transfer, unit: "₮", strip_insignificant_zeros: true)%><% else %>-<% end %></span>
+                <span class="font-medium xl:ml-auto"><% if @cargo_yesterday.present? %><%= number_to_currency(@cargo_yesterday.cash, unit: "₮", strip_insignificant_zeros: true)%><% else %>-<% end %></span>
+              </div>
+              <div class="flex items-center mt-4">
+                <div class="w-2 h-2 bg-theme-1 rounded-full mr-3"></div>
+                <span class="truncate"><%= Date.today.prev_day.prev_day.strftime('%Y-%m-%d') %></span>
+                <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+                <span class="font-medium xl:ml-auto"><% if @cargo_day_before_yesterday.present? %><%= number_to_currency(@cargo_day_before_yesterday.total, unit: "₮", strip_insignificant_zeros: true)%><% else %>-<% end %></span>
+                <span class="font-medium xl:ml-auto"><% if @cargo_day_before_yesterday.present? %><%= number_to_currency(@cargo_day_before_yesterday.transfer, unit: "₮", strip_insignificant_zeros: true)%><% else %>-<% end %></span>
+                <span class="font-medium xl:ml-auto"><% if @cargo_day_before_yesterday.present? %><%= number_to_currency(@cargo_day_before_yesterday.cash, unit: "₮", strip_insignificant_zeros: true)%><% else %>-<% end %></span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <!-- END: General Report -->
@@ -94,12 +135,12 @@
           <thead>
           <tr>
             <th class="whitespace-nowrap">Бүтээгдэхүүн</th>
-            <th class="text-center whitespace-nowrap">Агуулхад</th>
-            <th class="text-center whitespace-nowrap">Захиалганд</th>
+            <th class="text-center whitespace-nowrap">Нийт</th>
             <th class="text-center whitespace-nowrap">Хүлээгдэж байгаа</th>
+            <th class="text-center whitespace-nowrap">Бараа бэлэн</th>
             <th class="text-center whitespace-nowrap">Хүргэлтэнд</th>
             <th class="text-center whitespace-nowrap">Цуцалсан</th>
-            <th class="text-center whitespace-nowrap">Дууссан</th>
+            <th class="text-center whitespace-nowrap">Хүлээлгэж өгсөн</th>
           </tr>
           </thead>
           <tbody>
@@ -109,12 +150,12 @@
                 <a href="" class="font-medium whitespace-nowrap"><%= product.name %></a>
                 <div class="text-gray-600 text-xs whitespace-nowrap mt-0.5"><%= number_to_currency(product.price, unit: "₮", strip_insignificant_zeros: true)%></div>
               </td>
-              <td class="text-center"><%= product.quantity %></td>
-              <td class="text-center"><%= DashboardHelper.order_count_by_product(product.product_id) %></td>
-              <td class="text-center"><%= DashboardHelper.order_count_by_waiting(product.id) %></td>
-<!--              <td class="text-center"><%#= DashboardHelper.order_count_by_delivery(product.id) %></td>-->
-<!--              <td class="text-center"><%#= DashboardHelper.order_count_by_cancel(product.id) %></td>-->
-<!--              <td class="text-center"><%#= DashboardHelper.order_count_by_finish(product.id) %></td>-->
+              <td class="text-center"><%= product.all_product %></td>
+              <td class="text-center"><%= product.is_waiting %></td>
+              <td class="text-center"><%= product.is_willing %></td>
+              <td class="text-center"><%= product.is_delivery %></td>
+              <td class="text-center"><%= product.is_cancelled %></td>
+              <td class="text-center"><%= product.is_finish %></td>
             </tr>
           <% end %>
           </tbody>

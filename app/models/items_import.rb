@@ -28,7 +28,7 @@ class ItemsImport
       (3..spreadsheet.last_row).map do |i|
         row = Hash[[header, spreadsheet.row(i)].transpose]
         if spreadsheet.row(i)[1] != 0
-          ActiveRecord::Base.transaction do
+          Order.transaction do
             transition_date = spreadsheet.row(i)[0].gsub('.', '/')
             amount = spreadsheet.row(i)[1]
             description = spreadsheet.row(i)[2].to_s
@@ -42,7 +42,7 @@ class ItemsImport
             order.description = description
             order.phone_number = phone_number
             order.account_number = account_number
-            order.save!
+            order.save
             # product_id_quantities.each do |product_id_quantity|
             #   product_id = product_id_quantity.split('-')[0]
             #   quantity = product_id_quantity.split('-')[1]

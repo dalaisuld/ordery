@@ -60,6 +60,10 @@ class ItemsImport
             end
             #  Хэрэглэгчийн бүртгэл үүсгэх хэсэг
             Client.create!(phone_number: phone_number) if Client.where(phone_number: phone_number).count == 0 && phone_number.present?
+          rescue ActiveRecord::RecordInvalid => e
+            puts e.message
+            ActiveRecord::Rollback
+            false
           end
         end
       end

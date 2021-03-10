@@ -16,4 +16,5 @@ development:
 production:
   <<: *default
   database: ordery
-  url: 'mysql2://playhouse:dellF912;@139.59.247.112/ordery'
+  url: <%= ENV['DATABASE_URL'] %>
+#  url: 'mysql2://playhouse:dellF912;@139.59.247.112/ordery'

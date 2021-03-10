@@ -2,7 +2,7 @@ default: &default
   adapter: mysql2
   encoding: utf8mb4
   pool: <%= ENV["DB_POOL"] || 5  %>
-  database: <%= ENV['DB_NAME'] || 'ordery' %>
+  database: <%= ENV['DB_NAME'] || 'ordery-dev' %>
   username: <%= ENV['DB_USER'] || 'deploy' %>
   password: <%= ENV['DB_PASS'] || 'dellF912;'%>
   host: <%= ENV['DB_HOST'] || '188.166.185.184'%>
@@ -11,7 +11,7 @@ default: &default
 
 development:
   <<: *default
-  database: <%= ENV['DB_NAME'] || 'ordery' %>
+  database: <%= ENV['DB_NAME'] || 'ordery-dev' %>
 
 production:
   <<: *default

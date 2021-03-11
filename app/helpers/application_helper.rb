@@ -15,17 +15,47 @@ module ApplicationHelper
       if ops.present? && ops.count == 1
         op = ops.first
         if op.operator == 'MOBICOM'
-          puts 'Mobi'
+          smslog.operator = op.operator
+          req_params = {
+            'servicename': 'mongol',
+            'username': 'organic',
+            'from': '134143',
+            'msg': sms,
+            'to': phone_number
+          }
+          url = 'http://27.123.214.168/smsmt/mt'
+          response = HTTParty.get(url, query: req_params, timeout: 5)
+          smslog.is_send = (response.code == 200)
         elsif op.operator == 'UNITEL'
-          puts 'UNITEL'
+          puts "Unitel"
+          smslog.operator = op.operator
+          req_params = {
+            'uname': 'Yalalt',
+            'upass': 'OaeCrv@P7R',
+            'from': '132050',
+            'sms': sms,
+            'mobile': phone_number
+          }
+          url = 'http://sms.unitel.mn/sendSMS.php'
+          response = HTTParty.get(url, query: req_params)
+          puts "response body --->>> #{response.body}"
+          puts "response code --->>> #{response.code}"
+          smslog.api_response = response.body
+          smslog.is_send = (response.code == 200)
         elsif op.operator == 'SKYTEL'
           puts 'SKYTEL'
+          smslog.operator = op.operator
+          smslog.is_send = true
         elsif op.operator == 'GMOBILE'
           puts 'GMOBILE'
+          smslog.operator = op.operator
+          smslog.is_send = true
         end
       end
+
+      smslog.save
     else
-      Rails.logger.error '---Sms failde--->phone number lengh error--->'
+      Rails.logger.error '---Sms failed--->phone number lengh error--->'
     end
   end
 

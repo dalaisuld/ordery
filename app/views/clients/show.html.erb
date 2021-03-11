@@ -1,0 +1,334 @@
+<style type="text/css">
+
+    @media print
+    {
+        body * { visibility: hidden; }
+        #printcontent * { visibility: visible; }
+        #printcontent {
+            background-color: white;
+            height: 100%;
+            width: 400px;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index:1500;
+            visibility: visible;
+        }
+    }
+</style>
+<div class="grid grid-cols-12 gap-6">
+  <div class="col-span-12 xxl:col-span-9 grid grid-cols-12 gap-6">
+    <div class="col-span-12 lg:col-span-12 mt-5">
+      <div class="intro-y box p-5">
+        <div class="mt-3">
+          <div class="grid grid-cols-12 gap-2">
+            <div class="col-span-3">
+              <label>ID</label>
+              <input class="input w-full border mt-2" value="<%= @client.id %>" disabled>
+            </div>
+            <div class="col-span-3">
+              <label>Утасны дугаар</label>
+              <input class="input w-full border mt-2" value="<%= @client.phone_number %>" disabled>
+            </div>
+            <div class="col-span-3">
+              <label>И-Мэйл</label>
+              <input class="input w-full border mt-2" value="" disabled>
+            </div>
+            <div class="col-span-3">
+              <label>Бүртгүүлсэн огноо</label>
+              <input class="input w-full border mt-2" value="<%= @client.created_at.strftime('%Y-%m-%d %H:%M:%S') %>" disabled>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <label>Хүргүүлэх хаяг
+            <% if @client.is_delivery_to_home.present? && @client.is_delivery_to_home == false %>
+              <span class='text-theme-1 font-medium'>(Агуулхаас ирж авна)</span>
+            <% elsif @client.is_delivery_to_home.present? && @client.is_delivery_to_home == true %>
+              <span class='text-theme-1 font-medium'>(Гэртээ хүргүүлж авна)</span>
+            <% else %>
+              <span class='text-theme-6 font-medium'>(Мэдээлэл оруулаагүй)</span>
+            <% end %>
+          </label>
+          <textarea class="input w-full border mt-2" id="address" rows="4"><%= @client.address %></textarea>
+        </div>
+        <button id="change_address" class="button button--sm mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white">Хаяг өөрчлөх</button>
+        <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed mt-3 mb-3"></div>
+        <div class="overflow-x-auto">
+          <table class="table" id="product-table">
+            <thead>
+            <tr>
+              <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">#</th>
+              <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">Order ID</th>
+              <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">Бүтээгдэхүүн</th>
+              <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">нэгж үнэ</th>
+              <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">тоо ширхэг</th>
+              <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">нийт</th>
+              <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">карго</th>
+              <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">төлөв</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @products.each do |product| %>
+              <tr>
+                <td class="border">
+                  <% if product.status == IS_DELIVERY || product.status == IS_WAITING || product.status == IS_FINISH || product.status == IS_CANCELED %>
+                      -
+                  <% else %>
+                    <input type="checkbox" name="product_ids" value="<%= product.product_id %>">
+                  <% end %>
+                </td>
+                <td class="border"><a href="/orders/<%= product.order_id %>" class="text-theme-1 block font-normal" target="_blank"><%= product.order_id %></a></td>
+                <td class="border"><%= product.name %></td>
+                <td class="border"><%= number_to_currency(product.actual_price, unit: "₮ ", strip_insignificant_zeros: true) %></td>
+                <td class="border"><%= product.quantity %></td>
+                <td class="border"><%= number_to_currency(product.actual_price.to_i * product.quantity.to_i, unit: "₮ ", strip_insignificant_zeros: true) %></td>
+                <td class="border"><%= number_to_currency(product.cargo_price, unit: "₮ ", strip_insignificant_zeros: true) %></td>
+                <td class="border">
+                  <% if product.status == IS_WAITING %>
+                    <span class='text-theme-12 block font-medium'>Хүлээгдэж байгаа</span>
+                  <% elsif product.status == IS_WILLING %>
+                    <span class='block font-medium'>Бараа ирсэн</span>
+                  <% elsif product.status == IS_DELIVERY %>
+                    <span class='text-theme-1 block font-medium'>Хүргэлтэнд гарсан</span>
+                  <% elsif product.status == IS_FINISH %>
+                    <span class='text-theme-9 block font-medium'>Хүлээлгэж өгсөн</span>
+                  <% elsif product.status == IS_CANCELED %>
+                    <span class='text-theme-6 block font-medium'>Цуцалсан</span>
+                  <% end %>
+                </td>
+              </tr>
+            <%end %>
+
+            </tbody>
+          </table>
+        </div>
+        <div class="flex flex-col sm:flex-row mt-2">
+          <div class="flex items-center text-gray-700 dark:text-gray-500 mr-2">
+            <input type="radio" class="input border mr-2" id="0" name="is_cash" value="0" checked>
+            <label class="cursor-pointer select-none" for="0">Каргоны мөнгө дансаар</label>
+          </div>
+          <div class="flex items-center text-gray-700 dark:text-gray-500 mr-2 mt-2 sm:mt-0">
+            <input type="radio" class="input border mr-2" id="1" name="is_cash" value="1">
+            <label class="cursor-pointer select-none" for="1">Каргоны мөнгө бэлнээр</label>
+          </div>
+        </div>
+        <div class="w-full flex mt-3">
+          <button id="delivery_submit" class="button mr-2 mb-2 flex items-center justify-center bg-theme-9 text-white">
+            <i data-feather="truck" class="w-4 h-4 mr-2"></i> Хүргэлтэнд гаргах
+          </button>
+
+          <button id="take_products" class="button mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white">
+            <i data-feather="shopping-cart" class="w-4 h-4 mr-2"></i> Бараа хүлээлгэн өгөх
+          </button>
+
+          <button id="cancel_products" class="button mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white">
+            <i data-feather="trash" class="w-4 h-4 mr-2"></i> Захиалга цуцлах
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-span-12 xxl:col-span-3 xxl:border-l border-theme-5 -mb-10 pb-10">
+    <div class="xxl:pl-6 grid grid-cols-12 gap-6">
+      <div class="col-span-12 md:col-span-6 xl:col-span-4 xxl:col-span-12">
+        <div class="mt-5">
+          <div id="printcontent">
+            <div class="box intro-y p-3">
+              <img src="/images/logo.png" alt="Playhouse" class="mb-5">
+              <div class="font-medium"># <%= @client.id %> </div>
+              <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
+              <div class="font-medium">Захиалагч: <%= @client.phone_number %></div>
+              <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
+              <div class="font-medium">Хаяг: <%= @client.address %></div>
+              <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
+              <div class="font-medium">Огноо: <%= DateTime.now.strftime('%Y-%m-%d %H:%M:%S') %></div>
+              <div class="font-medium mt-3 mb-3">Бүтээгдэхүүн</div>
+              <% @delivered_product.each do |product| %>
+                <div class="font-medium"><%= product.name %> <%= number_to_currency(product.actual_price, unit: "₮", strip_insignificant_zeros: true) %>*<%= product.quantity %>=<%= number_to_currency(product.actual_price.to_i * product.quantity.to_i, unit: "₮ ", strip_insignificant_zeros: true) %></div>
+                <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
+              <% end %>
+              <div class="font-medium mt-3">
+                Каргоны төлбөр = <%= number_to_currency(@total_cargo_price, unit: "₮", strip_insignificant_zeros: true) %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    $(function () {
+        // window.print();
+        $("#change_address").hide();
+        var oldVal = "";
+        $("#address").on("change keyup paste", function() {
+            var currentVal = $(this).val();
+            if(currentVal == oldVal) {
+                return; //check to prevent multiple simultaneous triggers
+            }
+            oldVal = currentVal;
+            $("#change_address").show();
+        });
+
+        $("#change_address").click(function(){
+            if($("#address").val() > 0){
+                $.ajax({
+                    url: "/orders/add_cargo",
+                    type: "POST",
+                    data:{
+                        address: $('#address').val(),
+                    },
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                    },
+                    success: function(data) {
+                        Toastify({
+                            text: "хэрэглэгчийн хаяг амжилттай өөрчиллөө",
+                            duration: 3000,
+                            newWindow: true,
+                            close: true,
+                            gravity: "bottom",
+                            position: "right",
+                            backgroundColor: "#91C714",
+                            stopOnFocus: true,
+                        }).showToast();
+                    },
+                    error: function(data){
+                        alert(data.message)
+                    }
+                });
+            }
+            else{
+                Toastify({
+                    text: "Хэрэглэгчийн хаяг оруулна уу",
+                    duration: 3000,
+                    newWindow: true,
+                    close: true,
+                    gravity: "bottom",
+                    position: "right",
+                    backgroundColor: "#D32929",
+                    stopOnFocus: true,
+                }).showToast();
+                return
+            }
+        });
+
+        // Захиалга хүргэлтэнд гарах
+        $("#delivery_submit").click(function(event){
+            event.preventDefault();
+
+            var orderDetailIDs = [];
+            $("#product-table input:checkbox:checked").map(function(){
+                orderDetailIDs.push($(this).val());
+            });
+            $.ajax({
+                url: "/orders/set_delivery",
+                type: "POST",
+                data:{
+                    orderDetailIDs: orderDetailIDs,
+                    cargo_is_cash: $('input[name="is_cash"]:checked').val()
+                },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                },
+                success: function(data) {
+                    Toastify({
+                        text: "Хүргэлтэнд бүргэгдлээ",
+                        duration: 3000,
+                        newWindow: true,
+                        close: true,
+                        gravity: "bottom",
+                        position: "right",
+                        backgroundColor: "#91C714",
+                        stopOnFocus: true,
+                    }).showToast();
+                },
+                error: function(data){
+                    alert(data.message)
+                }
+            });
+            console.log(orderDetailIDs);
+        });
+
+        // Бараа хүлээлгэн өгөх
+        $("#take_products").click(function(event){
+            event.preventDefault();
+            var orderDetailIDs = [];
+            $("#product-table input:checkbox:checked").map(function(){
+                orderDetailIDs.push($(this).val());
+            });
+            $.ajax({
+                url: "/orders/take_products",
+                type: "POST",
+                data:{
+                    orderDetailIDs: orderDetailIDs,
+                    cargo_is_cash: $('input[name="is_cash"]:checked').val()
+                },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                },
+                success: function(data) {
+                    Toastify({
+                        text: "Бараа хүлээлгэн өглөө",
+                        duration: 3000,
+                        newWindow: true,
+                        close: true,
+                        gravity: "bottom",
+                        position: "right",
+                        backgroundColor: "#91C714",
+                        stopOnFocus: true,
+                    }).showToast();
+                },
+                error: function(data){
+                    alert(data.message)
+                }
+            });
+            console.log(orderDetailIDs);
+        });
+
+        // Бараа Цуцлах
+        $("#cancel_products").click(function(event){
+            event.preventDefault();
+            var orderDetailIDs = [];
+            $("#product-table input:checkbox:checked").map(function(){
+                orderDetailIDs.push($(this).val());
+            });
+            $('input[name="is_cash"]:checked').val();
+            $.ajax({
+                url: "/orders/cancel_products",
+                type: "POST",
+                data:{
+                    orderDetailIDs: orderDetailIDs,
+                },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                },
+                success: function(data) {
+                    Toastify({
+                        text: "Бараа цуцаллаа",
+                        duration: 3000,
+                        newWindow: true,
+                        close: true,
+                        gravity: "bottom",
+                        position: "right",
+                        backgroundColor: "#91C714",
+                        stopOnFocus: true,
+                    }).showToast();
+                    location.reload();
+                },
+                error: function(data){
+                    alert(data.message)
+                }
+            });
+            console.log(orderDetailIDs);
+        });
+    });
+
+</script>

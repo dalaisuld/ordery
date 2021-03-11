@@ -11,27 +11,6 @@
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
   <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
-
-  <style type="text/css">
-
-      @media print
-      {
-          body * { visibility: hidden; }
-          #printcontent * { visibility: visible; }
-          #printcontent {
-              background-color: white;
-              height: 100%;
-              width: 400px;
-              position: absolute;
-              top: 0;
-              bottom: 0;
-              left: 0;
-              right: 0;
-              z-index:1500;
-              visibility: visible;
-          }
-      }
-  </style>
 </head>
 
 <body class="app">
@@ -45,7 +24,7 @@
   </div>
   <ul class="border-t border-theme-24 py-5 hidden">
     <li>
-      <a href="/" class="menu menu--active">
+      <a href="<%= admin_path %>" class="menu menu--active">
         <div class="menu__icon"> <i data-feather="home"></i> </div>
         <div class="menu__title"> Хянах самбар </div>
       </a>
@@ -98,7 +77,7 @@
     <div class="side-nav__devider my-6"></div>
     <ul>
       <li>
-        <a href="/" class="side-menu <% if @page_dashboard_active %>side-menu--active <% end %>">
+        <a href="<%= admin_path %>" class="side-menu <% if @page_dashboard_active %>side-menu--active <% end %>">
           <div class="side-menu__icon"> <i data-feather="home"></i> </div>
           <div class="side-menu__title"> Хянах самбар </div>
         </a>
@@ -121,10 +100,23 @@
       <li>
         <a href="<%= orders_path %>" class="side-menu <% if @page_orders_active %>side-menu--active <% end %>">
           <div class="side-menu__icon"> <i data-feather="file-text"></i> </div>
-          <div class="side-menu__title"> Захиалга </div>
+          <div class="side-menu__title"> Захиалгын түүх </div>
         </a>
       </li>
 
+      <li>
+        <a href="<%= clients_path %>" class="side-menu <% if @page_clients_active %>side-menu--active <% end %>">
+          <div class="side-menu__icon"> <i data-feather="user-check"></i> </div>
+          <div class="side-menu__title"> Хэрэглэгч </div>
+        </a>
+      </li>
+
+      <li>
+        <a href="<%= deliveries_path %>" class="side-menu <% if @page_delivery_active %>side-menu--active <% end %>">
+          <div class="side-menu__icon"> <i data-feather="truck"></i> </div>
+          <div class="side-menu__title"> Хүргэлт </div>
+        </a>
+      </li>
 
       <li>
         <a href="<%= sms_logs_path %>" class="side-menu <% if @page_sms_active %>side-menu--active <% end %>">

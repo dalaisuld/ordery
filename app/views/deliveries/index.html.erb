@@ -1,0 +1,62 @@
+<div class="intro-y flex flex-col sm:flex-row items-center mt-8">
+  <h2 class="text-lg font-medium mr-auto">
+    Хүргэлтийн жагсаалт (<%= @orders.length %>)
+  </h2>
+  <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
+
+    <a href="javascript:;" data-toggle="modal" data-target="#send_sms">
+      <button class="button mr-2 mb-2 flex items-center justify-center bg-theme-9 text-white">
+        <i data-feather="send" class="w-4 h-4 mr-2"></i> SMS Илгээх
+      </button>
+    </a>
+    <a href="javascript:;" data-toggle="modal" data-target="#set_cargo_price" >
+      <button class="button mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white">
+        <i data-feather="dollar-sign" class="w-4 h-4 mr-2"></i> Бүх хүргэлтийг дуусгах
+      </button>
+    </a>
+    <button id="excelExport" class="button mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white">
+      <i data-feather="download" class="w-4 h-4 mr-2"></i> Excel татах
+    </button>
+  </div>
+</div>
+
+
+
+<div class="intro-y  mt-5">
+  <table class="table" id="table2excel">
+    <thead>
+    <tr>
+      <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap"><input type="checkbox"></th>
+      <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">Утасны дугаар</th>
+      <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">Гэрийн хаяг</th>
+      <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">Бүтгээдэхүүн</th>
+      <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">Тоо ширхэг</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @orders.each do |order| %>
+      <tr class="hover:bg-gray-200">
+        <td class="border"><input type="checkbox"></td>
+        <td class="border"><%= order.phone_number %></td>
+        <td class="border"><%= order.address %></td>
+        <td class="border"><%= order.pr_name %></td>
+        <td class="border"><%= order.pr_count %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+<script>
+    $(function() {
+        $("#excelExport").click(function(){
+            $("#table2excel").table2excel({
+                exclude: ".noExl",
+                name:"Хүргэлтийн жагсаалт",
+                filename: "delivery_" + new Date().toISOString().replace(/[\-\:\.]/g, "") + ".xls",
+                fileext:".xls",
+                preserveColors:true
+            });
+        });
+    });
+</script>

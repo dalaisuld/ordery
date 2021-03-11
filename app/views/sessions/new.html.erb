@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= @page_title || 'Ordey | Order Management System' %></title>
+  <title><%= @page_title || 'EToys | Order Management System' %></title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
@@ -15,18 +15,11 @@
   <div class="block xl:grid grid-cols-2 gap-4">
     <!-- BEGIN: Login Info -->
     <div class="hidden xl:flex flex-col min-h-screen">
-      <a href="" class="-intro-x flex items-center pt-5">
-        <img alt="Midone Tailwind HTML Admin Template" class="w-6" src="/images/logo.svg">
-        <span class="text-white text-lg ml-3"> Ord<span class="font-medium">ery</span> </span>
-      </a>
       <div class="my-auto">
-        <img alt="Midone Tailwind HTML Admin Template" class="-intro-x w-1/2 -mt-16" src="/images/illustration.svg">
+        <img alt="PlayHouse-Үйлдвэрийн үнээр хэрэгцээт бараа захиалгын групп" class="-intro-x w-1/2 -mt-16" src="/images/Logo-03.png">
         <div class="-intro-x text-white font-medium text-4xl leading-tight mt-10">
-          Ordery | Order management
-          <br>
-          SYSTEM
+          PLAY HOUSE ADMIN PANEL
         </div>
-        <div class="-intro-x mt-5 text-lg text-white dark:text-gray-500">Play House</div>
       </div>
     </div>
     <!-- END: Login Info -->
@@ -36,7 +29,7 @@
         <h2 class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">
           Нэвтрэх
         </h2>
-        <div class="intro-x mt-2 text-gray-500 xl:hidden text-center">Play House | Order management system</div>
+        <div class="intro-x mt-2 text-gray-500 xl:hidden text-center">Etoys.mn | Order management system</div>
         <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
           <div class="intro-x mt-8">
             <%= f.email_field :email, autofocus: true, autocomplete: 'email', class: 'intro-x login__input input input--lg border border-gray-300 block', placeholder: "Email" %>

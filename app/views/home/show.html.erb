@@ -1,0 +1,165 @@
+<html lang="en" class="dark">
+<head>
+  <title><%= @page_title || 'Ordey | Order Management System' %></title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+<body class="login">
+<div class="container sm:px-10">
+  <div class="block xl:grid grid-cols-2 gap-4">
+    <div class="hidden xl:flex flex-col min-h-screen">
+      <div class="my-auto">
+        <img alt="PlayHouse-Үйлдвэрийн үнээр хэрэгцээт бараа захиалгын групп" class="-intro-x w-1/2 -mt-16" src="/images/Logo-03.png">
+        <div class="-intro-x text-white font-medium text-4xl leading-tight mt-10">
+          УТАС: 7732-7733
+        </div>
+        <div class="-intro-x mt-5 text-lg text-white dark:text-gray-500">
+          <div class="w-full flex">
+            <i data-feather="map-pin" class="w-4 h-4 mr-2 mt-1"></i> Хорооллын эцэс Арвидах төв B1 давхар
+          </div>
+        </div>
+        <div class="-intro-x mt-5 text-lg text-white dark:text-gray-500">
+          <a href="https://www.facebook.com/groups/PlayHpuseZahialgiinGroup" target="_blank">
+            <div class="w-full flex">
+              <i data-feather="facebook" class="w-4 h-4 mr-2 mt-1"></i> PlayHouse-Үйлдвэрийн үнээр хэрэгцээт бараа
+              захиалгын групп
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <% if @clients.present? %>
+      <div class="h-screen xl:h-auto flex py-5 xl:py-0 my-10 xl:my-0">
+        <div class="my-auto mx-auto xl:ml-20 bg-white xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto">
+          <div class="col-span-12 mt-6">
+            <div class="intro-y overflow-auto lg:overflow-visible mt-8 sm:mt-0">
+              <table class="table table-report sm:mt-2">
+                <thead>
+                <tr>
+                  <th class="whitespace-nowrap">Бүтээгдэхүүн</th>
+                  <th class="text-center whitespace-nowrap">Шилжүүлсэн</th>
+                  <th class="text-center whitespace-nowrap">Карго</th>
+                  <th class="text-center whitespace-nowrap">Төлөв</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @products.each do |product| %>
+                  <tr class="intro-x">
+                    <td>
+                      <a href="" class="font-medium whitespace-nowrap"><%= product.name %></a>
+                      <div class="text-gray-600 text-xs whitespace-nowrap mt-0.5"><%= number_to_currency(product.actual_price, unit: "₮ ", strip_insignificant_zeros: true) %> x <%= product.quantity %> = <%= number_to_currency(product.actual_price.to_i * product.quantity.to_i, unit: "₮ ", strip_insignificant_zeros: true) %></div>
+                    </td>
+                    <td class="text-center"><%= number_to_currency(product.transition_amount, unit: "₮ ", strip_insignificant_zeros: true) %></td>
+                    <td class="text-center"><%= number_to_currency(product.cargo_price, unit: "₮ ", strip_insignificant_zeros: true) %></td>
+                    <td class="table-report__action w-56">
+                      <% if product.status == IS_WAITING %>
+                        <div class="flex justify-center items-center">
+                          <a class="flex items-center text-theme-12" href="">
+                            <i data-feather="alert-octagon" class="w-4 h-4 mr-1"></i> Хүлээгдэж байгаа </a>
+                        </div>
+                      <% elsif product.status == IS_WILLING %>
+                        <div class="flex justify-center items-center">
+                          <a class="flex items-center" href="">
+                            <i data-feather="alert-octagon" class="w-4 h-4 mr-1"></i> Бараа ирсэн байна </a>
+                        </div>
+                      <% elsif product.status == IS_DELIVERY %>
+                        <div class="flex justify-center items-center">
+                          <a class="flex items-center" href="">
+                            <i data-feather="truck" class="w-4 h-4 mr-1"></i> Хүргэлтэнд гарсан </a>
+                        </div>
+                      <% elsif product.status == IS_FINISH %>
+                        <div class="flex justify-center items-center">
+                          <a class="flex items-center text-theme-9" href="">
+                            <i data-feather="shopping-cart" class="w-4 h-4 mr-1"></i> Хүлээлгэж өгсөн </a>
+                        </div>
+                      <% elsif product.status == IS_CANCELED %>
+                        <div class="flex justify-center items-center">
+                          <a class="flex items-center text-theme-6" href="">
+                            <i data-feather="trash" class="w-4 h-4 mr-1"></i> Цуцалсан </a>
+                        </div>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="intro-x mt-8">
+            <div>
+              <div class="mt-0.5 text-gray-600 dark:text-gray-600">Та барагаа гэртээ хүргүүлж авах бол хүргүүлэх хаягаа дэлгэрэнгүй бичиж оруулна уу</div>
+            </div>
+            <textarea class="input w-full border mt-2" placeholder="Хүргүүлэх хаяг" rows="4" name="address" id="address"><%= @clients.address %></textarea>
+            <div class="flex flex-col sm:flex-row mt-2">
+              <div class="flex items-center text-gray-700 dark:text-gray-500 mr-2">
+                <input type="radio" class="input border mr-2" id="1" name="is_delivery_to_home" value="1" <% if @clients.is_delivery_to_home == true %>checked<% end %>>
+                <label class="cursor-pointer select-none" for="1">Гэртээ хүргүүлж авах</label>
+              </div>
+              <div class="flex items-center text-gray-700 dark:text-gray-500 mr-2 mt-2 sm:mt-0">
+                <input type="radio" class="input border mr-2" id="0" name="is_delivery_to_home" value="0" <% if @clients.is_delivery_to_home == false %>checked<% end %>>
+                <label class="cursor-pointer select-none" for="0">Агуулхаас ирж авах</label>
+              </div>
+            </div>
+            <button class="button button--sm w-full xl:w-32 text-white bg-theme-1 xl:mr-3 align-top mt-2" id="update_button">Хадгалах</button>
+          </div>
+        </div>
+      </div>
+    <% else %>
+      <div class="error-page flex flex-col lg:flex-row items-center justify-center h-screen text-center lg:text-left">
+        <div class="-intro-x lg:mr-20">
+          <img alt="Midone Tailwind HTML Admin Template" class="h-48 lg:h-auto" src="https://midone.left4code.com/dist/images/error-illustration.svg">
+        </div>
+        <div class="text-gray-700 mt-10 lg:mt-0">
+          <div class="intro-x text-8xl font-medium">Өө ...</div>
+          <div class="intro-x text-xl lg:text-3xl font-medium mt-5">Хайлт олдсонгүй ...</div>
+          <div class="intro-x text-lg mt-3">Та манайхаас ямар нэгэн бараа захиалаагүй байна.</div>
+          <button onclick="location.href='/'" class="button mr-2 mb-2 mt-10 flex items-center justify-center bg-theme-1 text-white"> <i data-feather="corner-down-left" class="w-4 h-4 mr-2"></i> Буцах </button>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<!-- BEGIN: JS Assets-->
+<%= javascript_pack_tag 'custom' %>
+<!-- END: JS Assets-->
+<script>
+    $("#update_button").click(function () {
+        var url = window.location.pathname;
+        var phone_number = url.substring(url.lastIndexOf('/') + 1);
+        $.ajax({
+            url: "/home",
+            type: "PUT",
+            data: {
+                is_delivery_to_home: $("input[name=is_delivery_to_home]:checked").val(),
+                phone_number: phone_number,
+                address: $('textarea#address').val()
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+            },
+            success: function (data) {
+                Toastify({
+                    text: "Хаяг амжилттай орууллаа",
+                    duration: 3000,
+                    newWindow: true,
+                    close: true,
+                    gravity: "bottom",
+                    position: "right",
+                    backgroundColor: "#0e2c88",
+                    stopOnFocus: true,
+                }).showToast();
+            },
+            error: function (data) {
+                alert("error");
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

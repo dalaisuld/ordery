@@ -27,6 +27,7 @@ import "./components/show-code";
 import "./components/side-menu";
 import "./components/mobile-menu";
 import "./components/side-menu-tooltip";
+import "./components/table2excel";
 import "./common/grid";
 // Dark mode switcher
 import "./dark-mode-switcher";

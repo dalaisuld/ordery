@@ -1,0 +1,65 @@
+<html lang="en" class="dark">
+<head>
+  <title><%= @page_title || 'Ordey | Order Management System' %></title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+<body class="login">
+<div class="container sm:px-10">
+  <div class="block xl:grid grid-cols-2 gap-4">
+    <!-- BEGIN: Register Info -->
+    <div class="hidden xl:flex flex-col min-h-screen">
+      <div class="my-auto">
+        <img alt="PlayHouse-Үйлдвэрийн үнээр хэрэгцээт бараа захиалгын групп" class="-intro-x w-1/2 -mt-16" src="/images/Logo-03.png">
+        <div class="-intro-x text-white font-medium text-4xl leading-tight mt-10">
+          УТАС: 7732-7733
+        </div>
+        <div class="-intro-x mt-5 text-lg text-white dark:text-gray-500">
+          <div class="w-full flex">
+            <i data-feather="map-pin" class="w-4 h-4 mr-2 mt-1"></i> Хорооллын эцэс Арвидах төв B1 давхар
+          </div>
+        </div>
+        <div class="-intro-x mt-5 text-lg text-white dark:text-gray-500">
+          <a href="https://www.facebook.com/groups/PlayHpuseZahialgiinGroup" target="_blank">
+            <div class="w-full flex">
+              <i data-feather="facebook" class="w-4 h-4 mr-2 mt-1"></i> PlayHouse-Үйлдвэрийн үнээр хэрэгцээт бараа захиалгын групп
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- END: Register Info -->
+    <!-- BEGIN: Register Form -->
+    <div class="h-screen xl:h-auto flex py-5 xl:py-0 my-10 xl:my-0">
+      <div class="my-auto mx-auto xl:ml-20 bg-white xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto">
+        <h2 class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">
+          Захиалгын мэдээлэл харах
+        </h2>
+        <div class="intro-x mt-2 text-gray-500 dark:text-gray-500 xl:hidden text-center">Та захиалга өгсөн утасны дугаараа оруулан захиалгын мэдээлээ харна уу</div>
+        <div class="intro-x mt-8">
+          <input type="text" class="intro-x login__input input input--lg border border-gray-300 block" placeholder="Утасны дугаар" id = "phone_number">
+<!--          <input type="text" class="intro-x login__input input input--lg border border-gray-300 block mt-4" placeholder="Баталгаажуулах код">-->
+        </div>
+        <div class="intro-x mt-2 xl:mt-2 text-center xl:text-left ">
+          <button class="button button--lg w-full xl:w-32 text-white bg-theme-1 xl:mr-3 align-top" id = "home_search">Хайх</button>
+        </div>
+      </div>
+    </div>
+    <!-- END: Register Form -->
+  </div>
+</div>
+<!-- BEGIN: JS Assets-->
+<%= javascript_pack_tag 'custom' %>
+<!-- END: JS Assets-->
+</body>
+<script>
+$("#home_search").click(function(){
+  window.location.href='/home/' + $('#phone_number').val();
+});
+</script>
+</html>

@@ -2,7 +2,7 @@ class DashboardController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @page_title = "Хянах самбар"
+    @page_title = 'Хянах самбар'
     @page_dashboard_active = true
     @users = User.all
     @waiting_order = OrderDetail.where(status: IS_WAITING).count
@@ -13,12 +13,12 @@ class DashboardController < ApplicationController
     @products = Product.count
     @customers = Client.count
     @ordered_products = OrderDetail.joins('as od inner join products as p on p.id = od.product_id')
-                                      .select('p.id, p.name, p.price, p.quantity, count(od.status) as all_product,
-                          SUM(case when od.status = 0 then 1 else 0 end) as is_waiting,
-                          SUM(case when od.status = 1 then 1 else 0 end) as is_willing,
-                          SUM(case when od.status = 2 then 1 else 0 end) as is_delivery,
-                          SUM(case when od.status = 3 then 1 else 0 end) as is_finish,
-                          SUM(case when od.status = 4 then 1 else 0 end) as is_cancelled')
+                                      .select('p.id, p.name, p.price, p.quantity, SUM(od.quantity) as all_product,
+                          SUM(case when od.status = 0 then od.quantity else 0 end) as is_waiting,
+                          SUM(case when od.status = 1 then od.quantity else 0 end) as is_willing,
+                          SUM(case when od.status = 2 then od.quantity else 0 end) as is_delivery,
+                          SUM(case when od.status = 3 then od.quantity else 0 end) as is_finish,
+                          SUM(case when od.status = 4 then od.quantity else 0 end) as is_cancelled')
                                       .group('p.id, p.name')
 
     @cargo_today = OrderDetail.select('SUM(cargo_price) AS total,

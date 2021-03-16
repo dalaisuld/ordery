@@ -9,11 +9,9 @@
         <i data-feather="send" class="w-4 h-4 mr-2"></i> SMS Илгээх
       </button>
     </a>
-    <a href="javascript:;" data-toggle="modal" data-target="#set_cargo_price" >
-      <button class="button mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white">
-        <i data-feather="dollar-sign" class="w-4 h-4 mr-2"></i> Бүх хүргэлтийг дуусгах
-      </button>
-    </a>
+    <button class="button mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white" id="complete_all_deliveries">
+      <i data-feather="dollar-sign" class="w-4 h-4 mr-2"></i> Бүх хүргэлтийг дуусгах
+    </button>
     <button id="excelExport" class="button mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white">
       <i data-feather="download" class="w-4 h-4 mr-2"></i> Excel татах
     </button>
@@ -21,12 +19,11 @@
 </div>
 
 
-
 <div class="intro-y  mt-5">
   <table class="table" id="table2excel">
     <thead>
     <tr>
-      <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap"><input type="checkbox"></th>
+      <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap"><input type="checkbox" id="checkAll"/></th>
       <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">Утасны дугаар</th>
       <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">Гэрийн хаяг</th>
       <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">Бүтгээдэхүүн</th>
@@ -36,8 +33,8 @@
     <tbody>
     <% @orders.each do |order| %>
       <tr class="hover:bg-gray-200">
-        <td class="border"><input type="checkbox"></td>
-        <td class="border"><%= order.phone_number %></td>
+        <td class="border"><input type="checkbox" class="cb-element" value="<%= order.order_details %>"></td>
+        <td class="border"><a href="/clients/<%= Client.find_by_phone_number(order.phone_number).id %>"><%= order.phone_number %></a></td>
         <td class="border"><%= order.address %></td>
         <td class="border"><%= order.pr_name %></td>
         <td class="border"><%= order.pr_count %></td>
@@ -59,4 +56,51 @@
             });
         });
     });
+
+    var orderDetailIDs = [];
+
+    $("#checkAll").change(function () {
+        $("input:checkbox").prop('checked', $(this).prop("checked"));
+    });
+
+    $("#complete_all_deliveries").click(function (){
+        orderDetailIDs = []
+        $("#table2excel input:checkbox:checked").map(function(){
+            if($(this).val() !== "on"){
+                $(this).val().split(",").forEach(function(order_detail_id) {
+                    orderDetailIDs.push(order_detail_id)
+                })
+            }
+        });
+
+        $.ajax({
+            url: "/orders/complete_all_deliveries",
+            type: "POST",
+            data:{
+                orderDetailIDs: orderDetailIDs,
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+            },
+            success: function(data) {
+                Toastify({
+                    text: "Хүргэлтүүдийг амжилттай дуусгалаа",
+                    duration: 3000,
+                    newWindow: true,
+                    close: true,
+                    gravity: "bottom",
+                    position: "right",
+                    backgroundColor: "#91C714",
+                    stopOnFocus: true,
+                }).showToast();
+                location.reload();
+            },
+            error: function(data){
+                alert(data.message)
+            }
+        });
+
+        console.log(orderDetailIDs);
+    });
+
 </script>

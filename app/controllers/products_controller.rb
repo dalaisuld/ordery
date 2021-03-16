@@ -30,7 +30,7 @@ class ProductsController < ApplicationController
                     name: params[:name], price: params[:price], total_amount: params[:quantity].to_i * params[:price].to_i, quantity: params[:quantity],
                     unit: params[:unit]})
     quantity =  params[:quantity]
-    products = OrderDetail.where('status NOT IN (4,3,2) and product_id = :id', id: product.id)
+    products = OrderDetail.where('status  IN (0,1) and product_id = :id', id: product.id)
     ordere_pr_count = products.select('sum(quantity) as total').first
     puts "neeedz ===>#{ordere_pr_count.total.to_s.to_i} "
     puts "quantity ===> #{quantity.to_s.to_i}"
@@ -38,7 +38,7 @@ class ProductsController < ApplicationController
       products.each do |product|
         product.status = IS_WILLING
         product.save
-        puts "--------------->>>>"
+        puts '--------------->>>>'
       end
     else
       counter = 0
@@ -51,10 +51,10 @@ class ProductsController < ApplicationController
         product.status = IS_WILLING
         product.save
         puts "counter =====> #{counter}"
-        break if quantity.to_s.to_i > counter.to_i
+        break if counter.to_i >= quantity.to_s.to_i
       end
     end
-    render json: { data: "success"}
+    render json: { data: 'success'}
   end
 
   def destroy

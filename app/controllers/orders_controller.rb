@@ -58,6 +58,7 @@ class OrdersController < ApplicationController
         product.quantity = product.quantity - order_detail.quantity
         product.save
         order_detail.status = IS_DELIVERY
+        order_detail.is_take_from_warehouse = false
         order_detail.delivery_date = Time.now.strftime('%Y-%m-%d')
         order_detail.is_cash = params[:cargo_is_cash]
         order_detail.save
@@ -76,6 +77,7 @@ class OrdersController < ApplicationController
         product.quantity = product.quantity - order_detail.quantity
         product.save
         order_detail.status = IS_FINISH
+        order_detail.is_take_from_warehouse = true
         order_detail.finish_date = Time.now.strftime('%Y-%m-%d')
         order_detail.is_cash = params[:cargo_is_cash]
         order_detail.save
@@ -99,10 +101,9 @@ class OrdersController < ApplicationController
     render json:{ message: 'амжиллтай' }, status: 200
   end
 
-
-
-  def set_take_confirm
-    order_details_ids =params[:orderDetailIDs]
+  #Хүргэлтэнд гарсан бүх барааг дуусгах
+  def complete_all_deliveries
+    order_details_ids = params[:orderDetailIDs]
     order_details_ids.each do |order_detail_id|
       order_detail = OrderDetail.find_by(id: order_detail_id)
       if order_detail
@@ -110,6 +111,22 @@ class OrdersController < ApplicationController
         product.quantity = product.quantity - order_detail.quantity
         product.save
         order_detail.status = IS_FINISH
+        order_detail.finish_date = Time.now.strftime('%Y-%m-%d')
+        order_detail.save
+      end
+    end
+    render json:{ message: 'амжиллтай' }, status: 200
+  end
+
+
+
+  def set_take_confirm
+    order_details_ids =params[:orderDetailIDs]
+    order_details_ids.each do |order_detail_id|
+      order_detail = OrderDetail.find_by(id: order_detail_id)
+      if order_detail
+        order_detail.status = IS_FINISH
+        order_detail.is_take_from_warehouse = false
         order_detail.delivery_date = Time.now.strftime('%Y-%m-%d')
         order_detail.save
       end

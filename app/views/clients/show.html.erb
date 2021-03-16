@@ -219,9 +219,10 @@
                 return
             }
         });
-
         // Захиалга хүргэлтэнд гарах
         $("#delivery_submit").click(function(event){
+            $(".main-screen").css('display', 'none');
+            $("body").addClass('loading');
             event.preventDefault();
 
             var orderDetailIDs = [];
@@ -232,13 +233,15 @@
                 url: "/orders/set_delivery",
                 type: "POST",
                 data:{
-                    orderDetailIDs: orderDetailIDs,
-                    cargo_is_cash: $('input[name="is_cash"]:checked').val()
+                   orderDetailIDs: orderDetailIDs,
+                   cargo_is_cash: $('input[name="is_cash"]:checked').val()
                 },
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
                 },
                 success: function(data) {
+                  $("body").removeClass("loading");
+                  $(".main-screen").css('display', '');
                     Toastify({
                         text: "Хүргэлтэнд бүргэгдлээ",
                         duration: 3000,
@@ -251,6 +254,8 @@
                     }).showToast();
                 },
                 error: function(data){
+                    $("body").removeClass("loading");
+                    $(".main-screen").css('display', '');
                     alert(data.message)
                 }
             });

@@ -45,7 +45,7 @@
                     }
                 },
                 {
-                    name: "username",
+                    name: "email",
                     title: "Хэрэглэгчийн нэр",
                     width: 15,
                     align: "center",
@@ -63,6 +63,6 @@
         });
     });
     function convertDatetimeToDate(date){
-        return date.substr(0,10)
+        return date.substr(0,19).replace("T", " ");
     }
 </script>

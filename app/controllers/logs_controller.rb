@@ -6,7 +6,7 @@ class LogsController < ApplicationController
     end
 
     def create
-        logs = Log.select("created_at, description, user_id, (select first_name from users where id = user_id) as username").
+        logs = Log.select("created_at, description, user_id, (select email from users where id = user_id) as email").
         search_by(params).page(params[:pageIndex]).per(params[:pageSize])
         logs_count = Log.all
         logs.each do |log|

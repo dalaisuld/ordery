@@ -63,7 +63,9 @@
         $("input:checkbox").prop('checked', $(this).prop("checked"));
     });
 
-    $("#complete_all_deliveries").click(function (){
+    $("#complete_all_deliveries").click(function (event){
+        event.preventDefault();
+        startLoader();
         orderDetailIDs = []
         $("#table2excel input:checkbox:checked").map(function(){
             if($(this).val() !== "on"){
@@ -83,6 +85,8 @@
                 xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
             },
             success: function(data) {
+                location.reload();
+                closeLoader();
                 Toastify({
                     text: "Хүргэлтүүдийг амжилттай дуусгалаа",
                     duration: 3000,
@@ -93,14 +97,11 @@
                     backgroundColor: "#91C714",
                     stopOnFocus: true,
                 }).showToast();
-                location.reload();
             },
             error: function(data){
-                alert(data.message)
+                closeLoader();
             }
         });
-
-        console.log(orderDetailIDs);
     });
 
 </script>

@@ -177,7 +177,9 @@
             $("#change_address").show();
         });
 
+        // Хэрэглэгчийн хаяг өөрчлөх
         $("#change_address").click(function(){
+            startLoader();
             if($("#address").val() > 0){
                 $.ajax({
                     url: "/orders/add_cargo",
@@ -189,6 +191,7 @@
                         xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
                     },
                     success: function(data) {
+                        closeLoader();
                         Toastify({
                             text: "хэрэглэгчийн хаяг амжилттай өөрчиллөө",
                             duration: 3000,
@@ -201,7 +204,7 @@
                         }).showToast();
                     },
                     error: function(data){
-                        alert(data.message)
+                        closeLoader();
                     }
                 });
             }
@@ -219,11 +222,11 @@
                 return
             }
         });
+
         // Захиалга хүргэлтэнд гарах
         $("#delivery_submit").click(function(event){
-            $(".main-screen").css('display', 'none');
-            $("body").addClass('loading');
             event.preventDefault();
+            startLoader();
 
             var orderDetailIDs = [];
             $("#product-table input:checkbox:checked").map(function(){
@@ -240,8 +243,7 @@
                     xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
                 },
                 success: function(data) {
-                  $("body").removeClass("loading");
-                  $(".main-screen").css('display', '');
+                    closeLoader();
                     Toastify({
                         text: "Хүргэлтэнд бүргэгдлээ",
                         duration: 3000,
@@ -254,9 +256,7 @@
                     }).showToast();
                 },
                 error: function(data){
-                    $("body").removeClass("loading");
-                    $(".main-screen").css('display', '');
-                    alert(data.message)
+                    closeLoader();
                 }
             });
             console.log(orderDetailIDs);
@@ -265,6 +265,7 @@
         // Бараа хүлээлгэн өгөх
         $("#take_products").click(function(event){
             event.preventDefault();
+            startLoader();
             var orderDetailIDs = [];
             $("#product-table input:checkbox:checked").map(function(){
                 orderDetailIDs.push($(this).val());
@@ -280,6 +281,7 @@
                     xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
                 },
                 success: function(data) {
+                    closeLoader();
                     Toastify({
                         text: "Бараа хүлээлгэн өглөө",
                         duration: 3000,
@@ -292,15 +294,16 @@
                     }).showToast();
                 },
                 error: function(data){
-                    alert(data.message)
+                    closeLoader();
                 }
             });
-            console.log(orderDetailIDs);
         });
 
         // Бараа Цуцлах
         $("#cancel_products").click(function(event){
             event.preventDefault();
+            startLoader();
+
             var orderDetailIDs = [];
             $("#product-table input:checkbox:checked").map(function(){
                 orderDetailIDs.push($(this).val());
@@ -316,6 +319,7 @@
                     xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
                 },
                 success: function(data) {
+                    closeLoader();
                     Toastify({
                         text: "Бараа цуцаллаа",
                         duration: 3000,
@@ -326,13 +330,11 @@
                         backgroundColor: "#91C714",
                         stopOnFocus: true,
                     }).showToast();
-                    location.reload();
                 },
                 error: function(data){
-                    alert(data.message)
+                    closeLoader();
                 }
             });
-            console.log(orderDetailIDs);
         });
     });
 

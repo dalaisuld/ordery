@@ -1,1 +1,68 @@
-<h1><%= @logs.inspect%></h1>
+<div id="jsGrid"></div>
+<script>
+    $(function () {
+        $("#jsGrid").jsGrid({
+            width: "100%",
+            filtering: true,
+            autoload: true,
+            paging: true,
+            pageLoading: true,
+            pageSize: 20,
+            pageButtonCount: 5,
+            sorting: true,
+            pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+            pagePrevText: "Prev",
+            pageNextText: "Next",
+            pageFirstText: "First",
+            pageLastText: "Last",
+            noDataContent: "Мэдээлэл байхгүй байна.",
+            pageNavigatorNextText: "...",
+            pageNavigatorPrevText: "...",
+            controller: {
+                loadData: function (filter) {
+                    return $.ajax({
+                        type: "POST",
+                        url: "/logs",
+                        data: filter,
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                        },
+                        success: function (data){
+                        }
+                    });
+                },
+            },
+            fields: [
+                {
+                    name: "created_at",
+                    title: "Огноо",
+                    width: 15,
+                    align: "center",
+                    type: "text",
+                    filtering: false,
+                    itemTemplate: function (value) {
+                        return convertDatetimeToDate(value)
+                    }
+                },
+                {
+                    name: "username",
+                    title: "Хэрэглэгчийн нэр",
+                    width: 15,
+                    align: "center",
+                    type: "text",
+                    filtering: true,
+                },
+                {
+                    name: "description",
+                    title: "Тайлбар",
+                    width: 50,
+                    type: "text",
+                    align: "center"
+                },
+            ]
+        });
+    });
+    function convertDatetimeToDate(date){
+        return date.substr(0,10)
+    }
+</script>

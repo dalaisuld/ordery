@@ -5,9 +5,9 @@ class Log < ApplicationRecord
 
     def self.by_description(description)
         if description.present?
-            where('description LIKE ?', "%#{description}%")
+            where('description LIKE ?', "%#{description}%").order("created_at desc")
           else
-            all
+            all.order("created_at desc")
           end
     end
 end

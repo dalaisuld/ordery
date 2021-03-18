@@ -22,10 +22,7 @@ class ProductsController < ApplicationController
     product = Product.create!({category_id: params[:category_id], user_id: current_user.id, 
     name: params[:name], price: params[:price], total_amount: params[:quantity].to_i * params[:price].to_i, quantity: params[:quantity], 
     unit: params[:unit]})
-    LogsHelper.create("Product дээр бүтээгдэхүүн нэмлээ #{product.id}", current_user.id)
-    Product.create!({category_id: params[:category_id], user_id: current_user.id,
-                     name: params[:name], price: params[:price], total_amount: params[:quantity].to_i * params[:price].to_i, quantity: params[:quantity],
-                     unit: params[:unit]})
+    LogsHelper.create("Product дээр бүтээгдэхүүн нэмлээ ##{product.id}", current_user.id)
   end
 
   def update

@@ -6,6 +6,7 @@ class Order < ApplicationRecord
   def self.search_by(search)
     by_account_number(search['account_number'])
    .by_phone_number(search['phone_number'])
+   .by_description(search['description'])
    .by_is_delivery_to_home(search['is_delivery_to_home'])
    .by_id(search['id'])
   end
@@ -21,6 +22,14 @@ class Order < ApplicationRecord
   def self.by_account_number(account_number)
     if account_number.present?
       where('account_number LIKE ?', "%#{account_number}%")
+    else
+      all
+    end
+  end
+
+  def self.by_description(description)
+    if description.present?
+      where('description LIKE ?', "%#{description}%")
     else
       all
     end

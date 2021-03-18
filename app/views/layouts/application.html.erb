@@ -59,6 +59,12 @@
       </a>
     </li>
 
+    <li>
+      <a href="<%= logs_path %>" class="menu">
+        <div class="menu__icon"> <i data-feather="file-text"></i> </div>
+        <div class="menu__title"> Түүхүүд </div>
+      </a>
+    </li>
   </ul>
 </div>
 <!-- END: Mobile Menu -->
@@ -120,6 +126,12 @@
         </a>
       </li>
 
+      <li>
+        <a href="<%= logs_path %>" class="side-menu <% if @page_logs_active %>side-menu--active <% end %>">
+          <div class="side-menu__icon"> <i data-feather="file-text"></i> </div>
+          <div class="side-menu__title"> Түүхүүд </div>
+        </a>
+      </li>
     </ul>
   </nav>
   <!-- END: Side Menu -->

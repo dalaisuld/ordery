@@ -18,6 +18,7 @@ class OrdersController < ApplicationController
         if @order.update(order_params)
           if @order.phone_number.present?
             Client.create!(phone_number: @order.phone_number) if Client.where(phone_number: @order.phone_number).count == 0
+            LogsHelper.create("Утасны дугаар update хийлээ ##{@order.phone_number}", current_user.id)
           end
           format.html { redirect_to orders_path, notice: 'Захиалгын мэдээлэл амжилттай өөрчлөгдлөө' }
         else
@@ -42,6 +43,7 @@ class OrdersController < ApplicationController
     orders = OrderDetail.where(product_id: params[:product])
     begin
       orders.update_all(cargo_price: params[:payment])
+      LogsHelper.create("Каргоны үнэ орууллаа  ##{params[:product]}-#{params[:payment]}", current_user.id)
       render json:{ message: 'амжиллтай хийлээ' }, status: 200
     rescue => e
       render json:{ message: 'амжиллгүй хийлээ' }, status: 422
@@ -64,6 +66,7 @@ class OrdersController < ApplicationController
         order_detail.save
       end
     end
+    LogsHelper.create("Бараа хүргэлтэнд гаргалаа ##{params[:orderDetailIDs]}", current_user.id)
     render json:{ message: 'амжиллтай хийлээ' }, status: 200
   end
 
@@ -83,6 +86,7 @@ class OrdersController < ApplicationController
         order_detail.save
       end
     end
+    LogsHelper.create("Бараа хүлээлгэж өгсөн ##{params[:orderDetailIDs]}", current_user.id)
     render json:{ message: 'амжиллтай' }, status: 200
   end
 
@@ -98,6 +102,7 @@ class OrdersController < ApplicationController
         order_detail.save
       end
     end
+    LogsHelper.create("Бараа цуцалсан ##{params[:orderDetailIDs]}", current_user.id)
     render json:{ message: 'амжиллтай' }, status: 200
   end
 

@@ -14,20 +14,20 @@
   <div class="block xl:grid grid-cols-2 gap-4">
     <div class="hidden xl:flex flex-col min-h-screen">
       <div class="my-auto">
-        <img alt="PlayHouse-Үйлдвэрийн үнээр хэрэгцээт бараа захиалгын групп" class="-intro-x w-1/2 -mt-16" src="/images/Logo-03.png">
+        <img alt="<%= SiteConfig.first.title || 'Ordery | developed by sukhochird' %>" class="-intro-x w-1/2 -mt-16" src="<%= SiteConfig.first.logo %>">
         <div class="-intro-x text-white font-medium text-4xl leading-tight mt-10">
-          УТАС: 7732-7733
+          УТАС: <%= SiteConfig.first.phone_number || '9999-9999' %>
         </div>
         <div class="-intro-x mt-5 text-lg text-white dark:text-gray-500">
           <div class="w-full flex">
-            <i data-feather="map-pin" class="w-4 h-4 mr-2 mt-1"></i> Хорооллын эцэс Арвидах төв B1 давхар
+            <i data-feather="map-pin" class="w-4 h-4 mr-2 mt-1"></i> <%= SiteConfig.first.address %>
           </div>
         </div>
+
         <div class="-intro-x mt-5 text-lg text-white dark:text-gray-500">
-          <a href="https://www.facebook.com/groups/PlayHpuseZahialgiinGroup" target="_blank">
+          <a href="<%= SiteConfig.first.facebook_url || 'https://www.facebook.com' %>" target="_blank">
             <div class="w-full flex">
-              <i data-feather="facebook" class="w-4 h-4 mr-2 mt-1"></i> PlayHouse-Үйлдвэрийн үнээр хэрэгцээт бараа
-              захиалгын групп
+              <i data-feather="facebook" class="w-4 h-4 mr-2 mt-1"></i> <%= SiteConfig.first.facebook_name || 'https://www.facebook.com' %>
             </div>
           </a>
         </div>
@@ -112,7 +112,7 @@
     <% else %>
       <div class="error-page flex flex-col lg:flex-row items-center justify-center h-screen text-center lg:text-left">
         <div class="-intro-x lg:mr-20">
-          <img alt="Midone Tailwind HTML Admin Template" class="h-48 lg:h-auto" src="https://midone.left4code.com/dist/images/error-illustration.svg">
+          <img alt="<%= SiteConfig.first.title || 'Order | Developed by sukhochird' %>" class="h-48 lg:h-auto" src="/images/error-illustration.svg">
         </div>
         <div class="text-gray-700 mt-10 lg:mt-0">
           <div class="intro-x text-8xl font-medium">Өө ...</div>

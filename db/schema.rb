@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_14_094443) do
+ActiveRecord::Schema.define(version: 2021_03_20_021709) do
 
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -24,6 +24,13 @@ ActiveRecord::Schema.define(version: 2021_03_14_094443) do
     t.string "phone_number"
     t.string "address"
     t.boolean "is_delivery_to_home"
+  end
+
+  create_table "logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "description"
+    t.string "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "order_details", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -69,6 +76,22 @@ ActiveRecord::Schema.define(version: 2021_03_14_094443) do
     t.integer "quantity", null: false
     t.integer "prev_quantity"
     t.integer "unit"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "site_configs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "name"
+    t.string "title"
+    t.string "logo"
+    t.string "address"
+    t.string "phone_number"
+    t.string "facebook_name"
+    t.string "facebook_url"
+    t.string "instagram_name"
+    t.string "instagram_url"
+    t.string "lat"
+    t.string "long"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

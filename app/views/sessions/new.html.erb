@@ -16,9 +16,9 @@
     <!-- BEGIN: Login Info -->
     <div class="hidden xl:flex flex-col min-h-screen">
       <div class="my-auto">
-        <img alt="PlayHouse-Үйлдвэрийн үнээр хэрэгцээт бараа захиалгын групп" class="-intro-x w-1/2 -mt-16" src="/images/Logo-03.png">
+        <img alt="<%= SiteConfig.first.title || 'Ordery | developed by sukhochird'%>" class="-intro-x w-1/2 -mt-16" src="<%= SiteConfig.first.logo %>">
         <div class="-intro-x text-white font-medium text-4xl leading-tight mt-10">
-          PLAY HOUSE ADMIN PANEL
+          <%= SiteConfig.first.title %> ADMIN PANEL
         </div>
       </div>
     </div>

@@ -34,4 +34,8 @@ class DashboardController < ApplicationController
     SUM(CASE WHEN is_cash = 1 THEN cargo_price ELSE 0 END) AS transfer').where('delivery_date like :q or finish_date like :q', q: "%#{Date.today.prev_day.prev_day.strftime('%Y-%m-%d')}%").first
 
   end
+
+  def smstest
+    ApplicationHelper.send_sms('99429967', 'Hello World')
+  end
 end

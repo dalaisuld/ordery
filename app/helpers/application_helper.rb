@@ -27,10 +27,7 @@ module ApplicationHelper
           response = HTTParty.get(url, query: req_params, timeout: 5)
           smslog.api_response = response.body
           smslog.is_send = (response.code == 200)
-          puts "response body --->>> #{response.body}"
-          puts "response code --->>> #{response.code}"
         elsif op.operator == 'UNITEL'
-          puts "Unitel"
           smslog.operator = op.operator
           req_params = {
             'uname': 'Yalalt',
@@ -40,22 +37,27 @@ module ApplicationHelper
             'mobile': phone_number
           }
           url = 'http://sms.unitel.mn/sendSMS.php'
-          response = HTTParty.get(url, query: req_params)
-          puts "response body --->>> #{response.body}"
-          puts "response code --->>> #{response.code}"
+          response = HTTParty.get(url, query: req_params, timeout: 5)
           smslog.api_response = response.body
           smslog.is_send = (response.code == 200)
         elsif op.operator == 'SKYTEL'
-          puts 'SKYTEL'
           smslog.operator = op.operator
           smslog.is_send = true
         elsif op.operator == 'GMOBILE'
-          puts 'GMOBILE'
           smslog.operator = op.operator
-          smslog.is_send = true
+          req_params = {
+              'username': 'Yalalt',
+              'password': 'OaeCrv@P7R',
+              'from': '132050',
+              'text': sms,
+              'to': phone_number
+          }
+          url = 'http://203.91.114.131/cgi-bin/sendsms'
+          response = HTTParty.get(url, query: req_params, timeout: 5)
+          smslog.api_response = response.body
+          smslog.is_send = (response.code == 200)
         end
       end
-
       smslog.save
     else
       Rails.logger.error '---Sms failed--->phone number lengh error--->'

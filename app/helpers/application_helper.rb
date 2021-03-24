@@ -17,7 +17,7 @@ module ApplicationHelper
         if op.operator == 'MOBICOM'
           smslog.operator = op.operator
           req_params = {
-            'servicename': '132050',
+            'servicename': 'Yalalt',
             'username': 'Yalalt',
             'from': '132050',
             'msg': sms,

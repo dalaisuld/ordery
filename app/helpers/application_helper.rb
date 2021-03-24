@@ -25,9 +25,10 @@ module ApplicationHelper
           }
           url = 'http://27.123.214.168/smsmt/mt'
           response = HTTParty.get(url, query: req_params, timeout: 5)
+          smslog.api_response = response.body
+          smslog.is_send = (response.code == 200)
           puts "response body --->>> #{response.body}"
           puts "response code --->>> #{response.code}"
-          smslog.is_send = (response.code == 200)
         elsif op.operator == 'UNITEL'
           puts "Unitel"
           smslog.operator = op.operator

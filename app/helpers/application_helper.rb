@@ -43,14 +43,24 @@ module ApplicationHelper
         elsif op.operator == 'SKYTEL'
           smslog.operator = op.operator
           smslog.is_send = true
+          req_params = {
+            'id': '1000133',
+            'src': '132050',
+            'text': sms,
+            'dest': phone_number
+          }
+          url = 'http://smsgw.skytel.mn/SMSGW-war/pushsms'
+          response = HTTParty.get(url, query: req_params, timeout: 5)
+          smslog.api_response = response.body
+          smslog.is_send = (response.code == 200)
         elsif op.operator == 'GMOBILE'
           smslog.operator = op.operator
           req_params = {
-              'username': 'Yalalt',
-              'password': 'OaeCrv@P7R',
-              'from': '132050',
-              'text': sms,
-              'to': phone_number
+            'username': 'Yalalt',
+            'password': 'ylalt*0322',
+            'from': '132050',
+            'text': sms,
+            'to': phone_number
           }
           url = 'http://203.91.114.131/cgi-bin/sendsms'
           response = HTTParty.get(url, query: req_params, timeout: 5)

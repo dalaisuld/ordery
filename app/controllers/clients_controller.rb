@@ -26,19 +26,13 @@ class ClientsController < ApplicationController
     client_count = Client.joins('As c left join orders as o on c.phone_number = o.phone_number left join order_details as od on od.order_id = o.id')
                        .select('c.id, c.phone_number, c.address, c.is_delivery_to_home, SUM(od.quantity) as all_product,
                                 SUM(case when od.status = 0 then od.quantity else 0 end) as is_waiting,
-                                SUM(case when od.status = 1 then od.quantity else 0 end) as is_willing,
-                                SUM(case when od.status = 2 then od.quantity else 0 end) as is_delivery,
-                                SUM(case when od.status = 3 then od.quantity else 0 end) as is_finish,
-                                SUM(case when od.status = 4 then od.quantity else 0 end) as is_cancelled')
+                                SUM(case when od.status = 1 then od.quantity else 0 end) as is_willing')
                        .group('c.id, c.phone_number, c.address, c.is_delivery_to_home').search_by(params).length
 
     clients = Client.joins('As c left join orders as o on c.phone_number = o.phone_number left join order_details as od on od.order_id = o.id')
                   .select('c.id, c.phone_number, c.address, c.is_delivery_to_home, SUM(od.quantity) as all_product,
                           SUM(case when od.status = 0 then od.quantity else 0 end) as is_waiting,
-                          SUM(case when od.status = 1 then od.quantity else 0 end) as is_willing,
-                          SUM(case when od.status = 2 then od.quantity else 0 end) as is_delivery,
-                          SUM(case when od.status = 3 then od.quantity else 0 end) as is_finish,
-                          SUM(case when od.status = 4 then od.quantity else 0 end) as is_cancelled')
+                          SUM(case when od.status = 1 then od.quantity else 0 end) as is_willing')
                   .group('c.id, c.phone_number, c.address, c.is_delivery_to_home')
                   .page(params[:pageIndex]).per(params[:pageSize]).order(order_by)
     clients = clients.search_by(params)

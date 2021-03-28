@@ -5,7 +5,7 @@ class Client < ApplicationRecord
 
   def self.by_phone_number(phone_number)
     if phone_number.present?
-      where('phone_number LIKE ?', "%#{phone_number}%")
+      where('phone_number LIKE ?', "#{phone_number}%")
     else
       all
     end

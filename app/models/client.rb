@@ -5,7 +5,7 @@ class Client < ApplicationRecord
 
   def self.by_phone_number(phone_number)
     if phone_number.present?
-      where('c.phone_number LIKE ?', "%#{phone_number}%")
+      where('phone_number LIKE ?', "%#{phone_number}%")
     else
       all
     end
@@ -13,7 +13,7 @@ class Client < ApplicationRecord
 
   def self.by_address(address)
     if address.present?
-      where('c.address LIKE ?', "%#{address}%")
+      where('address LIKE ?', "%#{address}%")
     else
       all
     end

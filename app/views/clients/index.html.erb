@@ -71,43 +71,6 @@
                     title: "Хаяг",
                     width: 200,
                     type: "text",
-                },
-                {
-                    name: "is_delivery_to_home",
-                    type: "checkbox",
-                    filtering: false,
-                    title: "Dlvr",
-                    width: 30,
-                },
-                {
-                    name: "all_product",
-                    title: "Бүх",
-                    filtering: false,
-                    type: "text",
-                    align: "center",
-                    width: 20,
-                },
-                {
-                    name: "is_waiting",
-                    title: "Х/Б",
-                    filtering: false,
-                    type: "text",
-                    align: "center",
-                    width: 20,
-                    itemTemplate: function (value) {
-                        return formatWaitingStatus(value)
-                    }
-                },
-                {
-                    name: "is_willing",
-                    title: "Бэлэн",
-                    filtering: false,
-                    type: "text",
-                    align: "center",
-                    width: 20,
-                    itemTemplate: function (value) {
-                        return formatWillingStatus(value)
-                    }
                 }
             ],
             rowClick: function(args) {

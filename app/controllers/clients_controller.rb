@@ -23,8 +23,9 @@ class ClientsController < ApplicationController
     if params[:sortField].present? && params[:sortOrder].present?
       order_by = "#{params[:sortField]} #{params[:sortOrder]} "
     end
+    clients_count = Client.search_by(params).count
     clients = Client.search_by(params).page(params[:pageIndex]).per(params[:pageSize]).order(order_by)
-    render json: { data: clients, itemsCount: clients.count }
+    render json: { data: clients, itemsCount: clients_count }
   end
 
   private

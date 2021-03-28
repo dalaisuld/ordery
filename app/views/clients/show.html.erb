@@ -149,13 +149,6 @@
               <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
               <div class="font-medium">Огноо: <%= DateTime.now.strftime('%Y-%m-%d %H:%M:%S') %></div>
               <div class="font-medium mt-3 mb-3">Бүтээгдэхүүн</div>
-              <% @delivered_product.each do |product| %>
-                <div class="font-medium"><%= product.name %> <%= number_to_currency(product.actual_price, unit: "₮", strip_insignificant_zeros: true) %>*<%= product.quantity %>=<%= number_to_currency(product.actual_price.to_i * product.quantity.to_i, unit: "₮ ", strip_insignificant_zeros: true) %></div>
-                <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
-              <% end %>
-              <div class="font-medium mt-3">
-                Каргоны төлбөр = <%= number_to_currency(@total_cargo_price, unit: "₮", strip_insignificant_zeros: true) %>
-              </div>
             </div>
           </div>
         </div>

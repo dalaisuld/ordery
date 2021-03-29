@@ -5,11 +5,12 @@ class ItemsImportsController < ApplicationController
 
   def create
     @items_import = ItemsImport.new(params[:items_import])
-    if @items_import.save(current_user.id)
+    response = @items_import.save(current_user.id)
+    if response == true
       flash[:notice] = 'Амжилттай upload хийлээ.'
       redirect_to orders_path
     else
-      flash[:alert] = 'Амжилтгүй upload хийлээ.'
+      flash[:alert] = response
       render :new
     end
   end

@@ -64,9 +64,9 @@ class ItemsImport
           end
         end
       end
-      true
-    rescue
-      false
+      return true
+    rescue => message
+      return  message
     end
   end
 end

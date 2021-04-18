@@ -73,14 +73,14 @@
         </div>
         <div class="text-center rounded-md w-20 py-3">
           <div class="font-medium text-theme-1 dark:text-theme-10 text-xl"><%= @deliveries.length %></div>
-          <div class="text-gray-600">Хүргэлтэнд</div>
+          <div class="text-gray-600">Хүргэлт</div>
         </div>
       </div>
     </div>
     <div class="nav-tabs flex flex-col sm:flex-row justify-center lg:justify-start">
       <a data-toggle="tab" data-target="#profile" href="javascript:;" class="py-4 sm:mr-8 flex items-center active"> <i class="w-4 h-4 mr-2" data-feather="user"></i> Профайл </a>
-      <a data-toggle="tab" data-target="#account" href="javascript:;" class="py-4 sm:mr-8 flex items-center"> <i class="w-4 h-4 mr-2" data-feather="shield"></i> Захиалгийн мэдээлэл </a>
-      <a data-toggle="tab" data-target="#change-password" href="javascript:;" class="py-4 sm:mr-8 flex items-center"> <i class="w-4 h-4 mr-2" data-feather="lock"></i> Хүргэлтийн мэдэлээл </a>
+      <a data-toggle="tab" data-target="#transaction" href="javascript:;" class="py-4 sm:mr-8 flex items-center"> <i class="w-4 h-4 mr-2" data-feather="file-text"></i> Шилжүүлгийн мэдээлэл </a>
+      <a data-toggle="tab" data-target="#delivery" href="javascript:;" class="py-4 sm:mr-8 flex items-center"> <i class="w-4 h-4 mr-2" data-feather="truck"></i> Хүргэлтийн мэдэлээл </a>
     </div>
   </div>
   <!-- END: Profile Info -->
@@ -119,50 +119,111 @@
           </h2>
         </div>
         <div class="p-5">
-          <div class="tab-content">
-            <div class="tab-content__pane active" id="latest-tasks-new">
-              <% @products.each.each_with_index do |product, counter| %>
-                <div class="flex items-center <% unless counter==0 %>mt-5<% end %>">
-                  <div class="border-l-2 border-theme-1 pl-4">
-                    <a href="" class="font-medium"><%= product.name %> (<%= product.quantity %>ш)</a>
-                    <div class="text-gray-600">
-                      <% if product.status == IS_WAITING %>
-                        <span class="text-theme-12">Хүлээгдэж байгаа</span>
-                      <% elsif product.status == IS_WILLING %>
-                        <span class="text-theme-1">Бараа ирсэн байна</span>
-                      <% elsif product.status == IS_DELIVERY %>
-                        Хүргэлтэнд гарсан
-                      <% elsif product.status == IS_FINISH %>
-                        Хүлээлгэж өгсөн
-                      <% elsif product.status == IS_CANCELED %>
-                        Цуцалсан
-                      <% end %>
-                    </div>
-                    <div class="text-gray-600">Үнэ: <%= number_to_currency(product.actual_price, unit: "₮ ", strip_insignificant_zeros: true) %> x <%= product.quantity %> = <%= number_to_currency(product.actual_price.to_i * product.quantity.to_i, unit: "₮ ", strip_insignificant_zeros: true) %></div>
-                    <!--<div class="text-gray-600">Үнэ: <%#= number_to_currency(product.transition_amount, unit: "₮ ", strip_insignificant_zeros: true) %></div>-->
-                    <div class="text-gray-600">Карго: <%= number_to_currency(product.cargo_price, unit: "₮ ", strip_insignificant_zeros: true) %></div>
-                  </div>
-                  <% if product.status == IS_WILLING %>
-                    <input class="input  ml-auto border" type="checkbox" checked>
+          <% @products.each.each_with_index do |product, counter| %>
+            <div class="flex items-center <% unless counter==0 %>mt-5<% end %>">
+              <div class="border-l-2 border-theme-1 pl-4">
+                <a href="" class="font-medium"><%= product.name %> (<%= product.quantity %>ш)</a>
+                <div class="text-gray-600">
+                  <% if product.status == IS_WAITING %>
+                    <span class="text-theme-12">Хүлээгдэж байгаа</span>
+                  <% elsif product.status == IS_WILLING %>
+                    <span class="text-theme-1">Бараа ирсэн байна</span>
+                  <% elsif product.status == IS_DELIVERY %>
+                    Хүргэлтэнд гарсан
+                  <% elsif product.status == IS_FINISH %>
+                    Хүлээлгэж өгсөн
+                  <% elsif product.status == IS_CANCELED %>
+                    Цуцалсан
                   <% end %>
                 </div>
-              <% end %>
-
-              <div class="mt-5">
-                <select class="input input--sm border mr-2">
-                <option>Үндсэн хаяг дээр хүргүүлэн авах</option>
-                <option>Өөр хаяг дээр хүргүүлэн авах</option>
-              </select>
+                <div class="text-gray-600">Үнэ: <%= number_to_currency(product.actual_price, unit: "₮ ", strip_insignificant_zeros: true) %> x <%= product.quantity %> = <%= number_to_currency(product.actual_price.to_i * product.quantity.to_i, unit: "₮ ", strip_insignificant_zeros: true) %></div>
+                <!--<div class="text-gray-600">Үнэ: <%#= number_to_currency(product.transition_amount, unit: "₮ ", strip_insignificant_zeros: true) %></div>-->
+                <div class="text-gray-600">Карго: <%= number_to_currency(product.cargo_price, unit: "₮ ", strip_insignificant_zeros: true) %></div>
               </div>
-              <button class="button button--sm w-full xl:w-auto text-white bg-theme-1 xl:mr-3 align-top mt-2" id="update_button">Хүргэлийн захиалга өгөх</button>
+              <% if product.status == IS_WILLING %>
+                <input class="input  ml-auto border" type="checkbox" checked>
+              <% end %>
             </div>
+          <% end %>
+
+          <div class="mt-5">
+            <select class="input input--sm border mr-2">
+              <option>Үндсэн хаяг дээр хүргүүлэн авах</option>
+              <option>Өөр хаяг дээр хүргүүлэн авах</option>
+            </select>
           </div>
+          <button class="button button--sm w-full xl:w-auto text-white bg-theme-1 xl:mr-3 align-top mt-2" id="update_button">Хүргэлтийн захиалга өгөх</button>
         </div>
       </div>
     </div>
+    <div class="tab-content__pane" id="transaction">
+      <div class="intro-y box col-span-12 lg:col-span-6 mt-5">
+        <div class="flex items-center px-5 py-5 sm:py-0 border-b border-gray-200 dark:border-dark-5">
+          <h2 class="font-medium text-base mr-auto lg:p-3">
+            Шилжүүлгийн мэдээлэл
+          </h2>
+        </div>
+        <div class="p-5">
+          <% @orders.each.each_with_index do |order, counter| %>
+            <div class="flex items-center <% unless counter==0 %>mt-5<% end %>">
+              <div class="border-l-2 border-theme-1 pl-4">
+                <a href="" class="font-medium"><%= order.account_number %> данснаас <span><%= number_to_currency(order.amount, unit: "₮", strip_insignificant_zeros: true) %></span> төгрөгийг <%= order.transition_date %> -д шилжүүлсэн</a>
+                <div class="text-gray-600">
+                  <span class="font-bold">Гүйлгээний утга:</span> <%= order.description %>
+                </div>
+                <div class="text-gray-600">
+                  <span class="font-bold">Бүртгэсэн огноо:</span> <%= order.created_at.strftime('%Y/%m/%d %H:%M:%S') %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="tab-content__pane" id="delivery">
+      <div class="intro-y box col-span-12 lg:col-span-6 mt-5">
+        <div class="flex items-center px-5 py-5 sm:py-0 border-b border-gray-200 dark:border-dark-5">
+          <h2 class="font-medium text-base mr-auto lg:p-3">
+            Хүргэлтийн мэдээлэл
+          </h2>
+        </div>
+        <div class="p-5">
+          <% @deliveries.each.each_with_index do |delivery, counter| %>
+            <div class="flex items-center <% unless counter==0 %>mt-5<% end %>">
+              <div class="border-l-2 border-theme-1 pl-4">
+                <a href="" class="font-medium"><%= delivery.phone_number %></a>
+                <div class="text-gray-600">
+                  <span class="font-bold">Хаяг:</span> <%= delivery.address %>
+                </div>
+                <div class="text-gray-600">
+                  <span class="font-bold">Хүргэлтийн хөлс:</span> 2,000
+                </div>
+              </div>
+            </div>
 
-    <div class="tab-content__pane" id="account">
-      asdfads
+            <div class="flex items-center mt-4">
+              <div class="w-2 h-2 <% if delivery.status == 1 %>bg-theme-9<% else %>bg-theme-11<% end %> rounded-full mr-3"></div>
+              <span>Хүлээгдэж байгаа <% if delivery.status == 1 %>(<%= delivery.updated_at.strftime('%Y-%m-%d %H:%M') %>)<% end %></span>
+              <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+            </div>
+            <div class="flex items-center mt-1">
+              <div class="w-2 h-2 <% if delivery.status == 2 %>bg-theme-9<% else %>bg-theme-11<% end %> dark:bg-theme-10 rounded-full mr-3"></div>
+              <span>Бараа хүргэлтэнд бэлтгэсэн <% if delivery.status == 2 %>(<%= delivery.updated_at.strftime('%Y-%m-%d %H:%M') %>)<% end %></span>
+              <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+            </div>
+            <div class="flex items-center mt-1">
+              <div class="w-2 h-2 <% if delivery.status == 3 %>bg-theme-9<% else %>bg-theme-11<% end %> dark:bg-theme-10 rounded-full mr-3"></div>
+              <span>Хүргэлтэнд замдаа гарсан <% if delivery.status == 3 %>(<%= delivery.updated_at.strftime('%Y-%m-%d %H:%M') %>)<% end %></span>
+              <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+            </div>
+            <div class="flex items-center mt-1">
+              <div class="w-2 h-2 <% if delivery.status == 4 %>bg-theme-9<% else %>bg-theme-11<% end %> rounded-full mr-3"></div>
+              <span>Бараа хүргэгдсэн <% if delivery.status == 4 %>(<%= delivery.updated_at.strftime('%Y-%m-%d %H:%M') %>)<% end %></span>
+              <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+            </div>
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
 </div>

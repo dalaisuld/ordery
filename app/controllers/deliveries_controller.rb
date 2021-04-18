@@ -22,7 +22,12 @@ class DeliveriesController < ApplicationController
   # end
 
   def list
-    deliveries = Delivery.filter_day(params[:filter_day])
+    order_by = 'id desc'
+    if params[:sortField].present? && params[:sortOrder].present?
+      order_by = "#{params[:sortField]} #{params[:sortOrder]} "
+    end
+    deliveries = Delivery.filter_day(params[:filter_day]).search_by(params).page(params[:pageIndex]).per(params[:pageSize]).order(order_by)
+    deliveries_count = Delivery.filter_day(params[:filter_day]).search_by(params).count
     new_arr = []
     deliveries.each do |delivery|
       new_arr.push({
@@ -49,6 +54,6 @@ class DeliveriesController < ApplicationController
                    })
     end
     puts new_arr.inspect
-    render json: {data: new_arr, itemsCount: deliveries.count}
+    render json: {data: new_arr, itemsCount: deliveries_count}
   end
 end

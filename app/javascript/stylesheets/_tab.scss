@@ -1,5 +1,6 @@
 .nav-tabs .active {
-  @apply border-b-2 border-theme-1 font-medium;
+  @apply border-b-2
+  font-medium;
 }
 .tab-content .tab-content__pane {
   top: -9999px;

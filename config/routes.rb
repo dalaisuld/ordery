@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   post 'orders/take_products', :to => 'orders#take_products'
   post 'orders/cancel_products', :to => 'orders#cancel_products'
   post 'orders/complete_all_deliveries', :to => 'orders#complete_all_deliveries'
+  post 'deliveries/list', :to => 'deliveries#list'
 
   get 'smstest', to: 'dashboard#smstest'
 end

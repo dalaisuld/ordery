@@ -1,0 +1,2 @@
+class DeliveryProduct < ApplicationRecord
+end

@@ -4,7 +4,9 @@ class HomeController < ApplicationController
   end
 
   def show
+    @orders = Order.where(phone_number: params[:phone_number])
     @clients = Client.find_by(phone_number: params[:phone_number])
+    @deliveries = Delivery.where(phone_number: params[:phone_number])
     @products = Order.joins('AS o
         LEFT JOIN
     order_details AS od ON o.id = od.order_id

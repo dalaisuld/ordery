@@ -1,167 +1,172 @@
-<html lang="en" class="dark">
+<!DOCTYPE html>
+<html lang="en" class="light">
 <head>
-  <title><%= @page_title || ' | Order Management System' %></title>
+  <title><%= @page_title || 'Ordey | Order Management System' %></title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
-
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 </head>
-<body class="login">
-<div class="container sm:px-10">
-  <div class="block xl:grid grid-cols-2 gap-4">
-    <div class="hidden xl:flex flex-col min-h-screen">
-      <div class="my-auto">
-        <img alt="<%= SiteConfig.first.title || 'Ordery | developed by sukhochird' %>" class="-intro-x w-1/2 -mt-16" src="<%= SiteConfig.first.logo %>">
-        <div class="-intro-x text-white font-medium text-4xl leading-tight mt-10">
-          УТАС: <%= SiteConfig.first.phone_number || '9999-9999' %>
-        </div>
-        <div class="-intro-x mt-5 text-lg text-white dark:text-gray-500">
-          <div class="w-full flex">
-            <i data-feather="map-pin" class="w-4 h-4 mr-2 mt-1"></i> <%= SiteConfig.first.address %>
-          </div>
-        </div>
+<body class="app">
+<!-- BEGIN: Mobile Menu -->
+<div class="mobile-menu md:hidden">
+  <div class="mobile-menu-bar">
+    <a href="" class="flex mr-auto">
+      <img alt="Midone Tailwind HTML Admin Template" class="w-6" src="/images/logo.svg">
+    </a>
+    <a href="javascript:;" id="mobile-menu-toggler"> <i data-feather="bar-chart-2" class="w-8 h-8 text-white transform -rotate-90"></i> </a>
+  </div>
+  <ul class="border-t border-theme-24 py-5 hidden">
+    <li>
+      <a href="index.html" class="menu menu--active">
+        <div class="menu__icon"> <i data-feather="home"></i> </div>
+        <div class="menu__title"> Dashboard </div>
+      </a>
+    </li>
+  </ul>
+</div>
+<!-- END: Mobile Menu -->
 
-        <div class="-intro-x mt-5 text-lg text-white dark:text-gray-500">
-          <a href="<%= SiteConfig.first.facebook_url || 'https://www.facebook.com' %>" target="_blank">
-            <div class="w-full flex">
-              <i data-feather="facebook" class="w-4 h-4 mr-2 mt-1"></i> <%= SiteConfig.first.facebook_name || 'https://www.facebook.com' %>
-            </div>
-          </a>
+<!-- BEGIN: Top Menu -->
+<nav class="top-nav">
+  <ul>
+    <li>
+      <a href="top-menu-light-dashboard.html" class="top-menu top-menu--active">
+        <div class="top-menu__icon"> <i data-feather="home"></i> </div>
+        <div class="top-menu__title"> Dashboard </div>
+      </a>
+    </li>
+  </ul>
+</nav>
+<!-- END: Top Menu -->
+<!-- BEGIN: Content -->
+<div class="content">
+  <!-- BEGIN: Profile Info -->
+  <div class="intro-y box px-5 pt-5 mt-5">
+    <div class="flex flex-col lg:flex-row border-b border-gray-200 dark:border-dark-5 pb-5 -mx-5">
+      <div class="flex flex-1 px-5 items-center justify-center lg:justify-start">
+        <div class="w-20 h-20 sm:w-24 sm:h-24 flex-none lg:w-32 lg:h-32 image-fit relative">
+          <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="/images/profile-10.jpg">
+        </div>
+        <div class="ml-5">
+          <div class="w-24 sm:w-40 truncate sm:whitespace-normal font-medium text-lg"><%= @clients.phone_number %></div>
+          <div class="text-gray-600">Хэрэглэгч</div>
+        </div>
+      </div>
+      <div class="mt-6 lg:mt-0 flex-1 dark:text-gray-300 px-5 border-l border-r border-gray-200 dark:border-dark-5 border-t lg:border-t-0 pt-5 lg:pt-0">
+        <div class="font-medium text-center lg:text-left lg:mt-5">Хэрэглэгчийн мэдээлэл</div>
+        <div class="flex flex-col justify-center items-center lg:items-start mt-4">
+          <div class="truncate sm:whitespace-normal flex items-center"> <i data-feather="mail" class="w-4 h-4 mr-2"></i> E-Mail хаяг холбоогүй байна </div>
+          <div class="truncate sm:whitespace-normal flex items-center mt-3"> <i data-feather="facebook" class="w-4 h-4 mr-2"></i> Facebook хаяг холбогдоогүй байна </div>
+        </div>
+      </div>
+      <div class="mt-6 lg:mt-0 flex-1 flex items-center justify-center px-5 border-t lg:border-0 border-gray-200 dark:border-dark-5 pt-5 lg:pt-0">
+        <div class="text-center rounded-md w-20 py-3">
+          <div class="font-medium text-theme-1 dark:text-theme-10 text-xl"><%= @orders.count %></div>
+          <div class="text-gray-600">Захиалга</div>
+        </div>
+        <div class="text-center rounded-md w-20 py-3">
+          <div class="font-medium text-theme-1 dark:text-theme-10 text-xl"><%= @products.length %></div>
+          <div class="text-gray-600">Бараа</div>
+        </div>
+        <div class="text-center rounded-md w-20 py-3">
+          <div class="font-medium text-theme-1 dark:text-theme-10 text-xl"><%= @deliveries.length %></div>
+          <div class="text-gray-600">Хүргэлтэнд</div>
         </div>
       </div>
     </div>
-    <% if @clients.present? %>
-      <div class="h-screen xl:h-auto flex py-5 xl:py-0 my-10 xl:my-0">
-        <div class="my-auto mx-auto xl:ml-20 bg-white xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto">
-          <div class="col-span-12 mt-6">
-            <div class="intro-y overflow-auto lg:overflow-visible mt-8 sm:mt-0">
-              <table class="table table-report sm:mt-2">
-                <thead>
-                <tr>
-                  <th class="whitespace-nowrap">Бүтээгдэхүүн</th>
-                  <th class="text-center whitespace-nowrap">Шилжүүлсэн</th>
-                  <th class="text-center whitespace-nowrap">Карго</th>
-                  <th class="text-center whitespace-nowrap">Төлөв</th>
-                </tr>
-                </thead>
-                <tbody>
-                <% @products.each do |product| %>
-                  <tr class="intro-x">
-                    <td>
-                      <a href="" class="font-medium whitespace-nowrap"><%= product.name %></a>
-                      <div class="text-gray-600 text-xs whitespace-nowrap mt-0.5"><%= number_to_currency(product.actual_price, unit: "₮ ", strip_insignificant_zeros: true) %> x <%= product.quantity %> = <%= number_to_currency(product.actual_price.to_i * product.quantity.to_i, unit: "₮ ", strip_insignificant_zeros: true) %></div>
-                    </td>
-                    <td class="text-center"><%= number_to_currency(product.transition_amount, unit: "₮ ", strip_insignificant_zeros: true) %></td>
-                    <td class="text-center"><%= number_to_currency(product.cargo_price, unit: "₮ ", strip_insignificant_zeros: true) %></td>
-                    <td class="table-report__action w-56">
+    <div class="nav-tabs flex flex-col sm:flex-row justify-center lg:justify-start">
+      <a data-toggle="tab" data-target="#profile" href="javascript:;" class="py-4 sm:mr-8 flex items-center active"> <i class="w-4 h-4 mr-2" data-feather="user"></i> Профайл </a>
+      <a data-toggle="tab" data-target="#account" href="javascript:;" class="py-4 sm:mr-8 flex items-center"> <i class="w-4 h-4 mr-2" data-feather="shield"></i> Захиалгийн мэдээлэл </a>
+      <a data-toggle="tab" data-target="#change-password" href="javascript:;" class="py-4 sm:mr-8 flex items-center"> <i class="w-4 h-4 mr-2" data-feather="lock"></i> Хүргэлтийн мэдэлээл </a>
+    </div>
+  </div>
+  <!-- END: Profile Info -->
+  <div class="tab-content mt-5">
+    <div class="tab-content__pane active" id="profile">
+      <div class="intro-y box col-span-12 lg:col-span-6">
+        <div class="flex items-center px-5 py-5 sm:py-0 border-b border-gray-200 dark:border-dark-5">
+          <h2 class="font-medium text-base mr-auto lg:p-3">
+            Үндсэн хаяг
+          </h2>
+        </div>
+        <div class="p-5">
+          <div>
+            <div class="mt-0.5 text-gray-600 dark:text-gray-600">Та бараагаа хүргүүлж авах бол ДҮҮРЭГ, ХОРОО гэрийн хаяг тодорхой бичээрэй.</div>
+            <div class="mt-0.5 text-gray-600 dark:text-gray-600">Анхааруулга: Та барааныхаа төлөвийг сайн хараарай. Ирсэн бараа л хүргэлтэнд гарна.</div>
+            <div class="mt-0.5 text-gray-600 dark:text-gray-600">Хүргэлтийн компаний хаяг харгалзахгүй хүргэлтийн төлбөр 4,000₮ </div>
+          </div>
+          <textarea class="input w-full border mt-2" placeholder="Гэрийн хаягаа энд бичнэ үү!" rows="4" name="address" id="address"><%= @clients.address %></textarea>
+          <div class="flex flex-col sm:flex-row mt-2">
+            <div class="flex items-center text-gray-700 dark:text-gray-500 mr-2">
+              <input type="radio" class="input border mr-2" id="1" name="is_delivery_to_home" value="1" <% if @clients.is_delivery_to_home == true %>checked<% end %>>
+              <label class="cursor-pointer select-none" for="1">Гэртээ хүргүүлж авах</label>
+            </div>
+            <div class="flex items-center text-gray-700 dark:text-gray-500 mr-2 mt-2 sm:mt-0">
+              <input type="radio" class="input border mr-2" id="0" name="is_delivery_to_home" value="0" <% if @clients.is_delivery_to_home == false %>checked<% end %>>
+              <label class="cursor-pointer select-none" for="0">Агуулхаас ирж авах</label>
+            </div>
+          </div>
+          <button class="button button--sm w-full xl:w-32 text-white bg-theme-1 xl:mr-3 align-top mt-2" id="update_button">Хадгалах</button>
+        </div>
+      </div>
+      <div class="intro-y box col-span-12 lg:col-span-6 mt-5">
+        <div class="flex items-center px-5 py-5 sm:py-0 border-b border-gray-200 dark:border-dark-5">
+          <h2 class="font-medium text-base mr-auto lg:p-3">
+            Барааны мэдээлэл
+          </h2>
+        </div>
+        <div class="p-5">
+          <div class="tab-content">
+            <div class="tab-content__pane active" id="latest-tasks-new">
+              <% @products.each.each_with_index do |product, counter| %>
+                <div class="flex items-center <% unless counter==0 %>mt-5<% end %>">
+                  <div class="border-l-2 border-theme-1 pl-4">
+                    <a href="" class="font-medium"><%= product.name %></a>
+                    <div class="text-gray-600">
                       <% if product.status == IS_WAITING %>
-                        <div class="flex justify-center items-center">
-                          <a class="flex items-center text-theme-12" href="">
-                            <i data-feather="alert-octagon" class="w-4 h-4 mr-1"></i> Хүлээгдэж байгаа </a>
-                        </div>
+                        <span class="text-theme-12">Хүлээгдэж байгаа</span>
                       <% elsif product.status == IS_WILLING %>
-                        <div class="flex justify-center items-center">
-                          <a class="flex items-center" href="">
-                            <i data-feather="alert-octagon" class="w-4 h-4 mr-1"></i> Бараа ирсэн байна </a>
-                        </div>
+                        <span class="text-theme-1">Бараа ирсэн байна</span>
                       <% elsif product.status == IS_DELIVERY %>
-                        <div class="flex justify-center items-center">
-                          <a class="flex items-center" href="">
-                            <i data-feather="truck" class="w-4 h-4 mr-1"></i> Хүргэлтэнд гарсан </a>
-                        </div>
+                        Хүргэлтэнд гарсан
                       <% elsif product.status == IS_FINISH %>
-                        <div class="flex justify-center items-center">
-                          <a class="flex items-center text-theme-9" href="">
-                            <i data-feather="shopping-cart" class="w-4 h-4 mr-1"></i> Хүлээлгэж өгсөн </a>
-                        </div>
+                        Хүлээлгэж өгсөн
                       <% elsif product.status == IS_CANCELED %>
-                        <div class="flex justify-center items-center">
-                          <a class="flex items-center text-theme-6" href="">
-                            <i data-feather="trash" class="w-4 h-4 mr-1"></i> Цуцалсан </a>
-                        </div>
+                        Цуцалсан
                       <% end %>
-                    </td>
-                  </tr>
-                <% end %>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="intro-x mt-8">
-            <div>
-              <div class="mt-0.5 text-gray-600 dark:text-gray-600">Та бараагаа хүргүүлж авах бол ДҮҮРЭГ, ХОРОО гэрийн хаяг тодорхой бичээрэй.</div>
-              <div class="mt-0.5 text-gray-600 dark:text-gray-600">Анхааруулга: Та барааныхаа төлөвийг сайн хараарай. Ирсэн бараа л хүргэлтэнд гарна.</div>
-              <div class="mt-0.5 text-gray-600 dark:text-gray-600">Хүргэлтийн компаний хаяг харгалзахгүй хүргэлтийн төлбөр 4,000₮ </div>
-            </div>
-            <textarea class="input w-full border mt-2" placeholder="Гэрийн хаягаа энд бичнэ үү!" rows="4" name="address" id="address"><%= @clients.address %></textarea>
-            <div class="flex flex-col sm:flex-row mt-2">
-              <div class="flex items-center text-gray-700 dark:text-gray-500 mr-2">
-                <input type="radio" class="input border mr-2" id="1" name="is_delivery_to_home" value="1" <% if @clients.is_delivery_to_home == true %>checked<% end %>>
-                <label class="cursor-pointer select-none" for="1">Гэртээ хүргүүлж авах</label>
+                    </div>
+                    <div class="text-gray-600">Үнэ: <%= number_to_currency(product.transition_amount, unit: "₮ ", strip_insignificant_zeros: true) %></div>
+                    <div class="text-gray-600">Карго: <%= number_to_currency(product.cargo_price, unit: "₮ ", strip_insignificant_zeros: true) %></div>
+                  </div>
+                  <% if product.status == IS_WILLING %>
+                    <input class="input  ml-auto border" type="checkbox" checked>
+                  <% end %>
+                </div>
+              <% end %>
+
+              <div class="mt-5">
+                <select class="input input--sm border mr-2">
+                <option>Үндсэн хаяг дээр хүргүүлэн авах</option>
+                <option>Өөр хаяг дээр хүргүүлэн авах</option>
+              </select>
               </div>
-              <div class="flex items-center text-gray-700 dark:text-gray-500 mr-2 mt-2 sm:mt-0">
-                <input type="radio" class="input border mr-2" id="0" name="is_delivery_to_home" value="0" <% if @clients.is_delivery_to_home == false %>checked<% end %>>
-                <label class="cursor-pointer select-none" for="0">Агуулхаас ирж авах</label>
-              </div>
+              <button class="button button--sm w-full xl:w-auto text-white bg-theme-1 xl:mr-3 align-top mt-2" id="update_button">Хүргэлийн захиалга өгөх</button>
             </div>
-            <button class="button button--sm w-full xl:w-32 text-white bg-theme-1 xl:mr-3 align-top mt-2" id="update_button">Хадгалах</button>
           </div>
         </div>
       </div>
-    <% else %>
-      <div class="error-page flex flex-col lg:flex-row items-center justify-center h-screen text-center lg:text-left">
-        <div class="-intro-x lg:mr-20">
-          <img alt="<%= SiteConfig.first.title || 'Order | Developed by sukhochird' %>" class="h-48 lg:h-auto" src="/images/error-illustration.svg">
-        </div>
-        <div class="text-gray-700 mt-10 lg:mt-0">
-          <div class="intro-x text-8xl font-medium">Өө ...</div>
-          <div class="intro-x text-xl lg:text-3xl font-medium mt-5">Хайлт олдсонгүй ...</div>
-          <div class="intro-x text-lg mt-3">Та манайхаас ямар нэгэн бараа захиалаагүй байна.</div>
-          <button onclick="location.href='/'" class="button mr-2 mb-2 mt-10 flex items-center justify-center bg-theme-1 text-white"> <i data-feather="corner-down-left" class="w-4 h-4 mr-2"></i> Буцах </button>
-        </div>
-      </div>
-    <% end %>
+    </div>
+
+    <div class="tab-content__pane" id="account">
+      asdfads
+    </div>
   </div>
 </div>
-<!-- BEGIN: JS Assets-->
+<!-- END: Content -->
 <%= javascript_pack_tag 'custom' %>
-<!-- END: JS Assets-->
-<script>
-    $("#update_button").click(function () {
-        var url = window.location.pathname;
-        var phone_number = url.substring(url.lastIndexOf('/') + 1);
-        $.ajax({
-            url: "/home",
-            type: "PUT",
-            data: {
-                is_delivery_to_home: $("input[name=is_delivery_to_home]:checked").val(),
-                phone_number: phone_number,
-                address: $('textarea#address').val()
-            },
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
-            },
-            success: function (data) {
-                Toastify({
-                    text: "Хаяг амжилттай орууллаа",
-                    duration: 3000,
-                    newWindow: true,
-                    close: true,
-                    gravity: "bottom",
-                    position: "right",
-                    backgroundColor: "#0e2c88",
-                    stopOnFocus: true,
-                }).showToast();
-            },
-            error: function (data) {
-                alert("error");
-            }
-        });
-    });
-</script>
 
 </body>
 </html>

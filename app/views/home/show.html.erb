@@ -109,7 +109,7 @@
               <label class="cursor-pointer select-none" for="0">Агуулхаас ирж авах</label>
             </div>
           </div>
-          <button class="button button--sm w-full xl:w-32 text-white bg-theme-1 xl:mr-3 align-top mt-2" id="update_button">Хадгалах</button>
+          <button class="button button--sm w-full xl:w-32 text-white bg-theme-1 xl:mr-3 align-top mt-2" id="update_address_btn">Хадгалах</button>
         </div>
       </div>
       <div class="intro-y box col-span-12 lg:col-span-6 mt-5">
@@ -122,7 +122,7 @@
           <% @products.each.each_with_index do |product, counter| %>
             <div class="flex items-center <% unless counter==0 %>mt-5<% end %>">
               <div class="border-l-2 border-theme-1 pl-4">
-                <a href="" class="font-medium"><%= product.name %> (<%= product.quantity %>ш)</a>
+                <a href="" class="font-medium"><%= product.name %> <%= product.order_detail_id %> (<%= product.quantity %>ш)</a>
                 <div class="text-gray-600">
                   <% if product.status == IS_WAITING %>
                     <span class="text-theme-12">Хүлээгдэж байгаа</span>
@@ -141,18 +141,21 @@
                 <div class="text-gray-600">Карго: <%= number_to_currency(product.cargo_price, unit: "₮ ", strip_insignificant_zeros: true) %></div>
               </div>
               <% if product.status == IS_WILLING %>
-                <input class="input  ml-auto border" type="checkbox" checked>
+                <input class="input  ml-auto border" type="checkbox" checked name="order-detail" data-order="<%= product.order_detail_id %>">
               <% end %>
             </div>
           <% end %>
 
           <div class="mt-5">
-            <select class="input input--sm border mr-2">
+            <select class="input input--lg border mr-2">
               <option>Үндсэн хаяг дээр хүргүүлэн авах</option>
               <option>Өөр хаяг дээр хүргүүлэн авах</option>
             </select>
           </div>
-          <button class="button button--sm w-full xl:w-auto text-white bg-theme-1 xl:mr-3 align-top mt-2" id="update_button">Хүргэлтийн захиалга өгөх</button>
+          <div class="mt-5">
+            <input class="datepicker input w-56 border" data-single-mode="true">
+          </div>
+          <button class="button button--sm w-full xl:w-auto text-white bg-theme-1 xl:mr-3 align-top mt-2" id="create_delivery_btn">Хүргэлтийн захиалга өгөх</button>
         </div>
       </div>
     </div>
@@ -229,6 +232,47 @@
 </div>
 <!-- END: Content -->
 <%= javascript_pack_tag 'custom' %>
+<script>
+    $("#update_address_btn").click(function () {
+        var url = window.location.pathname;
+        var phone_number = url.substring(url.lastIndexOf('/') + 1);
+        $.ajax({
+            url: "/home",
+            type: "PUT",
+            data: {
+                is_delivery_to_home: $("input[name=is_delivery_to_home]:checked").val(),
+                phone_number: phone_number,
+                address: $('textarea#address').val()
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+            },
+            success: function (data) {
+                Toastify({
+                    text: "Хаяг амжилттай орууллаа",
+                    duration: 3000,
+                    newWindow: true,
+                    close: true,
+                    gravity: "bottom",
+                    position: "right",
+                    backgroundColor: "#0e2c88",
+                    stopOnFocus: true,
+                }).showToast();
+            },
+            error: function (data) {
+                alert("error");
+            }
+        });
+    });
+
+    $("#create_delivery_btn").click(function () {
+        var orderDetailIDs = [];
+        $("input:checkbox[name='order-detail']").each(function(){
+            orderDetailIDs.push($(this).data("order"))
+        })
+        console.log(orderDetailIDs)
+    });
+</script>
 
 </body>
 </html>

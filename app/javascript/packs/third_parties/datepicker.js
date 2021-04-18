@@ -12,7 +12,8 @@ import Litepicker from "litepicker";
             numberOfColumns: 2,
             numberOfMonths: 2,
             showWeekNumbers: true,
-            format: "D MMM, YYYY",
+            format: "YYYY-MM-DD",
+            minDate: "2021-04-20",
             dropdowns: {
                 minYear: 1990,
                 maxYear: null,

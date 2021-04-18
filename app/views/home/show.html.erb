@@ -124,7 +124,7 @@
               <% @products.each.each_with_index do |product, counter| %>
                 <div class="flex items-center <% unless counter==0 %>mt-5<% end %>">
                   <div class="border-l-2 border-theme-1 pl-4">
-                    <a href="" class="font-medium"><%= product.name %></a>
+                    <a href="" class="font-medium"><%= product.name %> (<%= product.quantity %>ш)</a>
                     <div class="text-gray-600">
                       <% if product.status == IS_WAITING %>
                         <span class="text-theme-12">Хүлээгдэж байгаа</span>
@@ -138,7 +138,8 @@
                         Цуцалсан
                       <% end %>
                     </div>
-                    <div class="text-gray-600">Үнэ: <%= number_to_currency(product.transition_amount, unit: "₮ ", strip_insignificant_zeros: true) %></div>
+                    <div class="text-gray-600">Үнэ: <%= number_to_currency(product.actual_price, unit: "₮ ", strip_insignificant_zeros: true) %> x <%= product.quantity %> = <%= number_to_currency(product.actual_price.to_i * product.quantity.to_i, unit: "₮ ", strip_insignificant_zeros: true) %></div>
+                    <!--<div class="text-gray-600">Үнэ: <%#= number_to_currency(product.transition_amount, unit: "₮ ", strip_insignificant_zeros: true) %></div>-->
                     <div class="text-gray-600">Карго: <%= number_to_currency(product.cargo_price, unit: "₮ ", strip_insignificant_zeros: true) %></div>
                   </div>
                   <% if product.status == IS_WILLING %>

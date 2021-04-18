@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_20_021709) do
+ActiveRecord::Schema.define(version: 2021_04_16_165202) do
 
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -24,6 +24,27 @@ ActiveRecord::Schema.define(version: 2021_03_20_021709) do
     t.string "phone_number"
     t.string "address"
     t.boolean "is_delivery_to_home"
+  end
+
+  create_table "deliveries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "phone_number", null: false
+    t.string "address", limit: 500
+    t.datetime "delivery_date"
+    t.integer "status", default: 0
+    t.integer "user_id", null: false
+    t.string "memo", limit: 1000
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "delivery_products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.integer "order_detail_id", null: false
+    t.string "product_name", null: false
+    t.integer "quantity", default: 1, null: false
+    t.integer "price", null: false
+    t.integer "cargo_price", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|

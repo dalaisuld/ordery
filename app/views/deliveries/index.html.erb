@@ -1,6 +1,6 @@
 <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
   <h2 class="text-lg font-medium mr-auto">
-    Хүргэлтийн жагсаалт (<%= @orders.length %>)
+    Хүргэлтийн жагсаалт (<%= @deliveries.length %>)
   </h2>
   <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
 
@@ -18,31 +18,140 @@
   </div>
 </div>
 
-
-<div class="intro-y  mt-5">
-  <table class="table" id="table2excel">
-    <thead>
-    <tr>
-      <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap"><input type="checkbox" id="checkAll"/></th>
-      <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">Утасны дугаар</th>
-      <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">Гэрийн хаяг</th>
-      <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">Бүтгээдэхүүн</th>
-      <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">Тоо ширхэг</th>
-    </tr>
-    </thead>
-    <tbody>
-    <% @orders.each do |order| %>
-      <tr class="hover:bg-gray-200">
-        <td class="border"><input type="checkbox" class="cb-element" value="<%= order.order_details %>"></td>
-        <td class="border"><a href="/clients/<%= Client.find_by_phone_number(order.phone_number).id %>"><%= order.phone_number %></a></td>
-        <td class="border"><%= order.address %></td>
-        <td class="border"><%= order.pr_name %></td>
-        <td class="border"><%= order.pr_count %></td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
+<div class="mt-3">
+  <label>Хүргэлтийн төлөв</label>
+  <div class="flex flex-col sm:flex-row mt-2">
+    <div class="flex items-center text-gray-700 dark:text-gray-500 mr-2">
+      <input type="checkbox" class="input border mr-2" id="delivery_waiting">
+      <label class="cursor-pointer select-none" for="delivery_waiting">Хүлээгдэж байгаа</label>
+    </div>
+    <div class="flex items-center text-gray-700 dark:text-gray-500 mr-2 mt-2 sm:mt-0">
+      <input type="checkbox" class="input border mr-2" id="delivery_prepared">
+      <label class="cursor-pointer select-none" for="delivery_prepared">Хүргэлтэнд бэлдсэн</label>
+    </div>
+    <div class="flex items-center text-gray-700 dark:text-gray-500 mr-2 mt-2 sm:mt-0">
+      <input type="checkbox" class="input border mr-2" id="delivery_inprogress">
+      <label class="cursor-pointer select-none" for="delivery_inprogress">Хүргэлтэнд гарсан</label>
+    </div>
+    <div class="flex items-center text-gray-700 dark:text-gray-500 mr-2 mt-2 sm:mt-0">
+      <input type="checkbox" class="input border mr-2" id="delivery_complated">
+      <label class="cursor-pointer select-none" for="delivery_complated">Хүргэгдсэн</label>
+    </div>
+    <div class="flex items-center text-gray-700 dark:text-gray-500 mr-2 mt-2 sm:mt-0">
+      <input type="checkbox" class="input border mr-2" id="delivery_cancelled">
+      <label class="cursor-pointer select-none" for="delivery_cancelled">Цуцалсан</label>
+    </div>
+  </div>
 </div>
+
+
+<div class="grid grid-cols-12 mt-10">
+  <div class="col-span-12">
+    <div id="jsGrid"></div>
+  </div>
+</div>
+
+<script>
+    $(function () {
+        $("#jsGrid").jsGrid({
+            width: "100%",
+            filtering: true,
+            autoload: true,
+            paging: true,
+            pageLoading: true,
+            pageSize: 20,
+            pageButtonCount: 5,
+            sorting: true,
+            pagerFormat: "Page: {first} {prev} {pages} {next} {last}     (showing {pageIndex} to {pageCount} of  {itemCount} entries)",
+            pagePrevText: "Prev",
+            pageNextText: "Next",
+            pageFirstText: "First",
+            pageLastText: "Last",
+            noDataContent: "Мэдээлэл байхгүй байна.",
+            pageNavigatorNextText: "...",
+            pageNavigatorPrevText: "...",
+            controller: {
+                loadData: function (filter) {
+                    return $.ajax({
+                        type: "POST",
+                        url: "/deliveries/list",
+                        data: filter,
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                        },
+                        success: function (data){
+                            // $('#clients_count').text(data['itemsCount']);
+                        }
+                    });
+                },
+            },
+            fields: [
+                {
+                    name: "id",
+                    title: "ID",
+                    width: 15,
+                    align: "center",
+                    type: "text",
+                },
+                {
+                    name: "phone_number",
+                    title: "Дугаар",
+                    width: 50,
+                    type: "text",
+                    align: "center"
+                },
+                {
+                    name: "address",
+                    title: "Хаяг",
+                    width: 300,
+                    type: "text",
+                },
+                {
+                    name: "products",
+                    title: "Бараа",
+                    width: 200,
+                    type: "text",
+                },
+                {
+                    name: "delivery_date",
+                    title: "Хүргүүлж авах огноо",
+                    type: "text",
+                    itemTemplate: function (value) {
+                        return convertDatetimeToDate(value)
+                    }
+                },
+                {
+                    name: "status",
+                    title: "Төлөв",
+                    type: "text"
+                },
+            ],
+            rowClick: function(args) {
+                location.href="/deliveries/"+args.item['id']
+            }
+        });
+    });
+
+    function convertDatetimeToDate(date){
+        return date.substr(0,10)
+    }
+
+    function formatWaitingStatus(value){
+        if (value > 0)
+            return "<span class='text-theme-12 block font-medium'>"+value+"</span>"
+        else
+            return value
+    }
+
+    function formatWillingStatus(value){
+        if (value > 0)
+            return "<span class='text-theme-6 block font-medium'>"+value+"</span>"
+        else
+            return value
+    }
+
+</script>
+
 
 <script>
     $(function() {

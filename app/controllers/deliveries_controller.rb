@@ -22,7 +22,7 @@ class DeliveriesController < ApplicationController
   # end
 
   def list
-    deliveries = Delivery.all
+    deliveries = Delivery.filter_day(params[:filter_day])
     new_arr = []
     deliveries.each do |delivery|
       new_arr.push({

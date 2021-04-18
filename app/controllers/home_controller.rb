@@ -12,7 +12,7 @@ class HomeController < ApplicationController
     order_details AS od ON o.id = od.order_id
         LEFT JOIN
     products AS p ON od.product_id = p.id').select('o.id as order_id,
-    od.id as product_id,
+    od.id as order_detail_id,
     o.account_number,
     o.amount AS transition_amount,
     o.description,

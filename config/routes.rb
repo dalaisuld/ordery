@@ -29,5 +29,7 @@ Rails.application.routes.draw do
   post 'orders/complete_all_deliveries', :to => 'orders#complete_all_deliveries'
   post 'deliveries/list', :to => 'deliveries#list'
 
+  # Create delivery request
+  post 'deliveries/client', :to => 'deliveries:client_request'
   get 'smstest', to: 'dashboard#smstest'
 end

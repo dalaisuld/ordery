@@ -33,7 +33,7 @@
 <nav class="top-nav">
   <ul>
     <li>
-      <a href="top-menu-light-dashboard.html" class="top-menu top-menu--active">
+      <a href="#" class="top-menu top-menu--active">
         <div class="top-menu__icon"> <i data-feather="home"></i> </div>
         <div class="top-menu__title"> Dashboard </div>
       </a>
@@ -242,6 +242,13 @@
 <!-- END: Content -->
 <%= javascript_pack_tag 'custom' %>
 <script>
+
+    var orderDetailIDs = [];
+    $("input:checkbox[name='order-detail']").each(function(){
+        orderDetailIDs.push($(this).data("order"))
+    })
+    console.log(orderDetailIDs)
+
     $("#update_address_btn").click(function () {
         var url = window.location.pathname;
         var phone_number = url.substring(url.lastIndexOf('/') + 1);

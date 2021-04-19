@@ -56,4 +56,21 @@ class DeliveriesController < ApplicationController
     puts new_arr.inspect
     render json: {data: new_arr, itemsCount: deliveries_count}
   end
+
+  def client_request
+    # order_detail_ids = params[:order_detail_ids]
+    # address = params[:address]
+    # delivery_date = pararms[:delivery_date]
+    #
+    #
+    # order_detail_ids.each do |order_detail|
+    #   @delivery = Delivery.new
+    #
+    #   @order = Order.new(params[:order])
+    #   @order.user = current_user
+    #   @order.service = @service
+    #   @order.save
+    # end
+  end
+
 end

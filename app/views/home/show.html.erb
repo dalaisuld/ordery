@@ -145,17 +145,26 @@
               <% end %>
             </div>
           <% end %>
-
-          <div class="mt-5">
-            <select class="input input--lg border mr-2">
-              <option>Үндсэн хаяг дээр хүргүүлэн авах</option>
-              <option>Өөр хаяг дээр хүргүүлэн авах</option>
-            </select>
+          <div class="w-full flex justify-center border-t border-gray-200 dark:border-dark-5 mt-10">
+            <div class="bg-white dark:bg-dark-3 px-5 -mt-3 text-gray-600">Хүргэлтийн захиалга өгөх</div>
           </div>
-          <div class="mt-5">
-            <input class="datepicker input w-56 border" data-single-mode="true">
-          </div>
-          <button class="button button--sm w-full xl:w-auto text-white bg-theme-1 xl:mr-3 align-top mt-2" id="create_delivery_btn">Хүргэлтийн захиалга өгөх</button>
+          <% if @clients.address.present? || @clients.address != "" %>
+            <div class="mt-5">
+              <select class="input input--lg w-full border mr-2" id="delivery_addr_type">
+                <option value="0">Үндсэн хаяг дээр хүргүүлэн авах</option>
+                <option value="1">Өөр хаяг дээр хүргүүлэн авах</option>
+              </select>
+            </div>
+            <textarea class="input w-full border mt-3" placeholder="Та хүргүүлэн авах хаягаа энд бичнэ үү!" rows="4"  id="delivery_address"><%= @clients.address %></textarea>
+            <div class="mt-3">
+              <div class="relative w-full">
+                <div class="absolute rounded-l w-10 h-full flex items-center justify-center bg-gray-100 border text-gray-600 dark:bg-dark-1 dark:border-dark-4"> <i data-feather="calendar" class="w-4 h-4"></i> </div> <input type="text" class="datepicker input pl-12 border" data-single-mode="true">
+              </div>
+            </div>
+            <button class="button button--sm w-full xl:w-auto text-white bg-theme-1 xl:mr-3 align-top mt-2" id="create_delivery_btn">Хүргэлтийн захиалга өгөх</button>
+          <% else %>
+          Та үндсэн хаягаа оруулсаны дараа хүргэлтийн захиалга өгөх боломжтой болно
+          <% end %>
         </div>
       </div>
     </div>
@@ -258,11 +267,21 @@
                     backgroundColor: "#0e2c88",
                     stopOnFocus: true,
                 }).showToast();
+                location.reload();
             },
             error: function (data) {
                 alert("error");
             }
         });
+    });
+
+    $('#delivery_addr_type').change(function() {
+        console.log($(this).val())
+        if($(this).val()==='1'){
+            $("#delivery_address").text("")
+        }else if ($(this).val()==='0'){
+            $("#delivery_address").text($("#address").val())
+        }
     });
 
     $("#create_delivery_btn").click(function () {

@@ -337,7 +337,16 @@
                 location.reload();
             },
             error: function (data) {
-                alert("error");
+                Toastify({
+                    text: "Зөвхөн бэлэн байгаа бараа хүргэлтэнд бүртгэх боломжтой.",
+                    duration: 3000,
+                    newWindow: true,
+                    close: true,
+                    gravity: "bottom",
+                    position: "right",
+                    backgroundColor: "#D32929",
+                    stopOnFocus: true,
+                }).showToast();
             }
         });
 

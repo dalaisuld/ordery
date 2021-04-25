@@ -35,18 +35,18 @@ class DeliveriesController < ApplicationController
                      phone_number: delivery.phone_number,
                      address: delivery.address,
                      delivery_date: delivery.delivery_date,
-                     products: 'понни-1ш , сагс код2-1ш ,банны тавиур код-А',
+                     products: DeliveriesHelper.delviery_products(delivery.id),
                      cargo: 'price',
                      status: case delivery.status
-                             when 1
+                             when 0
                                '<span class="text-theme-6 block">Хүлээгдэж байгаа</span>'
-                             when 2
+                             when 1
                                '<span class="text-theme-12 block">Хүргэлтэнд бэлдсэн</span>'
-                             when 3
+                             when 2
                                '<span class="text-theme-1 block">Хүргэлтэнд гарсан</span>'
-                             when 4
+                             when 3
                                '<span class="text-theme-9 block">Хүргэгдсэн</span>'
-                             when 5
+                             when 4
                                '<span class="text-gray-700 dark:text-gray-600 block">Цуцалсан</span>'
                              else
                                ''

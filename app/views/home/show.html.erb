@@ -79,8 +79,10 @@
     </div>
     <div class="nav-tabs flex flex-col sm:flex-row justify-center lg:justify-start">
       <a data-toggle="tab" data-target="#profile" href="javascript:;" class="py-4 sm:mr-8 flex items-center active"> <i class="w-4 h-4 mr-2" data-feather="user"></i> Профайл </a>
-      <a data-toggle="tab" data-target="#transaction" href="javascript:;" class="py-4 sm:mr-8 flex items-center"> <i class="w-4 h-4 mr-2" data-feather="file-text"></i> Шилжүүлгийн мэдээлэл </a>
-      <a data-toggle="tab" data-target="#delivery" href="javascript:;" class="py-4 sm:mr-8 flex items-center"> <i class="w-4 h-4 mr-2" data-feather="truck"></i> Хүргэлтийн мэдэлээл </a>
+      <% if @clients.address.present? %>
+        <a data-toggle="tab" data-target="#transaction" href="javascript:;" class="py-4 sm:mr-8 flex items-center"> <i class="w-4 h-4 mr-2" data-feather="file-text"></i> Шилжүүлгийн мэдээлэл </a>
+        <a data-toggle="tab" data-target="#delivery" href="javascript:;" class="py-4 sm:mr-8 flex items-center"> <i class="w-4 h-4 mr-2" data-feather="truck"></i> Хүргэлтийн мэдэлээл </a>
+      <% end %>
     </div>
   </div>
   <!-- END: Profile Info -->
@@ -96,7 +98,15 @@
           <div>
             <div class="mt-0.5 text-gray-600 dark:text-gray-600">Та бараагаа хүргүүлж авах бол ДҮҮРЭГ, ХОРОО гэрийн хаяг тодорхой бичээрэй.</div>
             <div class="mt-0.5 text-gray-600 dark:text-gray-600">Анхааруулга: Та барааныхаа төлөвийг сайн хараарай. Ирсэн бараа л хүргэлтэнд гарна.</div>
-            <div class="mt-0.5 text-gray-600 dark:text-gray-600">Хүргэлтийн компаний хаяг харгалзахгүй хүргэлтийн төлбөр 4,000₮ </div>
+          </div>
+          <div class="modal" id="address-alert">
+            <div class="modal__content relative"> <a data-dismiss="modal" href="javascript:;" class="absolute right-0 top-0 mt-3 mr-3"> <i data-feather="x" class="w-8 h-8 text-gray-500"></i> </a>
+              <div class="p-5 text-center"> <i data-feather="alert-triangle" class="w-16 h-16 text-theme-6 mx-auto mt-3"></i>
+                <div class="text-3xl mt-5">Анхаар</div>
+                <div class="text-gray-600 mt-2">Та үндсэн гэрийн хаягаа оруулснаар системийг цааш ашиглах боломжтой болно.</div>
+              </div>
+              <div class="px-5 pb-8 text-center"> <button type="button" data-dismiss="modal" class="button w-24 bg-theme-1 text-white">Ok</button> </div>
+            </div>
           </div>
           <textarea class="input w-full border mt-2" placeholder="Гэрийн хаягаа энд бичнэ үү!" rows="4" name="address" id="address"><%= @clients.address %></textarea>
           <div class="flex flex-col sm:flex-row mt-2">
@@ -112,61 +122,64 @@
           <button class="button button--sm w-full xl:w-32 text-white bg-theme-1 xl:mr-3 align-top mt-2" id="update_address_btn">Хадгалах</button>
         </div>
       </div>
-      <div class="intro-y box col-span-12 lg:col-span-6 mt-5">
-        <div class="flex items-center px-5 py-5 sm:py-0 border-b border-gray-200 dark:border-dark-5">
-          <h2 class="font-medium text-base mr-auto lg:p-3">
-            Барааны мэдээлэл
-          </h2>
-        </div>
-        <div class="p-5">
-          <% @products.each.each_with_index do |product, counter| %>
-            <div class="flex items-center <% unless counter==0 %>mt-5<% end %>">
-              <div class="border-l-2 border-theme-1 pl-4">
-                <a href="" class="font-medium"><%= product.name %> <%= product.order_detail_id %> (<%= product.quantity %>ш)</a>
-                <div class="text-gray-600">
-                  <% if product.status == IS_WAITING %>
-                    <span class="text-theme-12">Хүлээгдэж байгаа</span>
-                  <% elsif product.status == IS_WILLING %>
-                    <span class="text-theme-1">Бараа ирсэн байна</span>
-                  <% elsif product.status == IS_DELIVERY %>
-                    Хүргэлтэнд гарсан
-                  <% elsif product.status == IS_FINISH %>
-                    Хүлээлгэж өгсөн
-                  <% elsif product.status == IS_CANCELED %>
-                    Цуцалсан
-                  <% end %>
-                </div>
-                <div class="text-gray-600">Үнэ: <%= number_to_currency(product.actual_price, unit: "₮ ", strip_insignificant_zeros: true) %> x <%= product.quantity %> = <%= number_to_currency(product.actual_price.to_i * product.quantity.to_i, unit: "₮ ", strip_insignificant_zeros: true) %></div>
-                <!--<div class="text-gray-600">Үнэ: <%#= number_to_currency(product.transition_amount, unit: "₮ ", strip_insignificant_zeros: true) %></div>-->
-                <div class="text-gray-600">Карго: <%= number_to_currency(product.cargo_price, unit: "₮ ", strip_insignificant_zeros: true) %></div>
-              </div>
-              <% if product.status == IS_WILLING %>
-                <input class="input  ml-auto border" type="checkbox" checked name="order-detail" data-order="<%= product.order_detail_id %>">
-              <% end %>
-            </div>
-          <% end %>
-          <div class="w-full flex justify-center border-t border-gray-200 dark:border-dark-5 mt-10">
-            <div class="bg-white dark:bg-dark-3 px-5 -mt-3 text-gray-600">Хүргэлтийн захиалга өгөх</div>
+      <% if @clients.address.present? %>
+        <div class="intro-y box col-span-12 lg:col-span-6 mt-5">
+          <div class="flex items-center px-5 py-5 sm:py-0 border-b border-gray-200 dark:border-dark-5">
+            <h2 class="font-medium text-base mr-auto lg:p-3">
+              Барааны мэдээлэл
+            </h2>
           </div>
-          <% if @clients.address.present? || @clients.address != "" %>
-            <div class="mt-5">
-              <select class="input input--lg w-full border mr-2" id="delivery_addr_type">
-                <option value="0">Үндсэн хаяг дээр хүргүүлэн авах</option>
-                <option value="1">Өөр хаяг дээр хүргүүлэн авах</option>
-              </select>
-            </div>
-            <textarea class="input w-full border mt-3" placeholder="Та хүргүүлэн авах хаягаа энд бичнэ үү!" rows="4"  id="delivery_address"><%= @clients.address %></textarea>
-            <div class="mt-3">
-              <div class="relative w-full">
-                <div class="absolute rounded-l w-10 h-full flex items-center justify-center bg-gray-100 border text-gray-600 dark:bg-dark-1 dark:border-dark-4"> <i data-feather="calendar" class="w-4 h-4"></i> </div> <input type="text" class="datepicker input pl-12 border" data-single-mode="true">
+          <div class="p-5">
+            <% @products.each.each_with_index do |product, counter| %>
+              <div class="flex items-center <% unless counter==0 %>mt-5<% end %>">
+                <div class="border-l-2 border-theme-1 pl-4">
+                  <a href="" class="font-medium"><%= product.name %> <%= product.order_detail_id %> (<%= product.quantity %>ш)</a>
+                  <div class="text-gray-600">
+                    <% if product.status == IS_WAITING %>
+                      <span class="text-theme-12">Хүлээгдэж байгаа</span>
+                    <% elsif product.status == IS_WILLING %>
+                      <span class="text-theme-1">Бараа ирсэн байна</span>
+                    <% elsif product.status == IS_DELIVERY %>
+                      Хүргэлтэнд бүртгэгдсэн
+                    <% elsif product.status == IS_FINISH %>
+                      Хүлээлгэж өгсөн
+                    <% elsif product.status == IS_CANCELED %>
+                      Цуцалсан
+                    <% end %>
+                  </div>
+                  <div class="text-gray-600">Үнэ: <%= number_to_currency(product.actual_price, unit: "₮ ", strip_insignificant_zeros: true) %> x <%= product.quantity %> = <%= number_to_currency(product.actual_price.to_i * product.quantity.to_i, unit: "₮ ", strip_insignificant_zeros: true) %></div>
+                  <!--<div class="text-gray-600">Үнэ: <%#= number_to_currency(product.transition_amount, unit: "₮ ", strip_insignificant_zeros: true) %></div>-->
+                  <div class="text-gray-600">Карго: <%= number_to_currency(product.cargo_price, unit: "₮ ", strip_insignificant_zeros: true) %></div>
+                </div>
+                <% if product.status == IS_WILLING %>
+                  <input class="input  ml-auto border" type="checkbox" checked name="order-detail" data-order="<%= product.order_detail_id %>">
+                <% end %>
               </div>
+            <% end %>
+            <div class="w-full flex justify-center border-t border-gray-200 dark:border-dark-5 mt-10">
+              <div class="bg-white dark:bg-dark-3 px-5 -mt-3 text-gray-600">Хүргэлтийн захиалга өгөх</div>
             </div>
-            <button class="button button--sm w-full xl:w-auto text-white bg-theme-1 xl:mr-3 align-top mt-2" id="create_delivery_btn">Хүргэлтийн захиалга өгөх</button>
-          <% else %>
-          Та үндсэн хаягаа оруулсаны дараа хүргэлтийн захиалга өгөх боломжтой болно
-          <% end %>
+            <% if @clients.address.present? || @clients.address != "" %>
+              <div class="mt-5">
+                <select class="input input--lg w-full border mr-2" id="delivery_addr_type">
+                  <option value="0">Үндсэн хаяг дээр хүргүүлэн авах</option>
+                  <option value="1">Өөр хаяг дээр хүргүүлэн авах</option>
+                </select>
+              </div>
+              <textarea class="input w-full border mt-3" placeholder="Та хүргүүлэн авах хаягаа энд бичнэ үү!" rows="4"  id="delivery_address"><%= @clients.address %></textarea>
+              <div class="mt-3">
+                <div class="relative w-full">
+                  <p class="text-xs px-1 bg-theme-6 text-white mr-1">Хөл хориотой холбоотойгоор хүргэлтийн ачаалал их байгаа тул 2 өдөртөө таны хүргэлт очно</p>
+<!--                  <div class="absolute rounded-l w-10 h-full flex items-center justify-center bg-gray-100 border text-gray-600 dark:bg-dark-1 dark:border-dark-4"> <i data-feather="calendar" class="w-4 h-4"></i> </div> <input type="text" class="datepicker input pl-12 border" data-single-mode="true">-->
+                </div>
+              </div>
+              <button class="button button--sm w-full xl:w-auto text-white bg-theme-1 xl:mr-3 align-top mt-2" id="create_delivery_btn">Хүргэлтийн захиалга өгөх</button>
+            <% else %>
+              Та үндсэн хаягаа оруулсаны дараа хүргэлтийн захиалга өгөх боломжтой болно
+            <% end %>
+          </div>
         </div>
-      </div>
+      <% end %>
     </div>
     <div class="tab-content__pane" id="transaction">
       <div class="intro-y box col-span-12 lg:col-span-6 mt-5">
@@ -214,23 +227,23 @@
             </div>
 
             <div class="flex items-center mt-4">
-              <div class="w-2 h-2 <% if delivery.status == 1 %>bg-theme-9<% else %>bg-theme-11<% end %> rounded-full mr-3"></div>
-              <span>Хүлээгдэж байгаа <% if delivery.status == 1 %>(<%= delivery.updated_at.strftime('%Y-%m-%d %H:%M') %>)<% end %></span>
+              <div class="w-2 h-2 <% if delivery.status == 0 %>bg-theme-9<% else %>bg-theme-11<% end %> rounded-full mr-3"></div>
+              <span>Хүлээгдэж байгаа <% if delivery.status == 0 %>(<%= delivery.updated_at.strftime('%Y-%m-%d %H:%M') %>)<% end %></span>
+              <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+            </div>
+            <div class="flex items-center mt-1">
+              <div class="w-2 h-2 <% if delivery.status == 1 %>bg-theme-9<% else %>bg-theme-11<% end %> dark:bg-theme-10 rounded-full mr-3"></div>
+              <span>Бараа хүргэлтэнд бэлтгэсэн <% if delivery.status ==12 %>(<%= delivery.updated_at.strftime('%Y-%m-%d %H:%M') %>)<% end %></span>
               <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
             </div>
             <div class="flex items-center mt-1">
               <div class="w-2 h-2 <% if delivery.status == 2 %>bg-theme-9<% else %>bg-theme-11<% end %> dark:bg-theme-10 rounded-full mr-3"></div>
-              <span>Бараа хүргэлтэнд бэлтгэсэн <% if delivery.status == 2 %>(<%= delivery.updated_at.strftime('%Y-%m-%d %H:%M') %>)<% end %></span>
+              <span>Хүргэлтэнд замдаа гарсан <% if delivery.status == 2 %>(<%= delivery.updated_at.strftime('%Y-%m-%d %H:%M') %>)<% end %></span>
               <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
             </div>
             <div class="flex items-center mt-1">
-              <div class="w-2 h-2 <% if delivery.status == 3 %>bg-theme-9<% else %>bg-theme-11<% end %> dark:bg-theme-10 rounded-full mr-3"></div>
-              <span>Хүргэлтэнд замдаа гарсан <% if delivery.status == 3 %>(<%= delivery.updated_at.strftime('%Y-%m-%d %H:%M') %>)<% end %></span>
-              <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-            </div>
-            <div class="flex items-center mt-1">
-              <div class="w-2 h-2 <% if delivery.status == 4 %>bg-theme-9<% else %>bg-theme-11<% end %> rounded-full mr-3"></div>
-              <span>Бараа хүргэгдсэн <% if delivery.status == 4 %>(<%= delivery.updated_at.strftime('%Y-%m-%d %H:%M') %>)<% end %></span>
+              <div class="w-2 h-2 <% if delivery.status == 3 %>bg-theme-9<% else %>bg-theme-11<% end %> rounded-full mr-3"></div>
+              <span>Бараа хүргэгдсэн <% if delivery.status == 3 %>(<%= delivery.updated_at.strftime('%Y-%m-%d %H:%M') %>)<% end %></span>
               <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
             </div>
           <% end %>
@@ -241,6 +254,13 @@
 </div>
 <!-- END: Content -->
 <%= javascript_pack_tag 'custom' %>
+
+<% unless @clients.address.present? %>
+  <script type="text/javascript" charset="utf-8">
+      cash('#address-alert').modal('show');
+  </script>
+<% end %>
+
 <script>
     $("#update_address_btn").click(function () {
         var url = window.location.pathname;
@@ -289,7 +309,38 @@
         $("input:checkbox[name='order-detail']").each(function(){
             orderDetailIDs.push($(this).data("order"))
         })
-        console.log(orderDetailIDs)
+        var address = $("#delivery_address").val();
+        var phone_number = "<%= @clients.phone_number %>"
+
+        $.ajax({
+            url: "/home/set_delivery_client",
+            type: "POST",
+            data: {
+                orderDetailIDs: orderDetailIDs,
+                phone_number: phone_number,
+                address: address
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+            },
+            success: function (data) {
+                Toastify({
+                    text: "Таны хүргэлт баталгаажлаа. Хөл хориотой холбоотойгоор хүргэлтийн ачаалал их байгаа тул 2 өдөртөө таны хүргэлт очно",
+                    duration: 3000,
+                    newWindow: true,
+                    close: true,
+                    gravity: "bottom",
+                    position: "right",
+                    backgroundColor: "#0e2c88",
+                    stopOnFocus: true,
+                }).showToast();
+                location.reload();
+            },
+            error: function (data) {
+                alert("error");
+            }
+        });
+
     });
 </script>
 

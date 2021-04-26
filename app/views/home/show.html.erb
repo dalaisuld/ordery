@@ -116,7 +116,7 @@
             </div>
             <div class="flex items-center text-gray-700 dark:text-gray-500 mr-2 mt-2 sm:mt-0">
               <input type="radio" class="input border mr-2" id="0" name="is_delivery_to_home" value="0" <% if @clients.is_delivery_to_home == false %>checked<% end %>>
-              <label class="cursor-pointer select-none" for="0">Агуулхаас ирж авах</label>
+              <label class="cursor-pointer select-none" for="0">Агуулахаас ирж авах</label>
             </div>
           </div>
           <button class="button button--sm w-full xl:w-32 text-white bg-theme-1 xl:mr-3 align-top mt-2" id="update_address_btn">Хадгалах</button>
@@ -326,7 +326,7 @@
             success: function (data) {
                 Toastify({
                     text: "Таны хүргэлт баталгаажлаа. Хөл хориотой холбоотойгоор хүргэлтийн ачаалал их байгаа тул 2 өдөртөө таны хүргэлт очно",
-                    duration: 3000,
+                    duration: 10000,
                     newWindow: true,
                     close: true,
                     gravity: "bottom",
@@ -339,7 +339,7 @@
             error: function (data) {
                 Toastify({
                     text: "Зөвхөн бэлэн байгаа бараа хүргэлтэнд бүртгэх боломжтой.",
-                    duration: 3000,
+                    duration: 10000,
                     newWindow: true,
                     close: true,
                     gravity: "bottom",

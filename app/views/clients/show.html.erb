@@ -46,7 +46,7 @@
         <div class="mt-3">
           <label>Хүргүүлэх хаяг
             <% if @client.is_delivery_to_home.present? && @client.is_delivery_to_home == false %>
-              <span class='text-theme-1 font-medium'>(Агуулхаас ирж авна)</span>
+              <span class='text-theme-1 font-medium'>(Агуулахаас ирж авна)</span>
             <% elsif @client.is_delivery_to_home.present? && @client.is_delivery_to_home == true %>
               <span class='text-theme-1 font-medium'>(Гэртээ хүргүүлж авна)</span>
             <% else %>

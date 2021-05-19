@@ -8,7 +8,7 @@ class ProductsController < ApplicationController
   end
 
   def list
-    order_by = 'created_at desc'
+    order_by = 'id desc'
     if params[:sortField].present? && params[:sortOrder].present?
       order_by = "#{params[:sortField]} #{params[:sortOrder]} "
     end

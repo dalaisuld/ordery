@@ -30,19 +30,19 @@ class HomeController < ApplicationController
     address = params[:address]
     phone_number = params[:phone_number]
     order_details_ids =params[:orderDetailIDs]
+    delivery = Delivery.new
+    delivery.address = address
+    delivery.phone_number = phone_number
+    delivery.status = 0
+    delivery.user_id = 1
+    delivery.delivery_date = DateTime.now.strftime('%Y-%m-%d')
+    delivery.save!
     order_details_ids.each do |order_detail_id|
       order_detail = OrderDetail.find_by(id: order_detail_id)
       if order_detail
         product = Product.find_by(id: order_detail.product_id)
         order_detail.status = IS_DELIVERY
         order_detail.save!
-        delivery = Delivery.new
-        delivery.address = address
-        delivery.phone_number = phone_number
-        delivery.status = 0
-        delivery.user_id = 1
-        delivery.delivery_date = DateTime.now.strftime('%Y-%m-%d')
-        delivery.save!
         delivery_product = DeliveryProduct.new
         delivery_product.delivery_id = delivery.id
         delivery_product.order_detail_id = order_detail_id

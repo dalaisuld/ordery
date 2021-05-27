@@ -1,0 +1,154 @@
+<%=@delivery %>
+<%=@delivery_products %>
+
+
+<style type="text/css">
+
+    @media print
+    {
+        body * { visibility: hidden; }
+        #printcontent * { visibility: visible; }
+        #printcontent {
+            background-color: white;
+            height: 100%;
+            width: 400px;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index:1500;
+            visibility: visible;
+        }
+    }
+</style>
+<div class="grid grid-cols-12 gap-6">
+  <div class="col-span-12 xxl:col-span-9 grid grid-cols-12 gap-6">
+    <div class="col-span-12 lg:col-span-12 mt-5">
+      <div class="intro-y box p-5">
+        <div class="mt-3">
+          <div class="grid grid-cols-12 gap-2">
+            <div class="col-span-3">
+              <label>ID</label>
+              <input class="input w-full border mt-2" value="<%= @delivery.id %>" disabled>
+            </div>
+            <div class="col-span-3">
+              <label>Утасны дугаар</label>
+              <input class="input w-full border mt-2" value="<%= @delivery.phone_number %>" disabled>
+            </div>
+            <div class="col-span-3">
+              <label>И-Мэйл</label>
+              <input class="input w-full border mt-2" value="" disabled>
+            </div>
+            <div class="col-span-3">
+              <label>Бүртгүүлсэн огноо</label>
+              <input class="input w-full border mt-2" value="<%= @delivery.created_at.strftime('%Y-%m-%d %H:%M:%S') %>" disabled>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <label>Хүргүүлэх хаяг</label>
+          <textarea class="input w-full border mt-2" id="address" rows="4"><%= @delivery.address %></textarea>
+        </div>
+        <button id="change_address" class="button button--sm mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white">Хаяг өөрчлөх</button>
+        <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed mt-3 mb-3"></div>
+        <div class="overflow-x-auto">
+          <table class="table" id="product-table">
+            <thead>
+            <tr>
+              <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">#</th>
+              <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">Order ID</th>
+              <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">Бүтээгдэхүүн</th>
+              <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">нэгж үнэ</th>
+              <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">тоо ширхэг</th>
+              <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">нийт</th>
+              <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">карго</th>
+              <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">төлөв</th>
+            </tr>
+            </thead>
+            <tbody>
+            <%# @delivery_products.each do |product| %>
+<!--              <tr>-->
+<!--                <td class="border">-->
+                  <%# if product.status == IS_DELIVERY || product.status == IS_WAITING || product.status == IS_FINISH || product.status == IS_CANCELED %>
+<!--                    --->
+                  <%# else %>
+<!--                    <input type="checkbox" name="product_ids" value="<%#= product.product_id %>">-->
+                  <%# end %>
+<!--                </td>-->
+<!--                <td class="border"><a href="/orders/<%#= product.order_id %>" class="text-theme-1 block font-normal" target="_blank"><%#= product.order_id %></a></td>-->
+<!--                <td class="border"><%#= product.name %></td>-->
+<!--                <td class="border"><%#= number_to_currency(product.actual_price, unit: "₮ ", strip_insignificant_zeros: true) %></td>-->
+<!--                <td class="border"><%#= product.quantity %></td>-->
+<!--                <td class="border"><%#= number_to_currency(product.actual_price.to_i * product.quantity.to_i, unit: "₮ ", strip_insignificant_zeros: true) %></td>-->
+<!--                <td class="border"><%#= number_to_currency(product.cargo_price, unit: "₮ ", strip_insignificant_zeros: true) %></td>-->
+<!--                <td class="border">-->
+                  <%# if product.status == IS_WAITING %>
+<!--                    <span class='text-theme-12 block font-medium'>Хүлээгдэж байгаа</span>-->
+                  <%# elsif product.status == IS_WILLING %>
+<!--                    <span class='block font-medium'>Бараа ирсэн</span>-->
+                  <%# elsif product.status == IS_DELIVERY %>
+<!--                    <span class='text-theme-1 block font-medium'>Хүргэлтэнд гарсан</span>-->
+                  <%# elsif product.status == IS_FINISH %>
+<!--                    <span class='text-theme-9 block font-medium'>Хүлээлгэж өгсөн</span>-->
+                  <%# elsif product.status == IS_CANCELED %>
+<!--                    <span class='text-theme-6 block font-medium'>Цуцалсан</span>-->
+                  <%# end %>
+<!--                </td>-->
+<!--              </tr>-->
+            <%#end %>
+
+            </tbody>
+          </table>
+        </div>
+        <div class="flex flex-col sm:flex-row mt-2">
+          <div class="flex items-center text-gray-700 dark:text-gray-500 mr-2">
+            <input type="radio" class="input border mr-2" id="0" name="is_cash" value="0" checked>
+            <label class="cursor-pointer select-none" for="0">Каргоны мөнгө дансаар</label>
+          </div>
+          <div class="flex items-center text-gray-700 dark:text-gray-500 mr-2 mt-2 sm:mt-0">
+            <input type="radio" class="input border mr-2" id="1" name="is_cash" value="1">
+            <label class="cursor-pointer select-none" for="1">Каргоны мөнгө бэлнээр</label>
+          </div>
+        </div>
+        <div class="w-full flex mt-3">
+          <!--          <button id="delivery_submit" class="button mr-2 mb-2 flex items-center justify-center bg-theme-9 text-white">-->
+          <!--            <i data-feather="truck" class="w-4 h-4 mr-2"></i> Хүргэлтэнд гаргах-->
+          <!--          </button>-->
+
+          <button id="take_products" class="button mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white">
+            <i data-feather="shopping-cart" class="w-4 h-4 mr-2"></i> Бараа хүлээлгэн өгөх
+          </button>
+
+          <button id="cancel_products" class="button mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white">
+            <i data-feather="trash" class="w-4 h-4 mr-2"></i> Захиалга цуцлах
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-span-12 xxl:col-span-3 xxl:border-l border-theme-5 -mb-10 pb-10">
+    <div class="xxl:pl-6 grid grid-cols-12 gap-6">
+      <div class="col-span-12 md:col-span-6 xl:col-span-4 xxl:col-span-12">
+        <div class="mt-5">
+          <div id="printcontent">
+            <div class="box intro-y p-3">
+              <img src="/images/logo.png" alt="Playhouse" class="mb-5">
+              <div class="font-medium"># <%= @delivery.id %> </div>
+              <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
+              <div class="font-medium">Захиалагч: <%= @delivery.phone_number %></div>
+              <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
+              <div class="font-medium">Хаяг: <%= @delivery.address %></div>
+              <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
+              <div class="font-medium">Огноо: <%= DateTime.now.strftime('%Y-%m-%d %H:%M:%S') %></div>
+              <div class="font-medium mt-3 mb-3">Бүтээгдэхүүн</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

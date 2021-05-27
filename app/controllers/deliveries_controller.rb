@@ -11,6 +11,13 @@ class DeliveriesController < ApplicationController
     @deliveries = Delivery.all
   end
 
+  def show
+    @page_delivery_active = true
+    @delivery = Delivery.find_by_id(params[:id])
+    @page_title = @delivery.phone_number
+    @delivery_products = DeliveryProduct.where(delivery_id: @delivery.id)
+  end
+
   # def list
   #   order_by = 'id desc'
   #   if params[:sortField].present? && params[:sortOrder].present?

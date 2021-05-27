@@ -7,7 +7,7 @@ module DeliveriesHelper
       if order_detail
         product = Product.find_by(id: order_detail.product_id)
         product_name = product_name + product.name
-        product_name += '('+order_detail.quantity.to_s+')'
+        product_name += '('+order_detail.quantity.to_s+'),'
       end
     end
     return product_name

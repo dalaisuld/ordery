@@ -83,6 +83,8 @@ class OrdersController < ApplicationController
         order_detail.is_take_from_warehouse = true
         order_detail.finish_date = Time.now.strftime('%Y-%m-%d')
         order_detail.is_cash = params[:cargo_is_cash]
+        order_detail.take_date = Time.now
+        order_detail.user_id = current_user.id
         order_detail.save
       end
     end

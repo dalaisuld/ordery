@@ -1,14 +1,14 @@
 .login {
   @apply relative bg-white;
   @media (max-width: $xl) {
-    background: linear-gradient(to bottom, #1c3faa, #2b51b4);
+    background: linear-gradient(to bottom, #aa9c1c, #d7de1f);
     background-repeat: no-repeat;
     background-attachment: fixed;
   }
   &:before {
     content: "";
     margin-left: -48%;
-    background-image: url(../images/bg-login-page.svg);
+    //background-image: url(../images/bg-login-page.svg);
     background-repeat: no-repeat;
     background-size: auto 100%;
     background-position: right;
@@ -30,7 +30,7 @@
   .login {
     @apply bg-dark-1;
     &:before {
-      background-image: url(../images/bg-login-page-dark.svg);
+      //background-image: url(../images/bg-login-page-dark.svg);
     }
   }
 }

@@ -3,7 +3,9 @@
         margin: 0;
     }
     @media print {
-        .page {
+        body * { visibility: hidden; }
+        #printcontent * { visibility: visible; }
+        #printcontent {
             margin: 0;
             border: initial;
             border-radius: initial;
@@ -136,14 +138,14 @@
       <div class="col-span-12 md:col-span-6 xl:col-span-4 xxl:col-span-12">
         <div class="mt-5">
 
-          <div id="invoice-POS">
+          <div id="printcontent">
 
-            <center id="top">
+            <div id="top" style="text-align: center;">
               <div class="logo"></div>
               <div class="info">
                 <h3 class="font-bold">BIG MALL- Үйлдвэрийн бөөний үнээр-Захиалгын бараа ✅✅✅</h3>
               </div><!--End Info-->
-            </center><!--End InvoiceTop-->
+            </div><!--End InvoiceTop-->
 
             <div id="mid">
               <div class="info">

@@ -1,20 +1,17 @@
 <style type="text/css">
-
-    @media print
-    {
-        body * { visibility: hidden; }
-        #printcontent * { visibility: visible; }
-        #printcontent {
-            background-color: white;
-            height: 100%;
-            width: 400px;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index:1500;
-            visibility: visible;
+    @page {
+        margin: 0;
+    }
+    @media print {
+        .page {
+            margin: 0;
+            border: initial;
+            border-radius: initial;
+            width: initial;
+            min-height: initial;
+            box-shadow: initial;
+            background: initial;
+            page-break-after: always;
         }
     }
 </style>
@@ -138,19 +135,83 @@
     <div class="xxl:pl-6 grid grid-cols-12 gap-6">
       <div class="col-span-12 md:col-span-6 xl:col-span-4 xxl:col-span-12">
         <div class="mt-5">
-          <div id="printcontent">
-            <div class="box intro-y p-3">
-              <img src="/images/logo.png" alt="Playhouse" class="mb-5">
-              <div class="font-medium"># <%= @client.id %> </div>
-              <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
-              <div class="font-medium">Захиалагч: <%= @client.phone_number %></div>
-              <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
-              <div class="font-medium">Хаяг: <%= @client.address %></div>
-              <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
-              <div class="font-medium">Огноо: <%= DateTime.now.strftime('%Y-%m-%d %H:%M:%S') %></div>
-              <div class="font-medium mt-3 mb-3">Бүтээгдэхүүн</div>
-            </div>
-          </div>
+
+          <div id="invoice-POS">
+
+            <center id="top">
+              <div class="logo"></div>
+              <div class="info">
+                <h3 class="font-bold">BIG MALL- Үйлдвэрийн бөөний үнээр-Захиалгын бараа ✅✅✅</h3>
+              </div><!--End Info-->
+            </center><!--End InvoiceTop-->
+
+            <div id="mid">
+              <div class="info">
+                <h3>Contact Info</h3>
+                <p>
+                  Хаяг : Viva city хорооллын зүүн талд #Фермерүүд худалдааны төв дотор Big Mall</br>
+                  Веб   : big-mall.mn</br>
+                  Утас   : 9090-5448</br>
+                </p>
+              </div>
+            </div><!--End Invoice Mid-->
+
+            <div id="bot">
+              <div id="table">
+                <table>
+                  <tr class="tabletitle">
+                    <td class="item"><h3>Item</h3></td>
+                    <td class="Hours"><h3>Qty</h3></td>
+                    <td class="Rate"><h3>Sub Total</h3></td>
+                  </tr>
+
+                  <tr class="service">
+                    <td class="tableitem"><p class="itemtext">зөөлөн хөнжил код 6 зөөлөн хөнжил код 6</p></td>
+                    <td class="tableitem"><p class="itemtext">5</p></td>
+                    <td class="tableitem"><p class="itemtext">$375.00</p></td>
+                  </tr>
+                  <tr class="service">
+                    <td class="tableitem"><p class="itemtext">Asset Gathering</p></td>
+                    <td class="tableitem"><p class="itemtext">3</p></td>
+                    <td class="tableitem"><p class="itemtext">$225.00</p></td>
+                  </tr>
+
+                  <tr class="service">
+                    <td class="tableitem"><p class="itemtext">Design Development</p></td>
+                    <td class="tableitem"><p class="itemtext">5</p></td>
+                    <td class="tableitem"><p class="itemtext">$375.00</p></td>
+                  </tr>
+
+                  <tr class="service">
+                    <td class="tableitem"><p class="itemtext">Animation</p></td>
+                    <td class="tableitem"><p class="itemtext">20</p></td>
+                    <td class="tableitem"><p class="itemtext">$1500.00</p></td>
+                  </tr>
+
+                  <tr class="service">
+                    <td class="tableitem"><p class="itemtext">Animation Revisions</p></td>
+                    <td class="tableitem"><p class="itemtext">10</p></td>
+                    <td class="tableitem"><p class="itemtext">$750.00</p></td>
+                  </tr>
+
+
+                  <tr class="tabletitle">
+                    <td></td>
+                    <td class="Rate"><h3>tax</h3></td>
+                    <td class="payment"><h3>$419.25</h3></td>
+                  </tr>
+
+                  <tr class="tabletitle">
+                    <td></td>
+                    <td class="Rate"><h3>Total</h3></td>
+                    <td class="payment"><h3>$3,644.25</h3></td>
+                  </tr>
+
+                </table>
+              </div><!--End Table-->
+
+            </div><!--End InvoiceBot-->
+          </div><!--End Invoice-->
         </div>
       </div>
     </div>

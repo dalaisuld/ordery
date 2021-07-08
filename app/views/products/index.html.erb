@@ -170,6 +170,19 @@
                     title: "Бүтээгдэхүүн",
                 },
                 {
+                    name: "ordered_count",
+                    type: "number",
+                    title: "Захиалсан",
+                    filtering: false,
+                    validate: {
+                        validator: "range",
+                        message: function(value, item) {
+                            return "The client age should be between 21 and 80. Entered age is \"" + value + "\" is out of specified range.";
+                        },
+                        param: [0, 100000]
+                    }
+                },
+                {
                     name: "quantity",
                     type: "number",
                     title: "Үлдэгдэл",

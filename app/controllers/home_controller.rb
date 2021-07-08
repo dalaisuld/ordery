@@ -64,4 +64,7 @@ class HomeController < ApplicationController
       render json: { message: "error"}, status: 400
     end
   end
+
+  def reset
+  end
 end

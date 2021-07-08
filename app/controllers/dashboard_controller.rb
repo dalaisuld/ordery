@@ -36,6 +36,6 @@ class DashboardController < ApplicationController
   end
 
   def smstest
-    ApplicationHelper.send_sms('99429967', 'Hello World')
+    ApplicationHelper.send_sms('80180297', 'Hello World')
   end
 end

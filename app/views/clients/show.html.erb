@@ -33,8 +33,13 @@
               <input class="input w-full border mt-2" value="<%= @client.phone_number %>" disabled>
             </div>
             <div class="col-span-3">
-              <label>И-Мэйл</label>
-              <input class="input w-full border mt-2" value="" disabled>
+              <label>Pin code</label>
+              <div class="relative mt-2">
+                <div id="reset-pin" class="cursor-pointer absolute rounded-l  w-10 h-full flex items-center justify-center bg-gray-100 dark:bg-dark-1 dark:border-dark-4 border text-gray-600">
+                  <i data-feather="refresh-cw"></i>
+                </div>
+                <input class="input pl-12 w-full border col-span-4" value="<%= @client.pincode %>">
+              </div>
             </div>
             <div class="col-span-3">
               <label>Бүртгүүлсэн огноо</label>
@@ -76,7 +81,7 @@
               <tr>
                 <td class="border">
                   <% if product.status == IS_DELIVERY || product.status == IS_WAITING || product.status == IS_FINISH || product.status == IS_CANCELED %>
-                      -
+                    -
                   <% else %>
                     <input type="checkbox" name="product_ids" value="<%= product.product_id %>">
                   <% end %>
@@ -117,9 +122,9 @@
           </div>
         </div>
         <div class="w-full flex mt-3">
-<!--          <button id="delivery_submit" class="button mr-2 mb-2 flex items-center justify-center bg-theme-9 text-white">-->
-<!--            <i data-feather="truck" class="w-4 h-4 mr-2"></i> Хүргэлтэнд гаргах-->
-<!--          </button>-->
+          <!--          <button id="delivery_submit" class="button mr-2 mb-2 flex items-center justify-center bg-theme-9 text-white">-->
+          <!--            <i data-feather="truck" class="w-4 h-4 mr-2"></i> Хүргэлтэнд гаргах-->
+          <!--          </button>-->
 
           <button id="take_products" class="button mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white">
             <i data-feather="shopping-cart" class="w-4 h-4 mr-2"></i> Бараа хүлээлгэн өгөх
@@ -158,6 +163,52 @@
 </div>
 <script>
     $(function () {
+        $("#reset-pin").click(function(){
+            startLoader();
+            if($("#pincode").val() > 0){
+                $.ajax({
+                    url: "/clients/reset_pin_code",
+                    type: "POST",
+                    data:{
+                        phone_number: <%= @client.phone_number %>,
+                    },
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                    },
+                    success: function(data) {
+                        closeLoader();
+                        Toastify({
+                            text: "хэрэглэгчийн Pin code амжилттай өөрчиллөө",
+                            duration: 3000,
+                            newWindow: true,
+                            close: true,
+                            gravity: "bottom",
+                            position: "right",
+                            backgroundColor: "#91C714",
+                            stopOnFocus: true,
+                        }).showToast();
+                        alert(data.pincode)
+                    },
+                    error: function(data){
+                        closeLoader();
+                    }
+                });
+            }
+            else{
+                closeLoader();
+                Toastify({
+                    text: "Хэрэглэгчийн pin code оруулна уу",
+                    duration: 3000,
+                    newWindow: true,
+                    close: true,
+                    gravity: "bottom",
+                    position: "right",
+                    backgroundColor: "#D32929",
+                    stopOnFocus: true,
+                }).showToast();
+            }
+        })
+
         // window.print();
         $("#change_address").hide();
         var oldVal = "";
@@ -202,6 +253,7 @@
                 });
             }
             else{
+                closeLoader();
                 Toastify({
                     text: "Хэрэглэгчийн хаяг оруулна уу",
                     duration: 3000,
@@ -229,8 +281,8 @@
                 url: "/orders/set_delivery",
                 type: "POST",
                 data:{
-                   orderDetailIDs: orderDetailIDs,
-                   cargo_is_cash: $('input[name="is_cash"]:checked').val()
+                    orderDetailIDs: orderDetailIDs,
+                    cargo_is_cash: $('input[name="is_cash"]:checked').val()
                 },
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))

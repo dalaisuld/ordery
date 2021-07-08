@@ -28,6 +28,33 @@ class ClientsController < ApplicationController
     render json: { data: clients, itemsCount: clients_count }
   end
 
+  def change_pin_code
+    phone_number = params[:phone_number]
+    pin_code = rand(1000..9999)
+    begin
+      @client = Client.where(phone_number: phone_number).first
+      @client.pincode = pin_code
+      @client.save!
+    rescue StandardError
+      render json: { pincode: pin_code}
+    end
+    render json: { error: 'error'}
+  end
+
+  def reset_pin_code
+    phone_number = params[:phone_number]
+    pin_code = rand(1000..9999)
+    begin
+      @client = Client.where(phone_number: phone_number).first
+      @client.pincode = pin_code
+      @client.save!
+      ApplicationHelper.send_sms(phone_number, pin_code.to_s)
+    rescue StandardError
+      render json: { pincode: pin_code}
+    end
+    render json: { error: 'error'}
+  end
+
   private
   def set_model
     @client = Client.find(params[:id])

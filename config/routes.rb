@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
   get 'deliveries/index'
   root to: 'home#index'
+  get 'reset', to: 'home#reset'
   get 'admin', to: 'dashboard#index'
   get 'items_imports/new'
   get 'items_imports/create'
   get 'dashboard/index'
-  get 'home/:phone_number', to: 'home#show'
+  get 'home/:phone_number/:pin_code', to: 'home#show'
   post 'home/set_delivery_client', to: 'home#set_delivery_client'
   put 'home', to: 'home#update'
   devise_for :users, controllers: { sessions: "sessions" }
@@ -29,6 +30,7 @@ Rails.application.routes.draw do
   post 'orders/cancel_products', to: 'orders#cancel_products'
   post 'orders/complete_all_deliveries', to: 'orders#complete_all_deliveries'
   post 'deliveries/list', to: 'deliveries#list'
+  post 'clients/reset_pin_code', to: 'clients#reset_pin_code'
 
   get 'smstest', to: 'dashboard#smstest'
 end

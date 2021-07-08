@@ -12,7 +12,7 @@ class ProductsController < ApplicationController
     if params[:sortField].present? && params[:sortOrder].present?
       order_by = "#{params[:sortField]} #{params[:sortOrder]} "
     end
-    product = Product.select('products.id, products.name, price, total_amount, quantity, ordered_count, unit, category_id, products.created_at').search_by(params)
+    product = Product.select('products.id, products.name, price, total_amount, quantity, products.ordered_count, unit, category_id, products.created_at').search_by(params)
                   .page(params[:pageIndex]).per(params[:pageSize]).order(order_by)
     products = Product.search_by(params)
     render json: { data: product, itemsCount: products.count, sum: products.sum(:total_amount)}

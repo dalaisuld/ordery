@@ -1,71 +1,215 @@
-<html lang="en" class="dark">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title><%= @page_title || 'Ordey | Order Management System' %></title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
-
-  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Affan - PWA Mobile HTML Template">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content="#0134d4">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <!-- Title -->
+  <title>Affan - PWA Mobile HTML Template</title>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
+  <!-- Favicon -->
+  <link rel="icon" href="mobile/img/demo-img/favicon.ico">
+  <link rel="apple-touch-icon" href="mobile/img/icons/icon-96x96.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="mobile/img/icons/icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="mobile/img/icons/icon-167x167.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="mobile/img/icons/icon-180x180.png">
+  <!-- CSS Libraries -->
+  <link rel="stylesheet" href="mobile/css/bootstrap.min.css">
+  <link rel="stylesheet" href="mobile/css/animate.css">
+  <link rel="stylesheet" href="mobile/css/owl.carousel.min.css">
+  <link rel="stylesheet" href="mobile/css/font-awesome.min.css">
+  <link rel="stylesheet" href="mobile/css/bootstrap-icons.css">
+  <link rel="stylesheet" href="mobile/css/magnific-popup.css">
+  <link rel="stylesheet" href="mobile/css/ion.rangeSlider.min.css">
+  <link rel="stylesheet" href="mobile/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="mobile/css/apexcharts.css">
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="mobile/style.css">
+  <!-- Web App Manifest -->
+  <link rel="manifest" href="mobile/manifest.json">
 </head>
-<body class="login" style="background: #F7D92B">
-<div class="container sm:px-10">
-  <div class="block xl:grid grid-cols-2 gap-4">
-    <!-- BEGIN: Register Info -->
-    <div class="hidden xl:flex flex-col min-h-screen">
-      <div class="my-auto">
-
-        <img alt="<%= SiteConfig.first.title || 'Ordery | developed by sukhochird'%>" class="-intro-x w-1/2 -mt-16" src="/undraw_web_shopping_dd4l.svg">
-        <div class="-intro-x text-white font-medium text-4xl leading-tight mt-10">
-          УТАС: <%= SiteConfig.first.phone_number || '9999-9999' %>
-        </div>
-        <div class="-intro-x mt-5 text-lg text-white dark:text-gray-500">
-          <div class="w-full flex">
-            <i data-feather="map-pin" class="w-4 h-4 mr-2 mt-1"></i> <%= SiteConfig.first.address %>
-          </div>
-        </div>
-        <div class="-intro-x mt-5 text-lg text-white dark:text-gray-500">
-          <a href="<%= SiteConfig.first.facebook_url || 'https://www.facebook.com' %>" target="_blank">
-            <div class="w-full flex">
-              <i data-feather="facebook" class="w-4 h-4 mr-2 mt-1"></i> <%= SiteConfig.first.facebook_name || 'https://www.facebook.com' %>
-            </div>
-          </a>
-          <img class="mt-20" src="/agency-white.png" alt="" width="30%">
-        </div>
-      </div>
-    </div>
-    <!-- END: Register Info -->
-    <!-- BEGIN: Register Form -->
-    <div class="h-screen xl:h-auto flex py-5 xl:py-0 my-10 xl:my-0">
-      <div class="my-auto mx-auto xl:ml-20 bg-white xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto">
-        <img class="visible md:hidden lg:hidden" alt="<%= SiteConfig.first.title || 'Ordery | developed by sukhochird'%>" src="/undraw_web_shopping_dd4l.svg">
-        <h2 style="color: black" class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">
-          BIG MALL- Үйлдвэрийн бөөний үнээр-Захиалгын бараа ✅✅✅
-        </h2>
-        <div class="intro-x mt-2 text-gray-500 dark:text-gray-500 xl:hidden text-center">Та захиалга өгсөн утасны дугаараа оруулан захиалгын мэдээлээ харна уу</div>
-        <div class="intro-x mt-8">
-          <input type="text" class="intro-x login__input input input--lg border border-gray-300 block" placeholder="Утасны дугаар" id = "phone_number">
-<!--          <input type="text" class="intro-x login__input input input--lg border border-gray-300 block mt-4" placeholder="Баталгаажуулах код">-->
-        </div>
-        <div class="intro-x mt-2 xl:mt-2 text-center xl:text-left ">
-          <button style="background: #F7D92B" class="button button--lg w-full xl:w-32 text-white bg-theme-1 xl:mr-3 align-top" id = "home_search">Хайх</button>
-        </div>
-<!--        <section class="hero container max-w-screen-lg mx-auto pr-10 pl-10 mt-20 visible lg:hidden md:hiddens ">-->
-<!--          <a class="mx-auto" href="https://www.facebook.com/Emoz.Agency" target="_blank"><img src="/agency.png"  alt=""></a>-->
-<!--        </section>-->
-      </div>
-    </div>
-    <!-- END: Register Form -->
+<body>
+<!-- Preloader -->
+<div class="preloader d-flex align-items-center justify-content-center" id="preloader">
+  <div class="spinner-grow text-primary" role="status">
+    <div class="sr-only">Loading...</div>
   </div>
 </div>
-<!-- BEGIN: JS Assets-->
-<%= javascript_pack_tag 'custom' %>
-<!-- END: JS Assets-->
-</body>
+<!-- Internet Connection Status -->
+<!-- # This code for showing internet connection status -->
+<div class="internet-connection-status" id="internetStatus"></div>
+<!-- Header Area -->
+<div class="header-area" id="headerArea">
+  <div class="container">
+    <!-- Header Content -->
+    <div class="header-content position-relative d-flex align-items-center justify-content-between">
+      <!-- Back Button -->
+      <div class="back-button">
+        <a href="#">
+
+        </a>
+      </div>
+      <!-- Page Title -->
+      <div class="page-heading">
+        <h6 class="mb-0">Тавтай морилно уу</h6>
+      </div>
+      <!-- Settings -->
+      <div class="setting-wrapper"><a class="setting-trigger-btn" id="settingTriggerBtn" href="#">
+      </a></div>
+    </div>
+  </div>
+</div>
+
+<!-- # Sidenav Left -->
+<!-- Offcanvas -->
+<div class="page-content-wrapper">
+  <!-- Hero Slides -->
+  <div class="owl-carousel-one owl-carousel">
+    <!-- Single Hero Slide -->
+    <div class="single-hero-slide bg-overlay" style="background-image: url('https://picjumbo.com/wp-content/uploads/flying-hearts-on-yellow-background-2210x1473.jpg')">
+      <div class="slide-content h-100 d-flex align-items-center text-center">
+        <div class="container">
+          <h3 class="text-white mb-1" data-animation="fadeInUp" data-delay="100ms" data-wow-duration="1000ms">BIG MALL</h3>
+          <p class="text-white mb-4" data-animation="fadeInUp" data-delay="400ms" data-wow-duration="1000ms">Үйлдвэрийн бөөний үнээр-Захиалгын бараа ✅✅✅.</p><a class="btn btn-creative btn-warning" href="#" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms">Бараа захиалах</a>
+        </div>
+      </div>
+    </div>
+    <!-- Single Hero Slide -->
+    <div class="single-hero-slide bg-overlay" style="background-image: url('https://picjumbo.com/wp-content/uploads/flying-hearts-on-yellow-background-2210x1473.jpg')">
+      <div class="slide-content h-100 d-flex align-items-center text-center">
+        <div class="container">
+          <h3 class="text-white mb-1" data-animation="fadeInUp" data-delay="100ms" data-wow-duration="500ms">9090-5448</h3>
+          <p class="text-white mb-4" data-animation="fadeInUp" data-delay="400ms" data-wow-duration="500ms">Бидэнтэй холбогдоорой</p><a class="btn btn-creative btn-warning" href="#" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms">Залгах</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pt-3"></div>
+  <div class="container direction-rtl">
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-4">
+            <div class="feature-card mx-auto text-center">
+              <div class="card mx-auto bg-gray">
+                <svg class="bi bi-award text-warning" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68L9.669.864zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702 1.509.229z"></path>
+                  <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"></path>
+                </svg>
+              </div>
+              <p class="mb-0">ХЯМД</p>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="feature-card mx-auto text-center">
+              <div class="card mx-auto bg-gray">
+                <svg class="bi bi-award text-warning" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68L9.669.864zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702 1.509.229z"></path>
+                  <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"></path>
+                </svg>
+              </div>
+              <p class="mb-0">ШУУРХАЙ</p>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="feature-card mx-auto text-center">
+              <div class="card mx-auto bg-gray">
+                <svg class="bi bi-award text-warning" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68L9.669.864zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702 1.509.229z"></path>
+                  <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"></path>
+                </svg>
+              </div>
+              <p class="mb-0">НАЙДВАРТАЙ</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="card card-bg-img bg-img bg-overlay mb-3" style="background-image: url('mobile/img/bg-img/bg-main.jpg')">
+      <div class="card-body direction-rtl p-5">
+        <h2 class="text-white">Захиалгийн мэдээлэл харах</h2>
+        <p class="mb-4 text-white">Та өөрийн захиалга өгсөн утасны дугаараа оруулна уу</p>
+        <div class="form-group">
+          <input class="form-control form-control-clicked" id="phone_number" type="text" placeholder="Утасны дугаар">
+        </div>
+        <a class="btn btn-warning" href="#" id="home_search">ХАЙХ</a>
+      </div>
+    </div>
+  </div>
+  <div class="container mb-3">
+    <div class="card position-relative shadow-sm"><img class="card-img-top" src="mobile/img/bg-img/location.jpg" alt="">
+      <div class="card-body direction-rtl">
+        <h2>Манай хаяг</h2>
+        <p>Viva city хорооллын зүүн талд #Фермерүүд худалдааны төв дотор Big Mall</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3>Захиалагчийн сэтгэгдэл</h3>
+        <div class="testimonial-slide owl-carousel testimonial-style3">
+          <!-- Single Testimonial Slide -->
+          <div class="single-testimonial-slide">
+            <div class="text-content"><span class="d-inline-block badge bg-warning mb-2"><i class="bi bi-star-fill me-1"></i><i class="bi bi-star-fill me-1"></i><i class="bi bi-star-fill me-1"></i><i class="bi bi-star-fill me-1"></i><i class="bi bi-star-fill"></i></span>
+              <h6 class="mb-2">Эднийхээс гэр ахуйн бараагаа байнга захиалж авдаг. Түргэн шуурхай найдтайртай үйлчилгээ үзүүлдэгт баярладаг.</h6><span class="d-block">Б. Лхагвасайхан</span>
+            </div>
+          </div>
+          <!-- Single Testimonial Slide -->
+          <div class="single-testimonial-slide">
+            <div class="text-content"><span class="d-inline-block badge bg-warning mb-2"><i class="bi bi-star-fill me-1"></i><i class="bi bi-star-fill me-1"></i><i class="bi bi-star-fill me-1"></i><i class="bi bi-star-fill me-1"></i><i class="bi bi-star-fill"></i></span>
+              <h6 class="mb-2">Спекр авмаар байна.</h6><span class="d-block">Altantuya Choijilsuren</span>
+            </div>
+          </div>
+          <!-- Single Testimonial Slide -->
+          <div class="single-testimonial-slide">
+            <div class="text-content"><span class="d-inline-block badge bg-warning mb-2"><i class="bi bi-star-fill me-1"></i><i class="bi bi-star-fill me-1"></i><i class="bi bi-star-fill me-1"></i><i class="bi bi-star-fill me-1"></i><i class="bi bi-star-fill"></i></span>
+              <h6 class="mb-2">ene deer zahialga avaach pls</h6><span class="d-block">Энхзул Лхагвасүрэн</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pb-3"></div>
+</div>
+<!-- All JavaScript Files -->
+<script src="mobile/js/bootstrap.bundle.min.js"></script>
+<script src="mobile/js/jquery.min.js"></script>
+<script src="mobile/js/internet-status.js"></script>
+<script src="mobile/js/waypoints.min.js"></script>
+<script src="mobile/js/jquery.easing.min.js"></script>
+<script src="mobile/js/wow.min.js"></script>
+<script src="mobile/js/owl.carousel.min.js"></script>
+<script src="mobile/js/jquery.counterup.min.js"></script>
+<script src="mobile/js/jquery.countdown.min.js"></script>
+<script src="mobile/js/imagesloaded.pkgd.min.js"></script>
+<script src="mobile/js/isotope.pkgd.min.js"></script>
+<script src="mobile/js/jquery.magnific-popup.min.js"></script>
+<script src="mobile/js/dark-mode-switch.js"></script>
+<script src="mobile/js/ion.rangeSlider.min.js"></script>
+<script src="mobile/js/jquery.dataTables.min.js"></script>
+<script src="mobile/js/active.js"></script>
+<!-- PWA -->
+<script src="mobile/js/pwa.js"></script>
 <script>
-$("#home_search").click(function(){
-  window.location.href='/home/' + $('#phone_number').val();
-});
+    $("#home_search").click(function(){
+        if($('#phone_number').val() !== undefined || $('#phone_number').val() !== ""){
+            window.location.href='/home/' + $('#phone_number').val()
+        }else{
+            alert('Утасны дугаараа оруулна уу!')
+        }
+    });
 </script>
+</body>
 </html>

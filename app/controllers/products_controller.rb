@@ -52,7 +52,7 @@ class ProductsController < ApplicationController
         product.save
       end
       products.each do |product|
-        counter = counter + product.quantity.to_s.to_i
+        counter += product.quantity.to_s.to_i
         product.status = IS_WILLING
         product.save
         puts "counter =====> #{counter}"

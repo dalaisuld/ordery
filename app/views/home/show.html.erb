@@ -1,266 +1,248 @@
 <!DOCTYPE html>
-<html lang="en" class="light">
+<html lang="en">
 <head>
-  <title><%= @page_title || 'Ordey | Order Management System' %></title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
   <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
-  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Affan - PWA Mobile HTML Template">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content="#0134d4">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <!-- Title -->
+  <title>Big Mall Үйлдвэрийн бараа бөөний үнээр-Захиалгын бараа ✅✅✅</title>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
+  <!-- Favicon -->
+  <link rel="icon" href="/mobile/img/demo-img/favicon.ico">
+  <link rel="apple-touch-icon" href="/mobile/img/icons/icon-96x96.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/mobile/img/icons/icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="/mobile/img/icons/icon-167x167.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/mobile/img/icons/icon-180x180.png">
+  <!-- CSS Libraries -->
+  <link rel="stylesheet" href="/mobile/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/mobile/css/animate.css">
+  <link rel="stylesheet" href="/mobile/css/owl.carousel.min.css">
+  <link rel="stylesheet" href="/mobile/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/mobile/css/bootstrap-icons.css">
+  <link rel="stylesheet" href="/mobile/css/magnific-popup.css">
+  <link rel="stylesheet" href="/mobile/css/ion.rangeSlider.min.css">
+  <link rel="stylesheet" href="/mobile/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="/mobile/css/apexcharts.css">
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="/mobile/style.css">
+  <!-- Web App Manifest -->
+  <link rel="manifest" href="/mobile/manifest.json">
 </head>
-<body class="app">
-<!-- BEGIN: Mobile Menu -->
-<div class="mobile-menu md:hidden">
-  <div class="mobile-menu-bar">
-    <a href="" class="flex mr-auto">
-      <img alt="Midone Tailwind HTML Admin Template" class="w-6" src="/images/logo.svg">
-    </a>
-    <a href="javascript:;" id="mobile-menu-toggler"> <i data-feather="bar-chart-2" class="w-8 h-8 text-white transform -rotate-90"></i> </a>
+<body>
+<!-- Preloader -->
+<div class="preloader d-flex align-items-center justify-content-center" id="preloader">
+  <div class="spinner-grow text-primary" role="status">
+    <div class="sr-only">Loading...</div>
   </div>
-  <ul class="border-t border-theme-24 py-5 hidden">
-    <li>
-      <a href="index.html" class="menu menu--active">
-        <div class="menu__icon"> <i data-feather="home"></i> </div>
-        <div class="menu__title"> Dashboard </div>
-      </a>
-    </li>
-  </ul>
 </div>
-<!-- END: Mobile Menu -->
+<!-- Internet Connection Status -->
+<!-- # This code for showing internet connection status -->
+<div class="internet-connection-status" id="internetStatus"></div>
+<!-- Header Area -->
+<div class="header-area" id="headerArea">
+  <div class="container">
+    <!-- Header Content -->
+    <div class="header-content position-relative d-flex align-items-center justify-content-between">
+      <!-- Back Button -->
+      <div class="back-button">
+        <a href="#">
 
-<!-- BEGIN: Top Menu -->
-<nav class="top-nav">
-  <ul>
-    <li>
-      <a href="top-menu-light-dashboard.html" class="top-menu top-menu--active">
-        <div class="top-menu__icon"> <i data-feather="home"></i> </div>
-        <div class="top-menu__title"> Dashboard </div>
-      </a>
-    </li>
-  </ul>
-</nav>
-<!-- END: Top Menu -->
-<!-- BEGIN: Content -->
-<div class="content">
-  <!-- BEGIN: Profile Info -->
-  <div class="intro-y box px-5 pt-5 mt-5">
-    <div class="flex flex-col lg:flex-row border-b border-gray-200 dark:border-dark-5 pb-5 -mx-5">
-      <div class="flex flex-1 px-5 items-center justify-center lg:justify-start">
-        <div class="w-20 h-20 sm:w-24 sm:h-24 flex-none lg:w-32 lg:h-32 image-fit relative">
-          <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="/images/profile-10.jpg">
-        </div>
-        <div class="ml-5">
-          <div class="w-24 sm:w-40 truncate sm:whitespace-normal font-medium text-lg"><%= @clients.phone_number %></div>
-          <div class="text-gray-600">Хэрэглэгч</div>
-        </div>
+        </a>
       </div>
-      <div class="mt-6 lg:mt-0 flex-1 dark:text-gray-300 px-5 border-l border-r border-gray-200 dark:border-dark-5 border-t lg:border-t-0 pt-5 lg:pt-0">
-        <div class="font-medium text-center lg:text-left lg:mt-5">Хэрэглэгчийн мэдээлэл</div>
-        <div class="flex flex-col justify-center items-center lg:items-start mt-4">
-          <div class="truncate sm:whitespace-normal flex items-center"> <i data-feather="mail" class="w-4 h-4 mr-2"></i> E-Mail хаяг холбоогүй байна </div>
-          <div class="truncate sm:whitespace-normal flex items-center mt-3"> <i data-feather="facebook" class="w-4 h-4 mr-2"></i> Facebook хаяг холбогдоогүй байна </div>
-        </div>
+      <!-- Page Title -->
+      <div class="page-heading">
+        <h6 class="mb-0">Тавтай морилно уу</h6>
       </div>
-      <div class="mt-6 lg:mt-0 flex-1 flex items-center justify-center px-5 border-t lg:border-0 border-gray-200 dark:border-dark-5 pt-5 lg:pt-0">
-        <div class="text-center rounded-md w-20 py-3">
-          <div class="font-medium text-theme-1 dark:text-theme-10 text-xl"><%= @orders.count %></div>
-          <div class="text-gray-600">Захиалга</div>
-        </div>
-        <div class="text-center rounded-md w-20 py-3">
-          <div class="font-medium text-theme-1 dark:text-theme-10 text-xl"><%= @products.length %></div>
-          <div class="text-gray-600">Бараа</div>
-        </div>
-        <div class="text-center rounded-md w-20 py-3">
-          <div class="font-medium text-theme-1 dark:text-theme-10 text-xl"><%= @deliveries.length %></div>
-          <div class="text-gray-600">Хүргэлт</div>
-        </div>
-      </div>
-    </div>
-    <div class="nav-tabs flex flex-col sm:flex-row justify-center lg:justify-start">
-      <a data-toggle="tab" data-target="#profile" href="javascript:;" class="py-4 sm:mr-8 flex items-center active"> <i class="w-4 h-4 mr-2" data-feather="user"></i> Профайл </a>
-      <% if @clients.address.present? %>
-        <a data-toggle="tab" data-target="#transaction" href="javascript:;" class="py-4 sm:mr-8 flex items-center"> <i class="w-4 h-4 mr-2" data-feather="file-text"></i> Шилжүүлгийн мэдээлэл </a>
-        <a data-toggle="tab" data-target="#delivery" href="javascript:;" class="py-4 sm:mr-8 flex items-center"> <i class="w-4 h-4 mr-2" data-feather="truck"></i> Хүргэлтийн мэдэлээл </a>
-      <% end %>
+      <!-- Settings -->
+      <div class="setting-wrapper"><a class="setting-trigger-btn" id="settingTriggerBtn" href="#">
+      </a></div>
     </div>
   </div>
-  <!-- END: Profile Info -->
-  <div class="tab-content mt-5">
-    <div class="tab-content__pane active" id="profile">
-      <div class="intro-y box col-span-12 lg:col-span-6">
-        <div class="flex items-center px-5 py-5 sm:py-0 border-b border-gray-200 dark:border-dark-5">
-          <h2 class="font-medium text-base mr-auto lg:p-3">
-            Үндсэн хаяг
-          </h2>
-        </div>
-        <div class="p-5">
-          <div>
-            <div class="mt-0.5 text-gray-600 dark:text-gray-600">Та бараагаа хүргүүлж авах бол ДҮҮРЭГ, ХОРОО гэрийн хаяг тодорхой бичээрэй.</div>
-            <div class="mt-0.5 text-gray-600 dark:text-gray-600">Анхааруулга: Та барааныхаа төлөвийг сайн хараарай. Ирсэн бараа л хүргэлтэнд гарна.</div>
-          </div>
-          <div class="modal" id="address-alert">
-            <div class="modal__content relative"> <a data-dismiss="modal" href="javascript:;" class="absolute right-0 top-0 mt-3 mr-3"> <i data-feather="x" class="w-8 h-8 text-gray-500"></i> </a>
-              <div class="p-5 text-center"> <i data-feather="alert-triangle" class="w-16 h-16 text-theme-6 mx-auto mt-3"></i>
-                <div class="text-3xl mt-5">Анхаар</div>
-                <div class="text-gray-600 mt-2">Та үндсэн гэрийн хаягаа оруулснаар системийг цааш ашиглах боломжтой болно.</div>
-              </div>
-              <div class="px-5 pb-8 text-center"> <button type="button" data-dismiss="modal" class="button w-24 bg-theme-1 text-white">Ok</button> </div>
-            </div>
-          </div>
-          <textarea class="input w-full border mt-2" placeholder="Гэрийн хаягаа энд бичнэ үү!" rows="4" name="address" id="address"><%= @clients.address %></textarea>
-          <div class="flex flex-col sm:flex-row mt-2">
-            <div class="flex items-center text-gray-700 dark:text-gray-500 mr-2">
-              <input type="radio" class="input border mr-2" id="1" name="is_delivery_to_home" value="1" <% if @clients.is_delivery_to_home == true %>checked<% end %>>
-              <label class="cursor-pointer select-none" for="1">Гэртээ хүргүүлж авах</label>
-            </div>
-            <div class="flex items-center text-gray-700 dark:text-gray-500 mr-2 mt-2 sm:mt-0">
-              <input type="radio" class="input border mr-2" id="0" name="is_delivery_to_home" value="0" <% if @clients.is_delivery_to_home == false %>checked<% end %>>
-              <label class="cursor-pointer select-none" for="0">Агуулахаас ирж авах</label>
-            </div>
-          </div>
-          <button class="button button--sm w-full xl:w-32 text-white bg-theme-1 xl:mr-3 align-top mt-2" id="update_address_btn">Хадгалах</button>
+</div>
+
+<div class="page-content-wrapper">
+  <!-- Hero Slides -->
+  <div class="owl-carousel-one owl-carousel">
+    <!-- Single Hero Slide -->
+    <div class="single-hero-slide bg-overlay" style="background-image: url('https://picjumbo.com/wp-content/uploads/flying-hearts-on-yellow-background-2210x1473.jpg')">
+      <div class="slide-content h-100 d-flex align-items-center text-center">
+        <div class="container">
+          <h3 class="text-white mb-1" data-animation="fadeInUp" data-delay="100ms" data-wow-duration="1000ms">BIG MALL</h3>
+          <p class="text-white mb-4" data-animation="fadeInUp" data-delay="400ms" data-wow-duration="1000ms">Үйлдвэрийн бараа бөөний үнээр-Захиалгын бараа ✅✅✅.</p><a class="btn btn-creative btn-warning" href="#" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms">Бараа захиалах</a>
         </div>
       </div>
-      <% if @clients.address.present? %>
-        <div class="intro-y box col-span-12 lg:col-span-6 mt-5">
-          <div class="flex items-center px-5 py-5 sm:py-0 border-b border-gray-200 dark:border-dark-5">
-            <h2 class="font-medium text-base mr-auto lg:p-3">
-              Барааны мэдээлэл
-            </h2>
+    </div>
+    <!-- Single Hero Slide -->
+    <div class="single-hero-slide bg-overlay" style="background-image: url('https://picjumbo.com/wp-content/uploads/flying-hearts-on-yellow-background-2210x1473.jpg')">
+      <div class="slide-content h-100 d-flex align-items-center text-center">
+        <div class="container">
+          <h3 class="text-white mb-1" data-animation="fadeInUp" data-delay="100ms" data-wow-duration="500ms">9090-5448</h3>
+          <p class="text-white mb-4" data-animation="fadeInUp" data-delay="400ms" data-wow-duration="500ms">Бидэнтэй холбогдоорой</p><a class="btn btn-creative btn-warning" href="#" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms">Залгах</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pt-3"></div>
+  <div class="container">
+    <!-- User Information-->
+    <div class="card user-info-card mb-3">
+      <div class="card-body d-flex align-items-center">
+        <div class="user-profile me-3"><img src="/mobile/img/bg-img/2.jpg" alt=""></div>
+        <div class="user-info">
+          <div class="d-flex align-items-center">
+            <h5 class="mb-1"><%= @clients.phone_number %></h5><span class="badge bg-warning ms-2 rounded-pill">Захиалагч</span>
           </div>
-          <div class="p-5">
+          <p class="mb-0">Тавтай морилно уу</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pt-3"></div>
+  <div class="container">
+    <div class="standard-tab">
+      <ul class="nav mb-2 p-2" id="affanTabs1" role="tablist" style="background: white">
+        <li class="nav-item" role="presentation">
+          <button class="btn active" id="bootstrap-tab" data-bs-toggle="tab" data-bs-target="#products" type="button" role="tab" aria-controls="products" aria-selected="true">Барааны мэдээлэл</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="btn" id="pwa-tab" data-bs-toggle="tab" data-bs-target="#orders" type="button" role="tab" aria-controls="orders" aria-selected="false">Шилжүүлгийн мэдээлэл</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="btn" id="dark-tab" data-bs-toggle="tab" data-bs-target="#address" type="button" role="tab" aria-controls="address" aria-selected="false">Хаяг</button>
+        </li>
+      </ul>
+      <div class="pt-3"></div>
+      <div class="tab-content" id="affanTabs1Content" style="border: none">
+        <div class="tab-pane fade show active" id="products" role="tabpanel" aria-labelledby="products-tab">
+          <div class="container">
+
             <% @products.each.each_with_index do |product, counter| %>
-              <div class="flex items-center <% unless counter==0 %>mt-5<% end %>">
-                <div class="border-l-2 border-theme-1 pl-4">
-                  <a href="" class="font-medium"><%= product.name %> <%= product.order_detail_id %> (<%= product.quantity %>ш)</a>
-                  <div class="text-gray-600">
-                    <% if product.status == IS_WAITING %>
-                      <span class="text-theme-12">Хүлээгдэж байгаа</span>
-                    <% elsif product.status == IS_WILLING %>
-                      <span class="text-theme-1">Бараа ирсэн байна</span>
-                    <% elsif product.status == IS_DELIVERY %>
-                      Хүргэлтэнд бүртгэгдсэн
-                    <% elsif product.status == IS_FINISH %>
-                      Хүлээлгэж өгсөн
-                    <% elsif product.status == IS_CANCELED %>
-                      Цуцалсан
-                    <% end %>
+              <div class="card timeline-card
+                  <% if product.status == IS_WAITING %>
+                    bg-warning
+                  <% elsif product.status == IS_WILLING %>
+                    bg-success
+                  <% elsif product.status == IS_DELIVERY %>
+                    bg-dark
+                  <% elsif product.status == IS_FINISH %>
+                    bg-info
+                  <% elsif product.status == IS_CANCELED %>
+                     bg-danger
+                  <% end %>
+                ">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <div class="timeline-text mb-2">
+                      <% if product.status == IS_WAITING %>
+                        <span class="badge mb-2 rounded-pill">Хүлээгдэж байгаа</span>
+                      <% elsif product.status == IS_WILLING %>
+                        <span class="badge mb-2 rounded-pill">Бараа ирсэн байна</span>
+                      <% elsif product.status == IS_DELIVERY %>
+                        <span class="badge mb-2 rounded-pill">Хүргэлтэнд бүртгэгдсэн</span>
+                      <% elsif product.status == IS_FINISH %>
+                        <span class="badge mb-2 rounded-pill">Хүлээлгэж өгсөн</span>
+                      <% elsif product.status == IS_CANCELED %>
+                        <span class="badge mb-2 rounded-pill">Цуцалсан</span>
+                      <% end %>
+                      <h6><%= product.name %> (<%= product.quantity %>ш)</h6>
+                    </div>
+                    <div class="timeline-icon mb-2">
+                      <svg class="bi bi-basket" width="28" height="28" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9H2zM1 7v1h14V7H1zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z"></path>
+                      </svg>
+                    </div>
                   </div>
-                  <div class="text-gray-600">Үнэ: <%= number_to_currency(product.actual_price, unit: "₮ ", strip_insignificant_zeros: true) %> x <%= product.quantity %> = <%= number_to_currency(product.actual_price.to_i * product.quantity.to_i, unit: "₮ ", strip_insignificant_zeros: true) %></div>
-                  <!--<div class="text-gray-600">Үнэ: <%#= number_to_currency(product.transition_amount, unit: "₮ ", strip_insignificant_zeros: true) %></div>-->
-                  <div class="text-gray-600">Карго: <%= number_to_currency(product.cargo_price, unit: "₮ ", strip_insignificant_zeros: true) %></div>
-                </div>
-                <% if product.status == IS_WILLING %>
-                  <input class="input  ml-auto border" type="checkbox" checked name="order-detail" data-order="<%= product.order_detail_id %>">
-                <% end %>
-              </div>
-            <% end %>
-            <div class="w-full flex justify-center border-t border-gray-200 dark:border-dark-5 mt-10">
-              <div class="bg-white dark:bg-dark-3 px-5 -mt-3 text-gray-600">Хүргэлтийн захиалга өгөх</div>
-            </div>
-            <% if @clients.address.present? || @clients.address != "" %>
-              <div class="mt-5">
-                <select class="input input--lg w-full border mr-2" id="delivery_addr_type">
-                  <option value="0">Үндсэн хаяг дээр хүргүүлэн авах</option>
-                  <option value="1">Өөр хаяг дээр хүргүүлэн авах</option>
-                </select>
-              </div>
-              <textarea class="input w-full border mt-3" placeholder="Та хүргүүлэн авах хаягаа энд бичнэ үү!" rows="4"  id="delivery_address"><%= @clients.address %></textarea>
-              <div class="mt-3">
-                <div class="relative w-full">
-                  <p class="text-xs px-1 bg-theme-6 text-white mr-1">Хөл хориотой холбоотойгоор хүргэлтийн ачаалал их байгаа тул 2 өдөртөө таны хүргэлт очно</p>
-<!--                  <div class="absolute rounded-l w-10 h-full flex items-center justify-center bg-gray-100 border text-gray-600 dark:bg-dark-1 dark:border-dark-4"> <i data-feather="calendar" class="w-4 h-4"></i> </div> <input type="text" class="datepicker input pl-12 border" data-single-mode="true">-->
+                  <p class="mb-2">Төлөх дүн: <%= number_to_currency(product.actual_price, unit: "₮ ", strip_insignificant_zeros: true) %> x <%= product.quantity %> = <%= number_to_currency(product.actual_price.to_i * product.quantity.to_i, unit: "₮ ", strip_insignificant_zeros: true) %></p>
+                  <p class="mb-2">Карго: <%= number_to_currency(product.cargo_price * product.quantity.to_i, unit: "₮ ", strip_insignificant_zeros: true) %></p>
                 </div>
               </div>
-              <button class="button button--sm w-full xl:w-auto text-white bg-theme-1 xl:mr-3 align-top mt-2" id="create_delivery_btn">Хүргэлтийн захиалга өгөх</button>
-            <% else %>
-              Та үндсэн хаягаа оруулсаны дараа хүргэлтийн захиалга өгөх боломжтой болно
             <% end %>
           </div>
+          <div class="pt-3"></div>
         </div>
-      <% end %>
-    </div>
-    <div class="tab-content__pane" id="transaction">
-      <div class="intro-y box col-span-12 lg:col-span-6 mt-5">
-        <div class="flex items-center px-5 py-5 sm:py-0 border-b border-gray-200 dark:border-dark-5">
-          <h2 class="font-medium text-base mr-auto lg:p-3">
-            Шилжүүлгийн мэдээлэл
-          </h2>
+        <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+          <div class="notification-area">
+            <div class="container">
+              <% @orders.each.each_with_index do |order, counter| %>
+                <div class="alert unread custom-alert-3 alert-primary" role="alert">
+                  <svg class="bi bi-check2-circle" width="24" height="24" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L8 9.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path>
+                    <path fill-rule="evenodd" d="M8 2.5A5.5 5.5 0 1 0 13.5 8a.5.5 0 0 1 1 0 6.5 6.5 0 1 1-3.25-5.63.5.5 0 1 1-.5.865A5.472 5.472 0 0 0 8 2.5z"></path>
+                  </svg>
+                  <div class="alert-text w-75">
+                    <h6><%= order.account_number %> данснаас <%= number_to_currency(order.amount, unit: "₮", strip_insignificant_zeros: true) %> төгрөгийг <%= order.transition_date %> -д шилжүүлсэн</h6>
+                    <span class="text-truncate">Гүйлгээний утга: <%= order.description %></span>
+                    <span class="text-truncate">Бүртгэсэн огноо: <%= order.created_at.strftime('%Y/%m/%d %H:%M:%S') %></span>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="dark" role="tabpanel" aria-labelledby="dark-tab">
+            <h6>Dark Mode</h6>
+            <p class="mb-0">Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+          </div>
         </div>
-        <div class="p-5">
-          <% @orders.each.each_with_index do |order, counter| %>
-            <div class="flex items-center <% unless counter==0 %>mt-5<% end %>">
-              <div class="border-l-2 border-theme-1 pl-4">
-                <a href="" class="font-medium"><%= order.account_number %> данснаас <span><%= number_to_currency(order.amount, unit: "₮", strip_insignificant_zeros: true) %></span> төгрөгийг <%= order.transition_date %> -д шилжүүлсэн</a>
-                <div class="text-gray-600">
-                  <span class="font-bold">Гүйлгээний утга:</span> <%= order.description %>
+        <div class="tab-pane fade" id="address" role="tabpanel" aria-labelledby="address-tab">
+          <div class="card">
+            <div class="card-body">
+              <p>Та бараагаа хүргүүлж авах бол ДҮҮРЭГ, ХОРОО гэрийн хаяг тодорхой бичээрэй.</p>
+              <p>Анхааруулга: Та барааныхаа төлөвийг сайн хараарай. Ирсэн бараа л хүргэлтэнд гарна.</p>
+              <form action="#" method="GET">
+                <div class="form-group">
+                  <textarea class="form-control" id="address" name="address" cols="3" rows="5" placeholder="Гэрийн хаягаа энд бичнэ үү!"><%= @clients.address %></textarea>
+                  <div class="flex flex-col sm:flex-row mt-2">
+                    <div class="flex items-center text-gray-700 dark:text-gray-500 mr-2">
+                      <input type="radio" class="input border mr-2" id="1" name="is_delivery_to_home" value="1" <% if @clients.is_delivery_to_home == true %>checked<% end %>>
+                      <label class="cursor-pointer select-none" for="1">Гэртээ хүргүүлж авах</label>
+                    </div>
+                    <div class="flex items-center text-gray-700 dark:text-gray-500 mr-2 mt-2 sm:mt-0">
+                      <input type="radio" class="input border mr-2" id="0" name="is_delivery_to_home" value="0" <% if @clients.is_delivery_to_home == false %>checked<% end %>>
+                      <label class="cursor-pointer select-none" for="0">Агуулахаас ирж авах</label>
+                    </div>
+                  </div>
                 </div>
-                <div class="text-gray-600">
-                  <span class="font-bold">Бүртгэсэн огноо:</span> <%= order.created_at.strftime('%Y/%m/%d %H:%M:%S') %>
-                </div>
-              </div>
+                <button class="btn btn-primary w-100 d-flex align-items-center justify-content-center" type="button" id="update_address_btn">Хадгалах
+                  <svg class="bi bi-arrow-right-short" width="24" height="24" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"></path>
+                  </svg>
+                </button>
+              </form>
             </div>
-          <% end %>
-        </div>
-      </div>
-    </div>
-    <div class="tab-content__pane" id="delivery">
-      <div class="intro-y box col-span-12 lg:col-span-6 mt-5">
-        <div class="flex items-center px-5 py-5 sm:py-0 border-b border-gray-200 dark:border-dark-5">
-          <h2 class="font-medium text-base mr-auto lg:p-3">
-            Хүргэлтийн мэдээлэл
-          </h2>
-        </div>
-        <div class="p-5">
-          <% @deliveries.each.each_with_index do |delivery, counter| %>
-            <div class="flex items-center <% unless counter==0 %>mt-5<% end %>">
-              <div class="border-l-2 border-theme-1 pl-4">
-                <a href="" class="font-medium"><%= delivery.phone_number %></a>
-                <div class="text-gray-600">
-                  <span class="font-bold">Хаяг:</span> <%= delivery.address %>
-                </div>
-                <div class="text-gray-600">
-                  <span class="font-bold">Хүргэлтийн хөлс:</span> 2,000
-                </div>
-              </div>
-            </div>
-
-            <div class="flex items-center mt-4">
-              <div class="w-2 h-2 <% if delivery.status == 0 %>bg-theme-9<% else %>bg-theme-11<% end %> rounded-full mr-3"></div>
-              <span>Хүлээгдэж байгаа <% if delivery.status == 0 %>(<%= delivery.updated_at.strftime('%Y-%m-%d %H:%M') %>)<% end %></span>
-              <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-            </div>
-            <div class="flex items-center mt-1">
-              <div class="w-2 h-2 <% if delivery.status == 1 %>bg-theme-9<% else %>bg-theme-11<% end %> dark:bg-theme-10 rounded-full mr-3"></div>
-              <span>Бараа хүргэлтэнд бэлтгэсэн <% if delivery.status ==12 %>(<%= delivery.updated_at.strftime('%Y-%m-%d %H:%M') %>)<% end %></span>
-              <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-            </div>
-            <div class="flex items-center mt-1">
-              <div class="w-2 h-2 <% if delivery.status == 2 %>bg-theme-9<% else %>bg-theme-11<% end %> dark:bg-theme-10 rounded-full mr-3"></div>
-              <span>Хүргэлтэнд замдаа гарсан <% if delivery.status == 2 %>(<%= delivery.updated_at.strftime('%Y-%m-%d %H:%M') %>)<% end %></span>
-              <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-            </div>
-            <div class="flex items-center mt-1">
-              <div class="w-2 h-2 <% if delivery.status == 3 %>bg-theme-9<% else %>bg-theme-11<% end %> rounded-full mr-3"></div>
-              <span>Бараа хүргэгдсэн <% if delivery.status == 3 %>(<%= delivery.updated_at.strftime('%Y-%m-%d %H:%M') %>)<% end %></span>
-              <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-            </div>
-          <% end %>
+          </div>
         </div>
       </div>
     </div>
   </div>
+  <div class="pb-3"></div>
 </div>
-<!-- END: Content -->
-<%= javascript_pack_tag 'custom' %>
-
-<% unless @clients.address.present? %>
-  <script type="text/javascript" charset="utf-8">
-      cash('#address-alert').modal('show');
-  </script>
-<% end %>
-
+  <!-- All JavaScript Files -->
+  <script src="/mobile/js/bootstrap.bundle.min.js"></script>
+  <script src="/mobile/js/jquery.min.js"></script>
+  <script src="/mobile/js/internet-status.js"></script>
+  <script src="/mobile/js/waypoints.min.js"></script>
+  <script src="/mobile/js/jquery.easing.min.js"></script>
+  <script src="/mobile/js/wow.min.js"></script>
+  <script src="/mobile/js/owl.carousel.min.js"></script>
+  <script src="/mobile/js/jquery.counterup.min.js"></script>
+  <script src="/mobile/js/jquery.countdown.min.js"></script>
+  <script src="/mobile/js/imagesloaded.pkgd.min.js"></script>
+  <script src="/mobile/js/isotope.pkgd.min.js"></script>
+  <script src="/mobile/js/jquery.magnific-popup.min.js"></script>
+  <script src="/mobile/js/dark-mode-switch.js"></script>
+  <script src="/mobile/js/ion.rangeSlider.min.js"></script>
+  <script src="/mobile/js/jquery.dataTables.min.js"></script>
+  <script src="/mobile/js/active.js"></script>
+  <!-- PWA -->
+  <script src="/mobile/js/pwa.js"></script>
 <script>
     $("#update_address_btn").click(function () {
         var url = window.location.pathname;
@@ -277,16 +259,16 @@
                 xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
             },
             success: function (data) {
-                Toastify({
-                    text: "Хаяг амжилттай орууллаа",
-                    duration: 3000,
-                    newWindow: true,
-                    close: true,
-                    gravity: "bottom",
-                    position: "right",
-                    backgroundColor: "#0e2c88",
-                    stopOnFocus: true,
-                }).showToast();
+                // Toastify({
+                //     text: "Хаяг амжилттай орууллаа",
+                //     duration: 3000,
+                //     newWindow: true,
+                //     close: true,
+                //     gravity: "bottom",
+                //     position: "right",
+                //     backgroundColor: "#0e2c88",
+                //     stopOnFocus: true,
+                // }).showToast();
                 location.reload();
             },
             error: function (data) {
@@ -352,6 +334,5 @@
 
     });
 </script>
-
 </body>
 </html>

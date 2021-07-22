@@ -63,7 +63,67 @@
 </body>
 <script>
     $("#reset_pin").click(function(){
-        window.location.href='/home/' + $('#phone_number').val();
+        if($("#phone_number").val().length === 0 ){
+            Toastify({
+                text: "Утасны дугаар оруулна уу.",
+                duration: 3000,
+                newWindow: true,
+                close: true,
+                gravity: "bottom",
+                position: "right",
+                backgroundColor: "#D32929",
+                stopOnFocus: true,
+            }).showToast();
+        }else{
+            $.ajax({
+                url: "/home/reset_pin_code/",
+                type: "POST",
+                data: {
+                    phone_number: $("#phone_number").val(),
+                },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                },
+                success: function (data) {
+                    Toastify({
+                        text: "Хаяг амжилттай орууллаа",
+                        duration: 3000,
+                        newWindow: true,
+                        close: true,
+                        gravity: "bottom",
+                        position: "right",
+                        backgroundColor: "#0e2c88",
+                        stopOnFocus: true,
+                    }).showToast();
+                    window.location.href='/'
+                },
+                error: function (data) {
+                    if (data.status === 400){
+                        Toastify({
+                            text: "Алдаа гарлаа дахин оролдоно уу.",
+                            duration: 3000,
+                            newWindow: true,
+                            close: true,
+                            gravity: "bottom",
+                            position: "right",
+                            backgroundColor: "#D32929",
+                            stopOnFocus: true,
+                        }).showToast();
+                    } else if(data.status === 401){
+                        Toastify({
+                            text: "Бүртгэлгүй хэрэглэгч байна.",
+                            duration: 3000,
+                            newWindow: true,
+                            close: true,
+                            gravity: "bottom",
+                            position: "right",
+                            backgroundColor: "#D32929",
+                            stopOnFocus: true,
+                        }).showToast();
+                    }
+                }
+            });
+        }
     });
 </script>
-</html>
+</html>ee

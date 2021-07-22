@@ -1,2 +1,69 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<html lang="en" class="dark">
+<head>
+  <title><%= @page_title || 'Ordey | Order Management System' %></title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+<body class="login">
+<div class="container sm:px-10">
+  <div class="block xl:grid grid-cols-2 gap-4">
+    <!-- BEGIN: Register Info -->
+    <div class="hidden xl:flex flex-col min-h-screen">
+      <div class="my-auto">
+        <img alt="<%= SiteConfig.first.title || 'Ordery | developed by sukhochird'%>" class="-intro-x w-1/2 -mt-16" src="<%= SiteConfig.first.logo %>">
+        <div class="-intro-x text-white font-medium text-4xl leading-tight mt-10">
+          УТАС: <%= SiteConfig.first.phone_number || '9999-9999' %>
+        </div>
+        <div class="-intro-x mt-5 text-lg text-white dark:text-gray-500">
+          <div class="w-full flex">
+            <i data-feather="map-pin" class="w-4 h-4 mr-2 mt-1"></i> <%= SiteConfig.first.address %>
+          </div>
+        </div>
+        <div class="-intro-x mt-5 text-lg text-white dark:text-gray-500">
+          <a href="<%= SiteConfig.first.facebook_url || 'https://www.facebook.com' %>" target="_blank">
+            <div class="w-full flex">
+              <i data-feather="facebook" class="w-4 h-4 mr-2 mt-1"></i> <%= SiteConfig.first.facebook_name || 'https://www.facebook.com' %>
+            </div>
+          </a>
+          <img class="mt-20" src="/agency-white.png" alt="" width="30%">
+        </div>
+      </div>
+    </div>
+    <!-- END: Register Info -->
+    <!-- BEGIN: Register Form -->
+    <div class="h-screen xl:h-auto flex py-5 xl:py-0 my-10 xl:my-0">
+      <div class="my-auto mx-auto xl:ml-20 bg-white xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto">
+        <img class="visible md:hidden lg:hidden" alt="<%= SiteConfig.first.title || 'Ordery | developed by sukhochird'%>" src="<%= SiteConfig.first.logo %>">
+        <h2 class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">
+          Pin code сэргээх
+        </h2>
+        <div class="intro-x mt-2 text-gray-500 dark:text-gray-500 xl:hidden text-center">Утасны дугаараа оруулна уу</div>
+        <div class="intro-x mt-8">
+          <input type="text" class="intro-x login__input input input--lg border border-gray-300 block" placeholder="Утасны дугаар" id = "phone_number">
+        </div>
+        <div class="intro-x xl:mt-2 text-center xl:text-left ">
+          <button class="button button--lg w-full xl:w-40 text-white bg-theme-11 xl:mr-3 align-top mt-2" id = "reset_pin">Pin code илгээх</button>
+        </div>
+        <section class="hero container max-w-screen-lg mx-auto pr-10 pl-10 mt-20 visible lg:hidden md:hiddens ">
+          <a class="mx-auto" href="https://www.facebook.com/Emoz.Agency" target="_blank"><img src="/agency.png"  alt=""></a>
+        </section>
+      </div>
+    </div>
+    <!-- END: Register Form -->
+  </div>
+</div>
+<!-- BEGIN: JS Assets-->
+<%= javascript_pack_tag 'custom' %>
+<!-- END: JS Assets-->
+</body>
+<script>
+    $("#reset_pin").click(function(){
+        window.location.href='/home/' + $('#phone_number').val();
+    });
+</script>
+</html>

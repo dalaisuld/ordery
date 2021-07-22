@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'dashboard/index'
   get 'home/:phone_number/:pin_code', to: 'home#show'
   post 'home/set_delivery_client', to: 'home#set_delivery_client'
+  post 'home/reset_pin_code', to: 'home#reset_pin_code'
   put 'home', to: 'home#update'
   devise_for :users, controllers: { sessions: "sessions" }
   resources :users

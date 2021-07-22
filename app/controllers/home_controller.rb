@@ -1,6 +1,8 @@
 class HomeController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:reset_pin_code]
+  
   def index
-    render :layout => "home"
+    render layout: 'home'
   end
 
   def show
@@ -23,7 +25,7 @@ class HomeController < ApplicationController
     od.price AS actual_price,
     od.cargo_price,
     od.status').where('o.phone_number = :q', q: "#{params[:phone_number]}").order('o.id')
-    render :layout => false
+    render layout: false
   end
 
   def set_delivery_client
@@ -59,12 +61,29 @@ class HomeController < ApplicationController
     begin
       clients = Client.find_by(phone_number: params[:phone_number])
       clients.update(is_delivery_to_home: params[:is_delivery_to_home], address: params[:address])
-      render json: { message: "success"}, status: 200
-    rescue
-      render json: { message: "error"}, status: 400
+      render json: { message: 'success'}, status: 200
+    rescue StandardError
+      render json: { message: 'error'}, status: 400
     end
   end
 
   def reset
+    render layout: false
+  end
+
+  def reset_pin_code
+    begin
+      client = Client.find_by(phone_number: params[:phone_number])
+      if client.present?
+        pincode = rand(1000..9999)
+        client.update(pincode: pincode)
+        ApplicationHelper.send_sms(80180297, pincode)
+        render json: { message: 'success'}, status: 200
+      else
+        render json: { message: 'Бүртгэлгүй хэрэглэгч'}, status: 401
+      end
+    rescue StandardError
+      render json: { message: 'error'}, status: 400
+    end
   end
 end

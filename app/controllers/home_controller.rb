@@ -81,7 +81,8 @@ class HomeController < ApplicationController
       if client.present?
         pincode = rand(1000..9999)
         client.update(pincode: pincode)
-        ApplicationHelper.send_sms(phone_number.to_s, pincode.to_s)
+        puts
+        ApplicationHelper.send_sms("#{phone_number}", "#{pincode}")
         render json: { message: 'success'}, status: 200
       else
         render json: { message: 'Бүртгэлгүй хэрэглэгч'}, status: 401

@@ -17,9 +17,9 @@ module ApplicationHelper
         if op.operator == 'MOBICOM'
           smslog.operator = op.operator
           req_params = {
-            'servicename': 'Yalalt',
-            'username': 'Yalalt',
-            'from': '132050',
+            'servicename': 'papus',
+            'username': 'papus',
+            'from': '131113',
             'msg': sms,
             'to': phone_number
           }
@@ -44,8 +44,8 @@ module ApplicationHelper
           smslog.operator = op.operator
           smslog.is_send = true
           req_params = {
-            'id': '1000133',
-            'src': '132050',
+            'id': '1000221',
+            'src': '131113',
             'text': sms,
             'dest': phone_number
           }
@@ -56,9 +56,9 @@ module ApplicationHelper
         elsif op.operator == 'GMOBILE'
           smslog.operator = op.operator
           req_params = {
-            'username': 'Yalalt',
-            'password': 'ylalt*0322',
-            'from': '132050',
+            'username': '_house_pro',
+            'password': 'profit*1313',
+            'from': '131113',
             'text': sms,
             'to': phone_number
           }

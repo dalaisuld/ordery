@@ -8,7 +8,7 @@ class HomeController < ApplicationController
   def show
     if params[:phone_number].present? && params[:pin_code].present?
       @orders = Order.where(phone_number: params[:phone_number])
-      @clients = Client.find_by(phone_number: params[:phone_number])
+      @clients = Client.find_by(phone_number: params[:phone_number],pincode: params[:pin_code])
       @deliveries = Delivery.where(phone_number: params[:phone_number])
       @products = Order.joins('AS o
         LEFT JOIN

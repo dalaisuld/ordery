@@ -77,7 +77,8 @@ class HomeController < ApplicationController
 
   def reset_pin_code
     begin
-      client = Client.find_by(phone_number: params[:phone_number])
+      phone_number = params[:phone_number]
+      client = Client.find_by(phone_number: phone_number)
       if client.present?
         pincode = rand(1000..9999)
         client.update(pincode: pincode)
@@ -87,7 +88,8 @@ class HomeController < ApplicationController
       else
         render json: { message: 'Бүртгэлгүй хэрэглэгч'}, status: 401
       end
-    rescue StandardError
+    rescue StandardError => e
+      puts "#{e.to_s}"
       render json: { message: 'error'}, status: 400
     end
   end

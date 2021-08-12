@@ -48,7 +48,7 @@ class ClientsController < ApplicationController
       @client = Client.where(phone_number: phone_number).first
       @client.pincode = pin_code
       @client.save!
-      ApplicationHelper.send_sms(phone_number, pin_code.to_s)
+      ApplicationHelper.send_sms(phone_number, "Tanii pin code: #{pin_code.to_s} www.playhouse-order.mn")
     rescue StandardError
       render json: { pincode: pin_code}
     end

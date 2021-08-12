@@ -80,10 +80,8 @@
       </div>
       <div class="nav-tabs flex flex-col sm:flex-row justify-center lg:justify-start">
         <a data-toggle="tab" data-target="#profile" href="javascript:;" class="py-4 sm:mr-8 flex items-center active"> <i class="w-4 h-4 mr-2" data-feather="user"></i> Профайл </a>
-        <% if @clients.address.present? %>
-          <a data-toggle="tab" data-target="#transaction" href="javascript:;" class="py-4 sm:mr-8 flex items-center"> <i class="w-4 h-4 mr-2" data-feather="file-text"></i> Шилжүүлгийн мэдээлэл </a>
-          <a data-toggle="tab" data-target="#delivery" href="javascript:;" class="py-4 sm:mr-8 flex items-center"> <i class="w-4 h-4 mr-2" data-feather="truck"></i> Хүргэлтийн мэдэлээл </a>
-        <% end %>
+        <a data-toggle="tab" data-target="#transaction" href="javascript:;" class="py-4 sm:mr-8 flex items-center"> <i class="w-4 h-4 mr-2" data-feather="file-text"></i> Шилжүүлгийн мэдээлэл </a>
+        <a data-toggle="tab" data-target="#delivery" href="javascript:;" class="py-4 sm:mr-8 flex items-center"> <i class="w-4 h-4 mr-2" data-feather="truck"></i> Хүргэлтийн мэдэлээл </a>
       </div>
     </div>
     <!-- END: Profile Info -->
@@ -123,8 +121,7 @@
             <button class="button button--sm w-full xl:w-32 text-white bg-theme-1 xl:mr-3 align-top mt-2" id="update_address_btn">Хадгалах</button>
           </div>
         </div>
-        <% if @clients.address.present? %>
-          <div class="intro-y box col-span-12 lg:col-span-6 mt-5">
+        <div class="intro-y box col-span-12 lg:col-span-6 mt-5">
             <div class="flex items-center px-5 py-5 sm:py-0 border-b border-gray-200 dark:border-dark-5">
               <h2 class="font-medium text-base mr-auto lg:p-3">
                 Барааны мэдээлэл
@@ -179,8 +176,7 @@
                 Та үндсэн хаягаа оруулсаны дараа хүргэлтийн захиалга өгөх боломжтой болно
               <% end %>
             </div>
-          </div>
-        <% end %>
+        </div>
       </div>
       <div class="tab-content__pane" id="transaction">
         <div class="intro-y box col-span-12 lg:col-span-6 mt-5">
@@ -256,11 +252,11 @@
   <!-- END: Content -->
   <%= javascript_pack_tag 'custom' %>
 
-  <% unless @clients.address.present? %>
-    <script type="text/javascript" charset="utf-8">
-        cash('#address-alert').modal('show');
-    </script>
-  <% end %>
+  <%# unless @clients.address.present? %>
+<!--    <script type="text/javascript" charset="utf-8">-->
+<!--        cash('#address-alert').modal('show');-->
+<!--    </script>-->
+  <%# end %>
 
   <script>
       $("#update_address_btn").click(function () {

@@ -261,7 +261,7 @@
   <script>
       $("#update_address_btn").click(function () {
           var url = window.location.pathname;
-          var phone_number = url.substring(url.lastIndexOf('/') + 1);
+          var phone_number = "<%= @clients.phone_number %>"
           $.ajax({
               url: "/home",
               type: "PUT",

@@ -56,13 +56,13 @@ module ApplicationHelper
         elsif op.operator == 'GMOBILE'
           smslog.operator = op.operator
           req_params = {
-            'username': '_house_pro',
+            'username': 'p_house_pro',
             'password': 'profit*1313',
             'from': '131113',
             'text': sms,
             'to': phone_number
           }
-          url = 'http://203.91.114.131/cgi-bin/sendsms'
+          url = 'http://203.91.114.74/cgi-bin/sendsms'
           response = HTTParty.get(url, query: req_params, timeout: 5)
           smslog.api_response = response.body
           smslog.is_send = (response.code == 200)

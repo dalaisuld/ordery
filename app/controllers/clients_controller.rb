@@ -48,29 +48,6 @@ class ClientsController < ApplicationController
     od.price AS actual_price,
     od.cargo_price,
     od.status').where('o.phone_number = :q', q: @client.phone_number.strip.to_s).order('status')
-
-    @delivered_product = Order.joins('AS o
-        LEFT JOIN
-    order_details AS od ON o.id = od.order_id
-        LEFT JOIN
-    products AS p ON od.product_id = p.id').select('o.id as order_id,
-    od.id as product_id,
-    o.account_number,
-    o.amount AS transition_amount,
-    o.description,
-    o.transition_date,
-    p.name,
-    p.price AS product_price,
-    od.quantity,
-    od.price AS actual_price,
-    od.cargo_price,
-    od.status').where('od.delivery_date = :q or od.finish_date', q: Time.now.strftime('%Y-%m-%d').to_s).order('o.id')
-
-    @total_cargo_price = Order.joins('AS o
-        LEFT JOIN
-    order_details AS od ON o.id = od.order_id
-        LEFT JOIN
-    products AS p ON od.product_id = p.id').where('od.delivery_date = :q or od.finish_date', q: Time.now.strftime('%Y-%m-%d').to_s).sum('od.cargo_price')
   end
 
 end

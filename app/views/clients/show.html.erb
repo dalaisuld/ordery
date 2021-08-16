@@ -134,34 +134,6 @@
       </div>
     </div>
   </div>
-  <div class="col-span-12 xxl:col-span-3 xxl:border-l border-theme-5 -mb-10 pb-10">
-    <div class="xxl:pl-6 grid grid-cols-12 gap-6">
-      <div class="col-span-12 md:col-span-6 xl:col-span-4 xxl:col-span-12">
-        <div class="mt-5">
-          <div id="printcontent">
-            <div class="box intro-y p-3">
-              <img src="/images/logo.png" alt="Playhouse" class="mb-5">
-              <div class="font-medium"># <%= @client.id %> </div>
-              <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
-              <div class="font-medium">Захиалагч: <%= @client.phone_number %></div>
-              <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
-              <div class="font-medium">Хаяг: <%= @client.address %></div>
-              <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
-              <div class="font-medium">Огноо: <%= DateTime.now.strftime('%Y-%m-%d %H:%M:%S') %></div>
-              <div class="font-medium mt-3 mb-3">Бүтээгдэхүүн</div>
-              <% @delivered_product.each do |product| %>
-                <div class="font-medium"><%= product.name %> <%= number_to_currency(product.actual_price, unit: "₮", strip_insignificant_zeros: true) %>*<%= product.quantity %>=<%= number_to_currency(product.actual_price.to_i * product.quantity.to_i, unit: "₮ ", strip_insignificant_zeros: true) %></div>
-                <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
-              <% end %>
-              <div class="font-medium mt-3">
-                Каргоны төлбөр = <%= number_to_currency(@total_cargo_price, unit: "₮", strip_insignificant_zeros: true) %>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
 <script>
     $(function () {

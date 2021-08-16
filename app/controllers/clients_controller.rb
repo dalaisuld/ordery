@@ -23,16 +23,9 @@ class ClientsController < ApplicationController
     if params[:sortField].present? && params[:sortOrder].present?
       order_by = "#{params[:sortField]} #{params[:sortOrder]} "
     end
-    client_count = Client.joins('As c left join orders as o on c.phone_number = o.phone_number left join order_details as od on od.order_id = o.id')
-                       .select('c.id, c.phone_number, c.address, c.is_delivery_to_home')
-                       .group('c.id, c.phone_number, c.address, c.is_delivery_to_home').search_by(params).length
-
-    clients = Client.joins('As c left join orders as o on c.phone_number = o.phone_number left join order_details as od on od.order_id = o.id')
-                  .select('c.id, c.phone_number, c.address, c.is_delivery_to_home')
-                  .group('c.id, c.phone_number, c.address, c.is_delivery_to_home')
-                  .page(params[:pageIndex]).per(params[:pageSize]).order(order_by)
-    clients = clients.search_by(params)
-    render json: { data: clients, itemsCount: client_count }
+    clients_count = Client.search_by(params).count
+    clients = Client.search_by(params).page(params[:pageIndex]).per(params[:pageSize]).order(order_by)
+    render json: { data: clients, itemsCount: clients_count }
   end
 
   private

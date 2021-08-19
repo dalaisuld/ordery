@@ -8,7 +8,7 @@ class SmsLogsController < ApplicationController
 
   def list
     order_by = 'created_at desc'
-    sms_logs = SmsLog.page(params[:pageIndex]).per(params[:pageSize]).order(order_by)
+    sms_logs = SmsLog.all.page(params[:pageIndex]).per(params[:pageSize]).order(order_by)
     render json: { data: sms_logs, itemsCount: sms_logs.count }
   end
 end

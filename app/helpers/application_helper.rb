@@ -17,9 +17,9 @@ module ApplicationHelper
         if op.operator == 'MOBICOM'
           smslog.operator = op.operator
           req_params = {
-              'servicename': 'papus',
-              'username': 'papus',
-              'from': '131113',
+              'servicename': 'Irgen',
+              'username': 'Altangerel',
+              'from': '134321',
               'msg': sms,
               'to': phone_number
           }
@@ -30,9 +30,9 @@ module ApplicationHelper
         elsif op.operator == 'UNITEL'
           smslog.operator = op.operator
           req_params = {
-              'uname': 'Playhouse',
-              'upass': 'IqSaob!yyN',
-              'from': '131113',
+              'uname': 'bigmall',
+              'upass': 'NC8qxJncZZ',
+              'from': '134321',
               'sms': sms,
               'mobile': phone_number
           }
@@ -56,9 +56,9 @@ module ApplicationHelper
         elsif op.operator == 'GMOBILE'
           smslog.operator = op.operator
           req_params = {
-              'username': 'p_house_pro',
-              'password': 'profit*1313',
-              'from': '131113',
+              'username': 'cust_321',
+              'password': 'user*134',
+              'from': '134321',
               'text': sms,
               'to': phone_number
           }

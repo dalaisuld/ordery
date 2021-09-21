@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:reset_pin_code]
+
   def index
     render :layout => "home"
   end
@@ -54,6 +56,30 @@ class HomeController < ApplicationController
       end
     end
   end
+
+  def reset
+    render layout: false
+  end
+
+  def reset_pin_code
+    begin
+      phone_number = params[:phone_number]
+      client = Client.find_by(phone_number: phone_number)
+      if client.present?
+        pincode = rand(1000..9999)
+        client.update(pincode: pincode)
+        puts
+        ApplicationHelper.send_sms(phone_number, "Tanii pin code: #{pincode.to_s} bigmall.mn")
+        render json: { message: 'success'}, status: 200
+      else
+        render json: { message: 'Бүртгэлгүй хэрэглэгч'}, status: 401
+      end
+    rescue StandardError => e
+      puts "#{e.to_s}"
+      render json: { message: 'error'}, status: 400
+    end
+  end
+
 
   def update
     begin

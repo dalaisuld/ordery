@@ -17,11 +17,11 @@ module ApplicationHelper
         if op.operator == 'MOBICOM'
           smslog.operator = op.operator
           req_params = {
-            'servicename': 'Yalalt',
-            'username': 'Yalalt',
-            'from': '132050',
-            'msg': sms,
-            'to': phone_number
+              'servicename': 'papus',
+              'username': 'papus',
+              'from': '131113',
+              'msg': sms,
+              'to': phone_number
           }
           url = 'http://27.123.214.168/smsmt/mt'
           response = HTTParty.get(url, query: req_params, timeout: 5)
@@ -30,11 +30,11 @@ module ApplicationHelper
         elsif op.operator == 'UNITEL'
           smslog.operator = op.operator
           req_params = {
-            'uname': 'Yalalt',
-            'upass': 'OaeCrv@P7R',
-            'from': '132050',
-            'sms': sms,
-            'mobile': phone_number
+              'uname': 'Playhouse',
+              'upass': 'IqSaob!yyN',
+              'from': '131113',
+              'sms': sms,
+              'mobile': phone_number
           }
           url = 'http://sms.unitel.mn/sendSMS.php'
           response = HTTParty.get(url, query: req_params, timeout: 5)
@@ -44,10 +44,10 @@ module ApplicationHelper
           smslog.operator = op.operator
           smslog.is_send = true
           req_params = {
-            'id': '1000133',
-            'src': '132050',
-            'text': sms,
-            'dest': phone_number
+              'id': '1000148',
+              'src': '134321',
+              'text': sms,
+              'dest': phone_number
           }
           url = 'http://smsgw.skytel.mn/SMSGW-war/pushsms'
           response = HTTParty.get(url, query: req_params, timeout: 5)
@@ -56,13 +56,13 @@ module ApplicationHelper
         elsif op.operator == 'GMOBILE'
           smslog.operator = op.operator
           req_params = {
-            'username': 'Yalalt',
-            'password': 'ylalt*0322',
-            'from': '132050',
-            'text': sms,
-            'to': phone_number
+              'username': 'p_house_pro',
+              'password': 'profit*1313',
+              'from': '131113',
+              'text': sms,
+              'to': phone_number
           }
-          url = 'http://203.91.114.131/cgi-bin/sendsms'
+          url = 'http://203.91.114.74/cgi-bin/sendsms'
           response = HTTParty.get(url, query: req_params, timeout: 5)
           smslog.api_response = response.body
           smslog.is_send = (response.code == 200)

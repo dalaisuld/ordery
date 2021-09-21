@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   get 'items_imports/create'
   get 'dashboard/index'
   get 'home/:phone_number', to: 'home#show'
+  post 'home', to: 'home#show'
+  get 'reset', to: 'home#reset'
+  post 'home/reset_pin_code', to: 'home#reset_pin_code'
   post 'home/set_delivery_client', to: 'home#set_delivery_client'
   put 'home', to: 'home#update'
   devise_for :users, controllers: { sessions: "sessions" }

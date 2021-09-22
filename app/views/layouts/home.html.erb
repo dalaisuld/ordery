@@ -138,7 +138,7 @@
   <div class="container">
     <div class="card card-bg-img bg-img bg-overlay mb-3" style="background-image: url('mobile/img/bg-img/bg-main.jpg')">
       <form action="/home" method="post">
-        <input type="hidden" name="authenticity_token" value='<%= csrf_meta_tags %>'>
+        <%= csrf_meta_tags %>
         <div class="card-body direction-rtl p-5">
           <h2 class="text-white">Захиалгийн мэдээлэл харах</h2>
           <p class="mb-4 text-white">Та өөрийн захиалга өгсөн утасны дугаараа оруулна уу</p>
@@ -146,7 +146,7 @@
             <input class="form-control form-control-clicked" id="phone_number" type="text" placeholder="Утасны дугаар" name="phone_number">
           </div>
           <div class="form-group">
-            <input class="form-control form-control-clicked" id="pin" type="number" placeholder="Picode" name="pincode">
+            <input class="form-control form-control-clicked" id="pin" type="number" placeholder="Picode" name="pin_code">
           </div>
           <input class="btn btn-warning" type="submit" value="Мэдээлэл харах">
           <a class="btn btn-info" href="/reset">ШИНЭ ПИН КОД АВАХ</a>

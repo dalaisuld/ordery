@@ -176,16 +176,7 @@
     });
     $("#reset_pin").click(function(){
         if($("#phone_number").val().length === 0 ){
-            Toastify({
-                text: "Утасны дугаар оруулна уу.",
-                duration: 3000,
-                newWindow: true,
-                close: true,
-                gravity: "bottom",
-                position: "right",
-                backgroundColor: "#D32929",
-                stopOnFocus: true,
-            }).showToast();
+            alert("Утасны дугаараа оруулна уу")
         }else{
             $.ajax({
                 url: "/home/reset_pin_code/",
@@ -197,41 +188,13 @@
                     xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
                 },
                 success: function (data) {
-                    Toastify({
-                        text: "Pin code шинэчлэгдлээ",
-                        duration: 3000,
-                        newWindow: true,
-                        close: true,
-                        gravity: "bottom",
-                        position: "right",
-                        backgroundColor: "#0e2c88",
-                        stopOnFocus: true,
-                    }).showToast();
                     window.location.href='/'
                 },
                 error: function (data) {
                     if (data.status === 400){
-                        Toastify({
-                            text: "Алдаа гарлаа дахин оролдоно уу.",
-                            duration: 3000,
-                            newWindow: true,
-                            close: true,
-                            gravity: "bottom",
-                            position: "right",
-                            backgroundColor: "#D32929",
-                            stopOnFocus: true,
-                        }).showToast();
+
                     } else if(data.status === 401){
-                        Toastify({
-                            text: "Бүртгэлгүй хэрэглэгч байна.",
-                            duration: 3000,
-                            newWindow: true,
-                            close: true,
-                            gravity: "bottom",
-                            position: "right",
-                            backgroundColor: "#D32929",
-                            stopOnFocus: true,
-                        }).showToast();
+                        alert("Бүртгэлгүй хэрэглэгч байна")
                     }
                 }
             });

@@ -135,16 +135,15 @@
     </div>
     <div class="container">
         <div class="card card-bg-img bg-img bg-overlay mb-3" style="background-image: url('mobile/img/bg-img/bg-main.jpg')">
-            <form action="/home/reset_pin_code" method="post">
+
                 <div class="card-body direction-rtl p-5">
                     <h2 class="text-white">Та утасны дугаараа оруулна уу</h2>
                     <p class="mb-4 text-white">Бид таньд нэг л удаа пин код өгөх бөгөөд та цаашид тэр пин кодоор барааны мэдээллээ харах болно</p>
                     <div class="form-group">
                         <input class="form-control form-control-clicked" id="phone_number" type="text" placeholder="Утасны дугаар" name="phone_number">
                     </div>
-                    <input class="btn btn-warning" type="submit" value="КОД ИЛГЭЭХ">
+                    <input class="btn btn-warning" type="submit" id="reset_pin" value="КОД ИЛГЭЭХ" >
                 </div>
-            </form>
         </div>
     </div>
 </div>
@@ -175,6 +174,72 @@
             alert('Утасны дугаараа оруулна уу!')
         }
     });
+
+    <script>
+    $("#reset_pin").click(function(){
+        if($("#phone_number").val().length === 0 ){
+            Toastify({
+                text: "Утасны дугаар оруулна уу.",
+                duration: 3000,
+                newWindow: true,
+                close: true,
+                gravity: "bottom",
+                position: "right",
+                backgroundColor: "#D32929",
+                stopOnFocus: true,
+            }).showToast();
+        }else{
+            $.ajax({
+                url: "/home/reset_pin_code/",
+                type: "POST",
+                data: {
+                    phone_number: $("#phone_number").val(),
+                },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                },
+                success: function (data) {
+                    Toastify({
+                        text: "Pin code шинэчлэгдлээ",
+                        duration: 3000,
+                        newWindow: true,
+                        close: true,
+                        gravity: "bottom",
+                        position: "right",
+                        backgroundColor: "#0e2c88",
+                        stopOnFocus: true,
+                    }).showToast();
+                    window.location.href='/'
+                },
+                error: function (data) {
+                    if (data.status === 400){
+                        Toastify({
+                            text: "Алдаа гарлаа дахин оролдоно уу.",
+                            duration: 3000,
+                            newWindow: true,
+                            close: true,
+                            gravity: "bottom",
+                            position: "right",
+                            backgroundColor: "#D32929",
+                            stopOnFocus: true,
+                        }).showToast();
+                    } else if(data.status === 401){
+                        Toastify({
+                            text: "Бүртгэлгүй хэрэглэгч байна.",
+                            duration: 3000,
+                            newWindow: true,
+                            close: true,
+                            gravity: "bottom",
+                            position: "right",
+                            backgroundColor: "#D32929",
+                            stopOnFocus: true,
+                        }).showToast();
+                    }
+                }
+            });
+        }
+    });
+</script>
 </script>
 </body>
 </html>

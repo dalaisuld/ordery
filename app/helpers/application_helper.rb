@@ -44,7 +44,7 @@ module ApplicationHelper
           smslog.operator = op.operator
           smslog.is_send = true
           req_params = {
-              'id': '1000148',
+              'id': '1000259',
               'src': '134321',
               'text': sms,
               'dest': phone_number

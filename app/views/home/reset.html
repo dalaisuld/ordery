@@ -188,6 +188,7 @@
                     xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
                 },
                 success: function (data) {
+                    console.log("Таны дугаарлуу PIN CODE илгээлээ")
                     window.location.href='/'
                 },
                 error: function (data) {

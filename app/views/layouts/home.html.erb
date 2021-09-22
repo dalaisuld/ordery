@@ -3,7 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Affan - PWA Mobile HTML Template">
+  <meta name="description" content="Big Mall Үйлдвэрийн бараа бөөний үнээр-Захиалгын бараа ✅✅✅">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="theme-color" content="#0134d4">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -136,6 +138,7 @@
   <div class="container">
     <div class="card card-bg-img bg-img bg-overlay mb-3" style="background-image: url('mobile/img/bg-img/bg-main.jpg')">
       <form action="/home" method="post">
+        <input type="hidden" name="authenticity_token" value='<%= csrf_meta_tags %>'>
         <div class="card-body direction-rtl p-5">
           <h2 class="text-white">Захиалгийн мэдээлэл харах</h2>
           <p class="mb-4 text-white">Та өөрийн захиалга өгсөн утасны дугаараа оруулна уу</p>

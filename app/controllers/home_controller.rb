@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
+
   skip_before_action :verify_authenticity_token, only: [:reset_pin_code]
 
   def index
@@ -6,10 +7,11 @@ class HomeController < ApplicationController
   end
 
   def show
-    @orders = Order.where(phone_number: params[:phone_number])
-    @clients = Client.find_by(phone_number: params[:phone_number])
-    @deliveries = Delivery.where(phone_number: params[:phone_number])
-    @products = Order.joins('AS o
+    if params[:phone_number].present? && params[:pin_code].present?
+      @orders = Order.where(phone_number: params[:phone_number])
+      @clients = Client.find_by(phone_number: params[:phone_number],pincode: params[:pin_code])
+      @deliveries = Delivery.where(phone_number: params[:phone_number])
+      @products = Order.joins('AS o
         LEFT JOIN
     order_details AS od ON o.id = od.order_id
         LEFT JOIN
@@ -25,7 +27,10 @@ class HomeController < ApplicationController
     od.price AS actual_price,
     od.cargo_price,
     od.status').where('o.phone_number = :q', q: "#{params[:phone_number]}").order('o.id')
-    render :layout => false
+    else
+      flash[:error] = 'Нууц үг эсвэл утасны дугаар буруу байна'
+    end
+    render layout: false
   end
 
   def set_delivery_client

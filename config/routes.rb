@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get 'items_imports/new'
   get 'items_imports/create'
   get 'dashboard/index'
-  get 'home/:phone_number', to: 'home#show'
+  # get 'home/:phone_number', to: 'home#show'
   post 'home', to: 'home#show'
   get 'reset', to: 'home#reset'
   post 'home/reset_pin_code', to: 'home#reset_pin_code'

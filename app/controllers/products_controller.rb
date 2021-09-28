@@ -12,30 +12,25 @@ class ProductsController < ApplicationController
     if params[:sortField].present? && params[:sortOrder].present?
       order_by = "#{params[:sortField]} #{params[:sortOrder]} "
     end
-    product = Product.select('products.id, products.name, price, total_amount, quantity, products.ordered_count, unit, category_id, products.created_at').search_by(params)
-                  .page(params[:pageIndex]).per(params[:pageSize]).order(order_by)
+    product = Product.search_by(params).page(params[:pageIndex]).per(params[:pageSize]).order(order_by)
     products = Product.search_by(params)
     render json: { data: product, itemsCount: products.count, sum: products.sum(:total_amount)}
   end
 
   def create
     product = Product.create!({category_id: params[:category_id], user_id: current_user.id, 
-    name: params[:name], price: params[:price], total_amount: params[:quantity].to_i * params[:price].to_i, quantity: params[:quantity], 
+    name: params[:name], price: params[:price], total_amount: params[:quantity].to_i * params[:price].to_i, quantity: params[:quantity], cargo: params[:cargo],
     unit: params[:unit]})
     LogsHelper.create("Product дээр бүтээгдэхүүн нэмлээ ##{product.id}", current_user.id)
   end
 
   def update
     product = Product.find(params[:id])
-    product.update({category_id: params[:category_id], user_id: current_user.id, 
-    name: params[:name], price: params[:price], total_amount: params[:quantity].to_i * params[:price].to_i, quantity: params[:quantity], ordered_count: params[:ordered_count],
-                    unit: params[:unit]})
+    product.update({category_id: params[:category_id], user_id: current_user.id, name: params[:name], price: params[:price], total_amount: params[:quantity].to_i * params[:price].to_i, quantity: params[:quantity], ordered_count: params[:ordered_count], cargo: params[:cargo], unit: params[:unit]})
     LogsHelper.create("Product дээр бүтээгдэхүүн шинэчлэлээ #{product.id}", current_user.id)
-    product.update({category_id: params[:category_id], user_id: current_user.id,
-                    name: params[:name], price: params[:price], total_amount: params[:quantity].to_i * params[:price].to_i, quantity: params[:quantity],
-                    unit: params[:unit]})
     quantity =  params[:quantity]
     products = OrderDetail.where('status  IN (0,1) and product_id = :id', id: product.id)
+    products.update_all(cargo_price: params[:cargo])
     ordere_pr_count = products.select('sum(quantity) as total').first
     puts "neeedz ===>#{ordere_pr_count.total.to_s.to_i} "
     puts "quantity ===> #{quantity.to_s.to_i}"

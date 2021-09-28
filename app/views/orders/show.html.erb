@@ -108,42 +108,5 @@
         </div>
       </div>
     </div>
-    <div class="col-span-12 xxl:col-span-3 xxl:border-l border-theme-5 -mb-10 pb-10">
-      <div class="xxl:pl-6 grid grid-cols-12 gap-6">
-        <div class="col-span-12 md:col-span-6 xl:col-span-4 xxl:col-span-12">
-          <div class="mt-5">
-            <div id="printcontent">
-              <div class="box intro-y p-3">
-                <img src="/images/logo.png" alt="Playhouse" class="mb-5">
-                <div class="font-medium">Захиалгын дугаар: <%= @order.id %></div>
-                <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
-                <div class="font-medium">Захиалга бүртгэсэн огноо: <%= @order.created_at.strftime('%Y-%m-%d %H:%M:%S') %></div>
-                <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
-                <div class="font-medium">Дансны дугаар: <%= @order.account_number %></div>
-                <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
-                <div class="font-medium">Гүйлгээний утга: <%= @order.description %></div>
-                <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
-                <div class="font-medium">Утасны дугаар: <%= @order.phone_number %></div>
-                <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
-                <div class="font-medium">Гүйлгээний огноо: <%= @order.transition_date %></div>
-                <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
-                <div class="font-medium">Шилжүүлсэн мөнгөн дүн: <%= number_to_currency(@order.amount, unit: "₮", strip_insignificant_zeros: true) %></div>
-                <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
-                <div class="font-medium">Бүтээгдэхүүний үнэ: 1</div>
-                <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
-                <div class="font-medium">Каргоны үнэ: <%= number_to_currency(@order.cargo_price, unit: "₮", strip_insignificant_zeros: true) %></div>
-                <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
-
-                <div class="font-medium">Нийт төлөх дүн:<% if @order.cargo_price.present? %>  <%= number_to_currency(@order.amount + @order.cargo_price || 0, unit: "₮", strip_insignificant_zeros: true) %><% end %></div>
-                <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
-                <div>
-                  <button class="button bg-theme-1 w-full text-white mt-5">Хэвлэх</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 <% end %>

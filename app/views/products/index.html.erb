@@ -168,24 +168,13 @@
                     type: "text",
                     width: 200,
                     title: "Бүтээгдэхүүн",
+                    align: "center"
                 },
                 {
                     name: "ordered_count",
                     type: "number",
-                    title: "Захиалсан",
-                    filtering: false,
-                    validate: {
-                        validator: "range",
-                        message: function(value, item) {
-                            return "The client age should be between 21 and 80. Entered age is \"" + value + "\" is out of specified range.";
-                        },
-                        param: [0, 100000]
-                    }
-                },
-                {
-                    name: "quantity",
-                    type: "number",
-                    title: "Үлдэгдэл",
+                    title: "Захиалга өгсөн тоо",
+                    align: "center",
                     filtering: false,
                     validate: {
                         validator: "range",
@@ -200,6 +189,17 @@
                     type: "number",
                     title: "Карго",
                     filtering: false,
+                    align: "center",
+                    itemTemplate: function (value) {
+                        return formatNumberForDisplay(value)
+                    }
+                },
+                {
+                    name: "quantity",
+                    type: "number",
+                    title: "Агуулхад",
+                    filtering: false,
+                    align: "center",
                     validate: {
                         validator: "range",
                         message: function(value, item) {
@@ -225,7 +225,7 @@
                 {
                     name: "price",
                     type: "text",
-                    title: "Yнэ",
+                    title: "Барааны үнэ",
                     align: "center",
                     itemTemplate: function (value) {
                         return formatNumberForDisplay(value)

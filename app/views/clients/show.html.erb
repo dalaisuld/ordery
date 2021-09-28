@@ -57,9 +57,9 @@
         <button id="change_address" class="button button--sm mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white">Хаяг өөрчлөх</button>
         <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed mt-3 mb-3"></div>
         <div class="overflow-x-auto">
-          <table class="table" id="product-table">
+          <table class="table" id="product_table">
             <thead>
-            <tr>
+            <tr class="titlerow">
               <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">#</th>
               <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">Order ID</th>
               <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">Бүтээгдэхүүн</th>
@@ -67,6 +67,7 @@
               <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">тоо ширхэг</th>
               <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">нийт</th>
               <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">карго</th>
+              <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">Нийт+Карго</th>
               <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">төлөв</th>
             </tr>
             </thead>
@@ -75,7 +76,7 @@
               <tr>
                 <td class="border">
                   <% if product.status == IS_DELIVERY || product.status == IS_WAITING || product.status == IS_FINISH || product.status == IS_CANCELED %>
-                      -
+                    -
                   <% else %>
                     <input type="checkbox" name="product_ids" value="<%= product.product_id %>">
                   <% end %>
@@ -84,8 +85,9 @@
                 <td class="border"><%= product.name %></td>
                 <td class="border"><%= number_to_currency(product.actual_price, unit: "₮ ", strip_insignificant_zeros: true) %></td>
                 <td class="border"><%= product.quantity %></td>
-                <td class="border"><%= number_to_currency(product.actual_price.to_i * product.quantity.to_i, unit: "₮ ", strip_insignificant_zeros: true) %></td>
-                <td class="border"><%= number_to_currency(product.cargo_price, unit: "₮ ", strip_insignificant_zeros: true) %></td>
+                <td class="border rowDataSd"><%= product.actual_price.to_i * product.quantity.to_i %></td>
+                <td class="border rowDataSd"><%= product.cargo_price %></td>
+                <td class="border rowDataSd"><%= product.actual_price.to_i * product.quantity.to_i + product.cargo_price %></td>
                 <td class="border">
                   <% if product.status == IS_WAITING %>
                     <span class='text-theme-12 block font-medium'>Хүлээгдэж байгаа</span>
@@ -99,6 +101,13 @@
                     <span class='text-theme-6 block font-medium'>Цуцалсан</span>
                   <% end %>
                 </td>
+              </tr>
+              <tr class="totalColumn">
+                <td colspan="5" class="border"><div class="lg:text-right font-extrabold">Шилжүүлсэн мөнгөн дүн: ss</div></td>
+                <td class="border totalCol"><div class="font-extrabold">Нийт барааны <%=@total_cargo_price %></div></td>
+                <td class="border totalCol"><div class="font-extrabold">Нийт карго</div></td>
+                <td class="border totalCol"><div class="font-extrabold">Эцсийн төлөх дүн</div></td>
+                <td class="border"><div class="font-extrabold"></div></td>
               </tr>
             <%end %>
 
@@ -292,8 +301,8 @@
                 url: "/orders/set_delivery",
                 type: "POST",
                 data:{
-                   orderDetailIDs: orderDetailIDs,
-                   cargo_is_cash: $('input[name="is_cash"]:checked').val()
+                    orderDetailIDs: orderDetailIDs,
+                    cargo_is_cash: $('input[name="is_cash"]:checked').val()
                 },
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
@@ -391,6 +400,22 @@
                     closeLoader();
                 }
             });
+        });
+
+        var totals=[0,0,0];
+        $(document).ready(function(){
+
+            var $dataRows=$("#product_table tr:not('.totalColumn, .titlerow')");
+
+            $dataRows.each(function() {
+                $(this).find('.rowDataSd').each(function(i){
+                    totals[i]+=parseInt( $(this).html());
+                });
+            });
+            $("#product_table td.totalCol").each(function(i){
+                $(this).html("Нийт:"+totals[i]);
+            });
+
         });
     });
 

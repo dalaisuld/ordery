@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= @page_title || 'EToys | Order Management System' %></title>
+  <title><%= @page_title || 'BigMall | Order Management System' %></title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
@@ -16,7 +16,6 @@
     <!-- BEGIN: Login Info -->
     <div class="hidden xl:flex flex-col min-h-screen">
       <div class="my-auto">
-        <img alt="<%= SiteConfig.first.title || 'Ordery | developed by sukhochird'%>" class="-intro-x w-1/2 -mt-16" src="<%= SiteConfig.first.logo %>">
         <div class="-intro-x text-white font-medium text-4xl leading-tight mt-10">
           <%= SiteConfig.first.title %> ADMIN PANEL
         </div>

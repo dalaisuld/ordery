@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_22_042146) do
+ActiveRecord::Schema.define(version: 2021_10_08_163753) do
 
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(version: 2021_09_22_042146) do
     t.boolean "is_take_from_warehouse"
     t.integer "user_id"
     t.datetime "take_date"
+    t.integer "action_user_id"
   end
 
   create_table "orders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|

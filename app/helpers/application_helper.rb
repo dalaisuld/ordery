@@ -75,6 +75,10 @@ module ApplicationHelper
   end
 
   def self.format_currency(amount)
-    return '₮ %.2f' % amount
+    '₮ %.2f' % amount
+  end
+
+  def self.getUserName(user_id)
+    "#{User.find(user_id).first_name } #{User.find(user_id).last_name}"
   end
 end

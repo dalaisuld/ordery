@@ -1,24 +1,5 @@
-<style type="text/css">
-    @page {
-        margin: 0;
-    }
-    @media print {
-        body * { visibility: hidden; }
-        #printcontent * { visibility: visible; }
-        #printcontent {
-            margin: 0;
-            border: initial;
-            border-radius: initial;
-            width: initial;
-            min-height: initial;
-            box-shadow: initial;
-            background: initial;
-            page-break-after: always;
-        }
-    }
-</style>
-<div class="grid grid-cols-12 gap-6">
-  <div class="col-span-12 xxl:col-span-9 grid grid-cols-12 gap-6">
+<div class="grid grid-cols-12">
+  <div class="col-span-12 xxl:col-span-12 grid grid-cols-12">
     <div class="col-span-12 lg:col-span-12 mt-5">
       <div class="intro-y box p-5">
         <div class="mt-3">
@@ -57,7 +38,7 @@
         <button id="change_address" class="button button--sm mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white">Хаяг өөрчлөх</button>
         <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed mt-3 mb-3"></div>
         <div class="overflow-x-auto">
-          <table class="table" id="product_table">
+          <table class="table" id="product-table">
             <thead>
             <tr class="titlerow">
               <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">#</th>
@@ -85,9 +66,9 @@
                 <td class="border"><%= product.name %></td>
                 <td class="border"><%= number_to_currency(product.actual_price, unit: "₮ ", strip_insignificant_zeros: true) %></td>
                 <td class="border"><%= product.quantity %></td>
-                <td class="border rowDataSd"><%= product.actual_price.to_i * product.quantity.to_i %></td>
-                <td class="border rowDataSd"><%= product.cargo_price %></td>
-                <td class="border rowDataSd"><%= product.actual_price.to_i * product.quantity.to_i + product.cargo_price %></td>
+                <td class="border <% if product.status == IS_WILLING %> rowDataSd <% end %>"><%= product.actual_price.to_i * product.quantity.to_i %></td>
+                <td class="border <% if product.status == IS_WILLING %> rowDataSd <% end %>"><%= product.cargo_price %></td>
+                <td class="border <% if product.status == IS_WILLING %> rowDataSd <% end %>"><%= product.actual_price.to_i * product.quantity.to_i + product.cargo_price %></td>
                 <td class="border">
                   <% if product.status == IS_WAITING %>
                     <span class='text-theme-12 block font-medium'>Хүлээгдэж байгаа</span>
@@ -102,15 +83,14 @@
                   <% end %>
                 </td>
               </tr>
-              <tr class="totalColumn">
-                <td colspan="5" class="border"><div class="lg:text-right font-extrabold">Шилжүүлсэн мөнгөн дүн: ss</div></td>
-                <td class="border totalCol"><div class="font-extrabold">Нийт барааны <%=@total_cargo_price %></div></td>
-                <td class="border totalCol"><div class="font-extrabold">Нийт карго</div></td>
-                <td class="border totalCol"><div class="font-extrabold">Эцсийн төлөх дүн</div></td>
-                <td class="border"><div class="font-extrabold"></div></td>
-              </tr>
-            <%end %>
-
+            <% end %>
+            <tr class="totalColumn">
+              <td colspan="5" class="border"><div class="lg:text-right font-extrabold"></div></td>
+              <td class="border totalCol"><div class="font-extrabold">Нийт барааны <%=@total_cargo_price %></div></td>
+              <td class="border totalCol"><div class="font-extrabold">Нийт карго</div></td>
+              <td class="border totalCol"><div class="font-extrabold">Эцсийн төлөх дүн</div></td>
+              <td class="border"><div class="font-extrabold"></div></td>
+            </tr>
             </tbody>
           </table>
         </div>
@@ -142,91 +122,7 @@
       </div>
     </div>
   </div>
-  <div class="col-span-12 xxl:col-span-3 xxl:border-l border-theme-5 -mb-10 pb-10">
-    <div class="xxl:pl-6 grid grid-cols-12 gap-6">
-      <div class="col-span-12 md:col-span-6 xl:col-span-4 xxl:col-span-12">
-        <div class="mt-5">
 
-          <div id="printcontent">
-
-            <div id="top" style="text-align: center;">
-              <div class="logo"></div>
-              <div class="info">
-                <h3 class="font-bold">BIG MALL- Үйлдвэрийн бөөний үнээр-Захиалгын бараа ✅✅✅</h3>
-              </div><!--End Info-->
-            </div><!--End InvoiceTop-->
-
-            <div id="mid">
-              <div class="info">
-                <h3>Contact Info</h3>
-                <p>
-                  Хаяг : Viva city хорооллын зүүн талд #Фермерүүд худалдааны төв дотор Big Mall</br>
-                  Веб   : big-mall.mn</br>
-                  Утас   : 9090-5448</br>
-                </p>
-              </div>
-            </div><!--End Invoice Mid-->
-
-            <div id="bot">
-              <div id="table">
-                <table>
-                  <tr class="tabletitle">
-                    <td class="item"><h3>Item</h3></td>
-                    <td class="Hours"><h3>Qty</h3></td>
-                    <td class="Rate"><h3>Sub Total</h3></td>
-                  </tr>
-
-                  <tr class="service">
-                    <td class="tableitem"><p class="itemtext">зөөлөн хөнжил код 6 зөөлөн хөнжил код 6</p></td>
-                    <td class="tableitem"><p class="itemtext">5</p></td>
-                    <td class="tableitem"><p class="itemtext">$375.00</p></td>
-                  </tr>
-                  <tr class="service">
-                    <td class="tableitem"><p class="itemtext">Asset Gathering</p></td>
-                    <td class="tableitem"><p class="itemtext">3</p></td>
-                    <td class="tableitem"><p class="itemtext">$225.00</p></td>
-                  </tr>
-
-                  <tr class="service">
-                    <td class="tableitem"><p class="itemtext">Design Development</p></td>
-                    <td class="tableitem"><p class="itemtext">5</p></td>
-                    <td class="tableitem"><p class="itemtext">$375.00</p></td>
-                  </tr>
-
-                  <tr class="service">
-                    <td class="tableitem"><p class="itemtext">Animation</p></td>
-                    <td class="tableitem"><p class="itemtext">20</p></td>
-                    <td class="tableitem"><p class="itemtext">$1500.00</p></td>
-                  </tr>
-
-                  <tr class="service">
-                    <td class="tableitem"><p class="itemtext">Animation Revisions</p></td>
-                    <td class="tableitem"><p class="itemtext">10</p></td>
-                    <td class="tableitem"><p class="itemtext">$750.00</p></td>
-                  </tr>
-
-
-                  <tr class="tabletitle">
-                    <td></td>
-                    <td class="Rate"><h3>tax</h3></td>
-                    <td class="payment"><h3>$419.25</h3></td>
-                  </tr>
-
-                  <tr class="tabletitle">
-                    <td></td>
-                    <td class="Rate"><h3>Total</h3></td>
-                    <td class="payment"><h3>$3,644.25</h3></td>
-                  </tr>
-
-                </table>
-              </div><!--End Table-->
-
-            </div><!--End InvoiceBot-->
-          </div><!--End Invoice-->
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
 <script>
     $(function () {
@@ -319,6 +215,7 @@
                         backgroundColor: "#91C714",
                         stopOnFocus: true,
                     }).showToast();
+                    location.reload();
                 },
                 error: function(data){
                     closeLoader();
@@ -357,6 +254,7 @@
                         backgroundColor: "#91C714",
                         stopOnFocus: true,
                     }).showToast();
+                    location.reload();
                 },
                 error: function(data){
                     closeLoader();
@@ -405,14 +303,14 @@
         var totals=[0,0,0];
         $(document).ready(function(){
 
-            var $dataRows=$("#product_table tr:not('.totalColumn, .titlerow')");
+            var $dataRows=$("#product-table tr:not('.totalColumn, .titlerow')");
 
             $dataRows.each(function() {
                 $(this).find('.rowDataSd').each(function(i){
                     totals[i]+=parseInt( $(this).html());
                 });
             });
-            $("#product_table td.totalCol").each(function(i){
+            $("#product-table td.totalCol").each(function(i){
                 $(this).html("Нийт:"+totals[i]);
             });
 

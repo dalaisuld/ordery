@@ -1,3 +1,8 @@
-Өнөөдрийн нийт карго: <%=@cargo_today_total.total %> <br>
-Өнөөдрийн нийт карго бэлнээр: <%=@cargo_today_total_cash.total %> <br>
-Өнөөдрийн нийт карго Дансаар: <%=@cargo_today_total_transaction.total %> <br>
+Өнөөдрийн нийт карго: <%= number_to_currency(@cargo_today, unit: "₮ ", strip_insignificant_zeros: true) %> <br>
+
+
+<%#= @reports.inspect %>
+
+<% @reports.each do |report| %>
+  <%= ApplicationHelper.getUserName(report[0])  %> => <%= number_to_currency(report[1], unit: "₮ ", strip_insignificant_zeros: true) %>  <br>
+<% end %>

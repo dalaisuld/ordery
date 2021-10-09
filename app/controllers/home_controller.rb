@@ -24,6 +24,7 @@ class HomeController < ApplicationController
     p.name,
     p.price AS product_price,
     od.quantity,
+    od.delivery_date,
     od.price AS actual_price,
     od.cargo_price,
     od.status').where('o.phone_number = :q', q: "#{params[:phone_number]}").order('o.id')

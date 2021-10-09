@@ -147,7 +147,7 @@
                         <span class="badge mb-2 rounded-pill">Бараа ирсэн байна</span>
                       <% elsif product.status == IS_DELIVERY %>
                         <span class="badge mb-2 rounded-pill">Хүргэлт баталгаажсан</span>
-                        <p>Баталгаажсан огноо: <%= product.delivery_date.strftime('%Y-%m-%d') %></p>
+                        <p>Баталгаажсан огноо: <%= product.delivery_date.strftime('%Y-%m-%d') %>  </p>
                       <% elsif product.status == IS_FINISH %>
                         <span class="badge mb-2 rounded-pill">Хүлээлгэж өгсөн</span>
                       <% elsif product.status == IS_CANCELED %>

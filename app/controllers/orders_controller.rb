@@ -55,19 +55,18 @@ class OrdersController < ApplicationController
     order_details_ids =params[:orderDetailIDs]
     order_details_ids.each do |order_detail_id|
       order_detail = OrderDetail.find_by(id: order_detail_id)
-      if order_detail
-        product = Product.find_by(id: order_detail.product_id)
-        product.quantity = product.quantity - order_detail.quantity
-        product.save
-        order_detail.status = IS_DELIVERY
-        order_detail.is_take_from_warehouse = false
-        order_detail.delivery_date = Time.now.strftime('%Y-%m-%d')
-        order_detail.is_cash = params[:cargo_is_cash]
-        order_detail.finish_date = Time.now.strftime('%Y-%m-%d')
-        order_detail.user_id = current_user.id
-        order_detail.action_user_id = current_user.id
-        order_detail.save
-      end
+      next unless order_detail
+      product = Product.find_by(id: order_detail.product_id)
+      product.quantity = product.quantity - order_detail.quantity
+      product.save
+      order_detail.status = IS_DELIVERY
+      order_detail.is_take_from_warehouse = false
+      order_detail.delivery_date = Time.now.strftime('%Y-%m-%d')
+      order_detail.is_cash = params[:cargo_is_cash]
+      order_detail.finish_date = Time.now.strftime('%Y-%m-%d')
+      order_detail.user_id = current_user.id
+      order_detail.action_user_id = current_user.id
+      order_detail.save
     end
     LogsHelper.create("Бараа хүргэлтэнд гаргалаа ##{params[:orderDetailIDs]}", current_user.id)
     render json:{ message: 'амжиллтай хийлээ' }, status: 200
@@ -78,19 +77,18 @@ class OrdersController < ApplicationController
     order_details_ids = params[:orderDetailIDs]
     order_details_ids.each do |order_detail_id|
       order_detail = OrderDetail.find_by(id: order_detail_id)
-      if order_detail
-        product = Product.find_by(id: order_detail.product_id)
-        product.quantity = product.quantity - order_detail.quantity
-        product.save
-        order_detail.status = IS_FINISH
-        order_detail.is_take_from_warehouse = true
-        order_detail.finish_date = Time.now.strftime('%Y-%m-%d')
-        order_detail.is_cash = params[:cargo_is_cash]
-        order_detail.take_date = Time.now
-        order_detail.user_id = current_user.id
-        order_detail.action_user_id = current_user.id
-        order_detail.save
-      end
+      next unless order_detail
+      product = Product.find_by(id: order_detail.product_id)
+      product.quantity = product.quantity - order_detail.quantity
+      product.save
+      order_detail.status = IS_FINISH
+      order_detail.is_take_from_warehouse = true
+      order_detail.finish_date = Time.now.strftime('%Y-%m-%d')
+      order_detail.is_cash = params[:cargo_is_cash]
+      order_detail.take_date = Time.now
+      order_detail.user_id = current_user.id
+      order_detail.action_user_id = current_user.id
+      order_detail.save
     end
     LogsHelper.create("Бараа хүлээлгэж өгсөн ##{params[:orderDetailIDs]}", current_user.id)
     render json:{ message: 'амжиллтай' }, status: 200
@@ -101,12 +99,14 @@ class OrdersController < ApplicationController
     order_details_ids = params[:orderDetailIDs]
     order_details_ids.each do |order_detail_id|
       order_detail = OrderDetail.find_by(id: order_detail_id)
-      if order_detail
-        product = Product.find_by(id: order_detail.product_id)
-        product.save
-        order_detail.status = IS_CANCELED
-        order_detail.save
-      end
+      next unless order_detail
+      product = Product.find_by(id: order_detail.product_id)
+      product.quantity = product.quantity + order_detail.quantity
+      product.save
+      order_detail.status = IS_CANCELED
+      order_detail.user_id = current_user.id
+      order_detail.action_user_id = current_user.id
+      order_detail.save
     end
     LogsHelper.create("Бараа цуцалсан ##{params[:orderDetailIDs]}", current_user.id)
     render json:{ message: 'амжиллтай' }, status: 200
@@ -117,30 +117,26 @@ class OrdersController < ApplicationController
     order_details_ids = params[:orderDetailIDs]
     order_details_ids.each do |order_detail_id|
       order_detail = OrderDetail.find_by(id: order_detail_id)
-      if order_detail
-        product = Product.find_by(id: order_detail.product_id)
-        product.quantity = product.quantity - order_detail.quantity
-        product.save
-        order_detail.status = IS_FINISH
-        order_detail.finish_date = Time.now.strftime('%Y-%m-%d')
-        order_detail.save
-      end
+      next unless order_detail
+      product = Product.find_by(id: order_detail.product_id)
+      product.quantity = product.quantity - order_detail.quantity
+      product.save
+      order_detail.status = IS_FINISH
+      order_detail.finish_date = Time.now.strftime('%Y-%m-%d')
+      order_detail.save
     end
     render json:{ message: 'амжиллтай' }, status: 200
   end
-
-
 
   def set_take_confirm
     order_details_ids =params[:orderDetailIDs]
     order_details_ids.each do |order_detail_id|
       order_detail = OrderDetail.find_by(id: order_detail_id)
-      if order_detail
-        order_detail.status = IS_FINISH
-        order_detail.is_take_from_warehouse = false
-        order_detail.delivery_date = Time.now.strftime('%Y-%m-%d')
-        order_detail.save
-      end
+      next unless order_detail
+      order_detail.status = IS_FINISH
+      order_detail.is_take_from_warehouse = false
+      order_detail.delivery_date = Time.now.strftime('%Y-%m-%d')
+      order_detail.save
     end
     render json:{ message: 'амжиллтай хийлээ' }, status: 200
   end

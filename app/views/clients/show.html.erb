@@ -56,7 +56,7 @@
             <% @products.each do |product| %>
               <tr>
                 <td class="border">
-                  <% if product.status == IS_DELIVERY || product.status == IS_WAITING || product.status == IS_FINISH || product.status == IS_CANCELED %>
+                  <% if product.status == IS_DELIVERY || product.status == IS_WAITING || product.status == IS_CANCELED %>
                     -
                   <% else %>
                     <input type="checkbox" name="product_ids" value="<%= product.product_id %>">

@@ -38,12 +38,21 @@
       </a>
     </li>
 
+
     <li>
       <a href="<%= products_path %>" class="menu">
         <div class="menu__icon"> <i data-feather="edit"></i> </div>
         <div class="menu__title"> Агуулах </div>
       </a>
     </li>
+
+    <li>
+      <a href="<%= product_report_index_path %>" class="menu">
+        <div class="menu__icon"> <i data-feather="users"></i> </div>
+        <div class="menu__title"> Барааны тайлан </div>
+      </a>
+    </li>
+
 
     <li>
       <a href="<%= orders_path %>" class="menu">
@@ -104,6 +113,16 @@
           <div class="side-menu__title"> Агуулах </div>
         </a>
       </li>
+
+
+      <li>
+        <a href="<%= product_report_index_path %>" class="side-menu <% if @page_product_report_active %>side-menu--active <% end %>">
+          <div class="side-menu__icon"> <i data-feather="shopping-bag"></i> </div>
+          <div class="side-menu__title"> Барааны тайлан </div>
+        </a>
+      </li>
+
+
 
       <li>
         <a href="<%= orders_path %>" class="side-menu <% if @page_orders_active %>side-menu--active <% end %>">

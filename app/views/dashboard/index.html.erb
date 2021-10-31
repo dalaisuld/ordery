@@ -141,6 +141,8 @@
             <th class="text-center whitespace-nowrap">Хүргэлтэнд</th>
             <th class="text-center whitespace-nowrap">Цуцалсан</th>
             <th class="text-center whitespace-nowrap">Хүлээлгэж өгсөн</th>
+            <th class="text-center whitespace-nowrap">агуулхад</th>
+            <th class="text-center whitespace-nowrap">Илүү бараа</th>
           </tr>
           </thead>
           <tbody>
@@ -156,6 +158,8 @@
               <td class="text-center"><%= product.is_delivery %></td>
               <td class="text-center"><%= product.is_cancelled %></td>
               <td class="text-center"><%= product.is_finish %></td>
+              <td class="text-center"><%= product.quantity %></td>
+              <td class="text-center"><%= product.quantity - product.is_willing %></td>
             </tr>
           <% end %>
           </tbody>

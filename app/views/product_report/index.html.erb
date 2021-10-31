@@ -1,0 +1,46 @@
+<div class="col-span-12 mt-6">
+  <div class="intro-y block sm:flex items-center h-10">
+    <h2 class="text-lg font-medium truncate mr-5">
+      Захиалга авсан бүтээгдэхүүн
+    </h2>
+    <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
+      <button onclick="location.href='<%= orders_path %>'" class="button box flex items-center text-gray-700 dark:text-gray-300"> <i data-feather="file-text" class="hidden sm:block w-4 h-4 mr-2"></i> Захилагийн жагсаалт </button>
+      <button onclick="location.href='<%= products_path %>'" class="ml-3 button box flex items-center text-gray-700 dark:text-gray-300"> <i data-feather="file-text" class="hidden sm:block w-4 h-4 mr-2"></i> Агуулхын бүртгэл </button>
+    </div>
+  </div>
+  <div class="intro-y overflow-auto lg:overflow-visible mt-8 sm:mt-0">
+    <table class="table table-report sm:mt-2">
+      <thead>
+      <tr>
+        <th class="whitespace-nowrap">Бүтээгдэхүүн</th>
+        <th class="text-center whitespace-nowrap">Нийт</th>
+        <th class="text-center whitespace-nowrap">Хүлээгдэж байгаа</th>
+        <th class="text-center whitespace-nowrap">Бараа бэлэн</th>
+        <th class="text-center whitespace-nowrap">Хүргэлтэнд</th>
+        <th class="text-center whitespace-nowrap">Цуцалсан</th>
+        <th class="text-center whitespace-nowrap">Хүлээлгэж өгсөн</th>
+        <th class="text-center whitespace-nowrap">Агуулхад</th>
+        <th class="text-center whitespace-nowrap">Илүү бараа</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @ordered_products.each do |product| %>
+        <tr class="intro-x">
+          <td>
+            <a href="" class="font-medium whitespace-nowrap"><%= product.name %></a>
+            <div class="text-gray-600 text-xs whitespace-nowrap mt-0.5"><%= number_to_currency(product.price, unit: "₮", strip_insignificant_zeros: true)%></div>
+          </td>
+          <td class="text-center"><%= product.all_product %></td>
+          <td class="text-center"><%= product.is_waiting %></td>
+          <td class="text-center"><%= product.is_willing %></td>
+          <td class="text-center"><%= product.is_delivery %></td>
+          <td class="text-center"><%= product.is_cancelled %></td>
+          <td class="text-center"><%= product.is_finish %></td>
+          <td class="text-center"><%= product.quantity %></td>
+          <td class="text-center"><%= product.quantity - product.is_willing %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

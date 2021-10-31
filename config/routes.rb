@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'product_report/index'
   get 'deliveries/index'
   root to: 'home#index'
   get 'admin', to: 'dashboard#index'
@@ -11,6 +12,9 @@ Rails.application.routes.draw do
   post 'home/reset_pin_code', to: 'home#reset_pin_code'
   post 'home/set_delivery_client', to: 'home#set_delivery_client'
   put 'home', to: 'home#update'
+
+  get 'product_report', to: 'product_report#index'
+
   devise_for :users, controllers: { sessions: "sessions" }
   resources :users
   resources :clients

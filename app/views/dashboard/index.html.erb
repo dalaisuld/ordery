@@ -79,39 +79,27 @@
           </div>
         </div>
         <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y">
-          <div class="intro-y box p-5">
+          <div class="intro-y box p-5 mt-3">
             <div class="mt-1">
               <div class="flex items-center">
                 <div class="w-2 h-2 bg-theme-11 rounded-full mr-3"></div>
-                <span class="truncate">Каргоны төлбөр</span>
+                <span class="truncate">Ажилтан</span>
                 <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-                <span class="font-medium xl:ml-auto">Нийт</span>
-                <span class="font-medium xl:ml-auto">Дансаар</span>
-                <span class="font-medium xl:ml-auto">Бэлнээр</span>
+                <span class="font-medium xl:ml-auto">Каргоны төлбөр</span>
               </div>
+              <% @reports.each do |report| %>
+                <div class="flex items-center mt-4">
+                  <div class="w-2 h-2 bg-theme-1 rounded-full mr-3"></div>
+                  <span class="truncate"><%= ApplicationHelper.getUserName(report[0])  %></span>
+                  <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+                  <span class="font-medium xl:ml-auto"><%= number_to_currency(report[1], unit: "₮ ", strip_insignificant_zeros: true) %></span>
+                </div>
+              <% end %>
               <div class="flex items-center mt-4">
-                <div class="w-2 h-2 bg-theme-1 rounded-full mr-3"></div>
-                <span class="truncate"><%= Time.now.strftime('%Y-%m-%d') %></span>
+                <div class="w-2 h-2 bg-theme-6 rounded-full mr-3"></div>
+                <span class="truncate">Өнөөдрийн нийт карго:</span>
                 <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-                <span class="font-medium xl:ml-auto"><% if @cargo_today.present? %><%= number_to_currency(@cargo_today.total, unit: "₮", strip_insignificant_zeros: true)%><% else %>-<% end %></span>
-                <span class="font-medium xl:ml-auto"><% if @cargo_today.present? %><%= number_to_currency(@cargo_today.transfer, unit: "₮", strip_insignificant_zeros: true)%><% else %>-<% end %></span>
-                <span class="font-medium xl:ml-auto"><% if @cargo_today.present? %><%= number_to_currency(@cargo_today.cash, unit: "₮", strip_insignificant_zeros: true)%><% else %>-<% end %></span>
-              </div>
-              <div class="flex items-center mt-4">
-                <div class="w-2 h-2 bg-theme-1 rounded-full mr-3"></div>
-                <span class="truncate"><%= Date.today.prev_day.strftime('%Y-%m-%d') %></span>
-                <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-                <span class="font-medium xl:ml-auto"><% if @cargo_yesterday.present? %><%= number_to_currency(@cargo_yesterday.total, unit: "₮", strip_insignificant_zeros: true)%><% else %>-<% end %></span>
-                <span class="font-medium xl:ml-auto"><% if @cargo_yesterday.present? %><%= number_to_currency(@cargo_yesterday.transfer, unit: "₮", strip_insignificant_zeros: true)%><% else %>-<% end %></span>
-                <span class="font-medium xl:ml-auto"><% if @cargo_yesterday.present? %><%= number_to_currency(@cargo_yesterday.cash, unit: "₮", strip_insignificant_zeros: true)%><% else %>-<% end %></span>
-              </div>
-              <div class="flex items-center mt-4">
-                <div class="w-2 h-2 bg-theme-1 rounded-full mr-3"></div>
-                <span class="truncate"><%= Date.today.prev_day.prev_day.strftime('%Y-%m-%d') %></span>
-                <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-                <span class="font-medium xl:ml-auto"><% if @cargo_day_before_yesterday.present? %><%= number_to_currency(@cargo_day_before_yesterday.total, unit: "₮", strip_insignificant_zeros: true)%><% else %>-<% end %></span>
-                <span class="font-medium xl:ml-auto"><% if @cargo_day_before_yesterday.present? %><%= number_to_currency(@cargo_day_before_yesterday.transfer, unit: "₮", strip_insignificant_zeros: true)%><% else %>-<% end %></span>
-                <span class="font-medium xl:ml-auto"><% if @cargo_day_before_yesterday.present? %><%= number_to_currency(@cargo_day_before_yesterday.cash, unit: "₮", strip_insignificant_zeros: true)%><% else %>-<% end %></span>
+                <span class="font-medium xl:ml-auto"><%= number_to_currency(@cargo_today, unit: "₮ ", strip_insignificant_zeros: true) %></span>
               </div>
             </div>
           </div>
@@ -120,52 +108,6 @@
     </div>
     <!-- END: General Report -->
 
-    <div class="col-span-12 mt-6">
-      <div class="intro-y block sm:flex items-center h-10">
-        <h2 class="text-lg font-medium truncate mr-5">
-          Захиалга авсан бүтээгдэхүүн
-        </h2>
-        <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
-          <button onclick="location.href='<%= orders_path %>'" class="button box flex items-center text-gray-700 dark:text-gray-300"> <i data-feather="file-text" class="hidden sm:block w-4 h-4 mr-2"></i> Захилагийн жагсаалт </button>
-          <button onclick="location.href='<%= products_path %>'" class="ml-3 button box flex items-center text-gray-700 dark:text-gray-300"> <i data-feather="file-text" class="hidden sm:block w-4 h-4 mr-2"></i> Агуулхын бүртгэл </button>
-        </div>
-      </div>
-      <div class="intro-y overflow-auto lg:overflow-visible mt-8 sm:mt-0">
-        <table class="table table-report sm:mt-2">
-          <thead>
-          <tr>
-            <th class="whitespace-nowrap">Бүтээгдэхүүн</th>
-            <th class="text-center whitespace-nowrap">Нийт</th>
-            <th class="text-center whitespace-nowrap">Хүлээгдэж байгаа</th>
-            <th class="text-center whitespace-nowrap">Бараа бэлэн</th>
-            <th class="text-center whitespace-nowrap">Хүргэлтэнд</th>
-            <th class="text-center whitespace-nowrap">Цуцалсан</th>
-            <th class="text-center whitespace-nowrap">Хүлээлгэж өгсөн</th>
-            <th class="text-center whitespace-nowrap">агуулхад</th>
-            <th class="text-center whitespace-nowrap">Илүү бараа</th>
-          </tr>
-          </thead>
-          <tbody>
-          <% @ordered_products.each do |product| %>
-            <tr class="intro-x">
-              <td>
-                <a href="" class="font-medium whitespace-nowrap"><%= product.name %></a>
-                <div class="text-gray-600 text-xs whitespace-nowrap mt-0.5"><%= number_to_currency(product.price, unit: "₮", strip_insignificant_zeros: true)%></div>
-              </td>
-              <td class="text-center"><%= product.all_product %></td>
-              <td class="text-center"><%= product.is_waiting %></td>
-              <td class="text-center"><%= product.is_willing %></td>
-              <td class="text-center"><%= product.is_delivery %></td>
-              <td class="text-center"><%= product.is_cancelled %></td>
-              <td class="text-center"><%= product.is_finish %></td>
-              <td class="text-center"><%= product.quantity %></td>
-              <td class="text-center"><%= product.quantity - product.is_willing %></td>
-            </tr>
-          <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div>
   </div>
   <div class="col-span-12 xxl:col-span-3 xxl:border-l border-theme-5 -mb-10 pb-10">
     <div class="xxl:pl-6 grid grid-cols-12 gap-6">

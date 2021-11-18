@@ -51,16 +51,18 @@
           <% if product.status != IS_DELIVERY || product.status != IS_WAITING || product.status != IS_CANCELED %>
             <tr class="service" style="font-size: 10px">
               <td class="tableitem">
-                <p class="itemtext"><%= product.name %></p>
+                <p class="itemtext"><%= product.name %> (<%= number_to_currency(product.actual_price, unit: "₮ ", strip_insignificant_zeros: true) %>)</p>
               </td>
               <td class="tableitem">
                 <p class="itemtext"><%= product.quantity %></p>
               </td>
               <td class="tableitem">
-                <p class="itemtext"><%= product.cargo_price %></p>
+                <p class="itemtext cargo"><%= product.cargo_price %></p>
               </td>
               <td class="tableitem">
-                <p class="itemtext"><%= product.actual_price.to_i * product.quantity.to_i + product.cargo_price %></p>
+                <p class="itemtext">
+                  <%= number_to_currency(product.actual_price.to_i * product.quantity.to_i + product.cargo_price, unit: "₮ ", strip_insignificant_zeros: true) %>
+                  </p>
               </td>
             </tr>
           <% end %>
@@ -70,7 +72,7 @@
     <!--End Table-->
 
     <div id="legalcopy">
-      <p class="legal" style="font-size: 12px">Биднийг сонгон үйлчлүүлсэн баярлалаа 99429967
+      <p class="legal" style="font-size: 12px">Биднийг сонгон үйлчлүүлсэн баярлалаа
       </p>
     </div>
 
@@ -78,3 +80,22 @@
   <!--End InvoiceBot-->
 </div>
 <!--End Invoice-->
+
+<script type="text/javascript" charset="utf-8">
+    var totals=[0,0,0];
+    $(document).ready(function(){
+
+        var $dataRows=$("#table tr:not('.totalColumn, .titlerow')");
+
+        $dataRows.each(function() {
+            $(this).find('.rowDataSd').each(function(i){
+                totals[i]+=parseInt( $(this).html());
+            });
+        });
+        $("#product-table td.totalCol").each(function(i){
+            $(this).html("Нийт:"+totals[i]);
+        });
+
+    });
+
+</script>

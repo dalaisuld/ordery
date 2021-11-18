@@ -87,7 +87,7 @@
             <tr class="totalColumn">
               <td colspan="5" class="border"><div class="lg:text-right font-extrabold"></div></td>
               <td class="border totalCol"><div class="font-extrabold">Нийт барааны <%=@total_cargo_price %></div></td>
-              <td class="border totalCol"><div class="font-extrabold">Нийт карго</div></td>
+              <td class="border totalCol cargo"><div class="font-extrabold">Нийт карго</div></td>
               <td class="border totalCol"><div class="font-extrabold">Эцсийн төлөх дүн</div></td>
               <td class="border"><div class="font-extrabold"></div></td>
             </tr>
@@ -115,6 +115,10 @@
 
           <button id="cancel_products" class="button mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white">
             <i data-feather="trash" class="w-4 h-4 mr-2"></i> Захиалга цуцлах
+          </button>
+
+          <button id="print_bill" class="button mr-2 ml-8 mb-2 flex items-center justify-center bg-theme-9 text-white">
+            <i data-feather="save" class="w-4 h-4 mr-2"></i> Баримт хэвлэх
           </button>
 
         </div>
@@ -314,6 +318,14 @@
                 $(this).html("Нийт:"+totals[i]);
             });
 
+        });
+
+        // Print bill
+        $("#print_bill").click(function(){
+            window.open(
+                window.location.href+'/print',
+                '_blank' // <- This is what makes it open in a new window.
+            );
         });
     });
 

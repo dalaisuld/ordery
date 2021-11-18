@@ -1,0 +1,80 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+    #invoice-POS{
+        font-family: 'Roboto', sans-serif;
+    }
+    #table {
+        font-size: 10px;
+    }
+</style>
+
+<div id="invoice-POS">
+
+  <center id="top">
+    <div class="logo"></div>
+    <div class="info">
+      <h4>BIG MALL- Үйлдвэрийн бөөний үнээр-Захиалгын бараа ✅✅✅</h4>
+    </div>
+    <!--End Info-->
+  </center>
+  <!--End InvoiceTop-->
+
+  <div id="mid">
+    <div class="info">
+      <p>
+        Утас : 9090-5448</br>
+      </p>
+    </div>
+  </div>
+  <!--End Invoice Mid-->
+
+  <div id="bot">
+
+    <div id="table">
+      <table>
+        <tr class="tabletitle" style="font-size: 14px">
+          <td class="item">
+            <h5>Бараа</h5>
+          </td>
+          <td class="Hours">
+            <h5>Т/Ш</h5>
+          </td>
+          <td class="Hours">
+            <h5>Карго</h5>
+          </td>
+          <td class="Rate">
+            <h5>Нийт</h5>
+          </td>
+        </tr>
+
+        <% @products.each do |product| %>
+          <% if product.status != IS_DELIVERY || product.status != IS_WAITING || product.status != IS_CANCELED %>
+            <tr class="service" style="font-size: 10px">
+              <td class="tableitem">
+                <p class="itemtext"><%= product.name %></p>
+              </td>
+              <td class="tableitem">
+                <p class="itemtext"><%= product.quantity %></p>
+              </td>
+              <td class="tableitem">
+                <p class="itemtext"><%= product.cargo_price %></p>
+              </td>
+              <td class="tableitem">
+                <p class="itemtext"><%= product.actual_price.to_i * product.quantity.to_i + product.cargo_price %></p>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </table>
+    </div>
+    <!--End Table-->
+
+    <div id="legalcopy">
+      <p class="legal" style="font-size: 12px">Биднийг сонгон үйлчлүүлсэн баярлалаа 99429967
+      </p>
+    </div>
+
+  </div>
+  <!--End InvoiceBot-->
+</div>
+<!--End Invoice-->

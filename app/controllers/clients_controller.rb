@@ -1,6 +1,6 @@
 class ClientsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_model, only: %i[show update]
+  before_action :set_model, only: %i[show update print]
 
   def index
     @page_title = 'Хэрэглэгчийн жагсаалт'
@@ -9,6 +9,12 @@ class ClientsController < ApplicationController
 
   def show
     @page_clients_active = true
+  end
+
+  def print
+    @page_clients_active = true
+    @page_title = 'Хэрэглэгчийн жагсаалт'
+    render layout: false
   end
 
   def change_address

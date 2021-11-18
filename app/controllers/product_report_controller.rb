@@ -12,4 +12,13 @@ class ProductReportController < ApplicationController
                             .group('p.id, p.name')
   end
 
+  def sell_product
+    sell_quantity = params[:sell_quantity]
+    product_id = params[:product_id]
+    product = Product.find(product_id)
+    product.quantity = product.quantity.to_i - sell_quantity.to_i
+    product.save
+    render json:{ message: product_id }, status: 200
+  end
+
 end

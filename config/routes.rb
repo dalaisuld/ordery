@@ -15,6 +15,8 @@ Rails.application.routes.draw do
 
   get 'product_report', to: 'product_report#index'
 
+  get 'clients/:id/print', to: 'clients#print'
+
   devise_for :users, controllers: { sessions: "sessions" }
   resources :users
   resources :clients
@@ -37,6 +39,8 @@ Rails.application.routes.draw do
   post 'orders/cancel_products', to: 'orders#cancel_products'
   post 'orders/complete_all_deliveries', to: 'orders#complete_all_deliveries'
   post 'deliveries/list', to: 'deliveries#list'
+
+  post 'product_report/sell', to: 'product_report#sell_product'
 
   get 'smstest', to: 'dashboard#smstest'
 end

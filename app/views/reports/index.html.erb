@@ -1,7 +1,10 @@
-<h2 class="intro-y text-lg font-medium mt-10">
-  Тайлангийн огноо : <%= Time.now.strftime('%Y-%m-%d') %>
-</h2>
-
+<form action="/reports" method="get">
+  <h2 class="intro-y text-lg font-medium mt-10">
+    Тайлангийн огноо :
+    <input type="text" name="date" class="datepicker form-control pl-12" data-single-mode="true" value="<%= @current_date %>">
+    <button type="submit" class="button button--sm text-white bg-theme-1 mr-2">Тайлан харах</button>
+  </h2>
+</form>
 <div class="grid grid-cols-12 gap-6">
   <div class="col-span-6 sm:col-span-6 xl:col-span-6 intro-y">
     <div class="intro-y box p-5 mt-3">

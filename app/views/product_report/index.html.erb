@@ -41,9 +41,10 @@
           <td class="text-center"><%= product.quantity - product.is_willing %></td>
           <td>
             <% if (product.quantity.to_i - product.is_willing.to_i) > 0 %>
-              <button class="button mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white" onclick="sellPrd('<%= product.name %>', '<%= product.id %>', '<%= product.quantity - product.is_willing %>')">Зарах</button>
+              <button class="button mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white" onclick="sellPrd('<%= product.name %>', '<%= product.id %>','<%= product.price %>', '<%= product.quantity - product.is_willing %>')">Зарах</button>
             <% else %>
               --
+              <button class="button mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white" onclick="sellPrd('<%= product.name %>', '<%= product.id %>','<%= product.price %>', '<%= product.quantity - product.is_willing %>')">Зарах</button>
             <% end %>
           </td>
         </tr>
@@ -69,6 +70,9 @@
       <div class="col-span-12 sm:col-span-12"><label>Зарах тоо ширхэг</label>
         <input type="number" id="sell_quantity" required min="1" value="1" class="input w-full border mt-2 flex-1" placeholder="Тоо ширхэг">
       </div>
+      <div class="col-span-12 sm:col-span-12"><label>Зарах үнэ</label>
+        <input type="number" id="sell_price" required min="1" value="1" class="input w-full border mt-2 flex-1" placeholder="Зарах үнэ">
+      </div>
     </div>
     <div class="px-5 py-3 text-right border-t border-gray-200 dark:border-dark-5">
       <button type="button" data-dismiss="modal" class="button w-20 border text-gray-700 dark:border-dark-5 dark:text-gray-300 mr-1">Болих</button>
@@ -79,9 +83,10 @@
 
 <script type="text/javascript" charset="utf-8">
 
-    function sellPrd(product_name, product_id, potential_balance){
+    function sellPrd(product_name, product_id, sell_price, potential_balance){
         console.log(product_name)
         cash("#sell_product").val(product_name)
+        cash("#sell_price").val(sell_price)
         cash("#product_id").val(product_id)
         cash("#potential_balance").val(potential_balance)
         cash("#sellProduct").modal("show");
@@ -93,6 +98,7 @@
             type: "POST",
             data:{
                 sell_quantity: $("#sell_quantity").val(),
+                sell_price: $("#sell_price").val(),
                 product_id: $("#product_id").val(),
             },
             beforeSend: function (xhr) {

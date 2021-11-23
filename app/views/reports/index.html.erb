@@ -26,6 +26,12 @@
           <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
           <span class="font-medium xl:ml-auto"><%= number_to_currency(@cargo_today, unit: "₮ ", strip_insignificant_zeros: true) %></span>
         </div>
+        <div class="flex items-center mt-4">
+          <div class="w-2 h-2 bg-theme-6 rounded-full mr-3"></div>
+          <span class="truncate">Өнөөдрийн нийт бэлэн зарсан бараа:</span>
+          <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+          <span class="font-medium xl:ml-auto"><%= number_to_currency(@sold_total, unit: "₮ ", strip_insignificant_zeros: true) %></span>
+        </div>
       </div>
     </div>
   </div>

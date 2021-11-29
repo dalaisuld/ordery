@@ -115,9 +115,6 @@
         <li class="nav-item" role="presentation">
           <button class="btn" id="pwa-tab" data-bs-toggle="tab" data-bs-target="#orders" type="button" role="tab" aria-controls="orders" aria-selected="false">Шилжүүлгийн мэдээлэл</button>
         </li>
-        <li class="nav-item" role="presentation">
-          <button class="btn" id="dark-tab" data-bs-toggle="tab" data-bs-target="#address" type="button" role="tab" aria-controls="address" aria-selected="false">Хаяг</button>
-        </li>
       </ul>
       <div class="pt-3"></div>
       <div class="tab-content" id="affanTabs1Content" style="border: none">
@@ -168,6 +165,24 @@
             <% end %>
           </div>
           <div class="pt-3"></div>
+          <div class="container">
+            <div class="card">
+              <div class="card-body">
+                <p>Та бараагаа хүргүүлж авах бол ДҮҮРЭГ, ХОРОО гэрийн хаяг тодорхой бичээрэй.</p>
+                <p>Анхааруулга: Та барааныхаа төлөвийг сайн хараарай. Ирсэн бараа л хүргэлтэнд гарна.</p>
+                <form action="#" method="GET">
+                  <div class="form-group">
+                    <textarea class="form-control" id="address" name="address" cols="3" rows="5" placeholder="Гэрийн хаягаа энд бичнэ үү!"><%= @clients.address %></textarea>
+                  </div>
+                  <button class="btn btn-primary w-100 d-flex align-items-center justify-content-center" type="button" id="update_address_btn">Хүргэлтийн захиалга үүсгэх
+                    <svg class="bi bi-arrow-right-short" width="24" height="24" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"></path>
+                    </svg>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
           <div class="notification-area">
@@ -192,34 +207,7 @@
             <p class="mb-0">Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
           </div>
         </div>
-        <div class="tab-pane fade" id="address" role="tabpanel" aria-labelledby="address-tab">
-          <div class="card">
-            <div class="card-body">
-              <p>Та бараагаа хүргүүлж авах бол ДҮҮРЭГ, ХОРОО гэрийн хаяг тодорхой бичээрэй.</p>
-              <p>Анхааруулга: Та барааныхаа төлөвийг сайн хараарай. Ирсэн бараа л хүргэлтэнд гарна.</p>
-              <form action="#" method="GET">
-                <div class="form-group">
-                  <textarea class="form-control" id="address" name="address" cols="3" rows="5" placeholder="Гэрийн хаягаа энд бичнэ үү!"><%= @clients.address %></textarea>
-                  <div class="flex flex-col sm:flex-row mt-2">
-                    <div class="flex items-center text-gray-700 dark:text-gray-500 mr-2">
-                      <input type="radio" class="input border mr-2" id="1" name="is_delivery_to_home" value="1" <% if @clients.is_delivery_to_home == true %>checked<% end %>>
-                      <label class="cursor-pointer select-none" for="1">Гэртээ хүргүүлж авах</label>
-                    </div>
-                    <div class="flex items-center text-gray-700 dark:text-gray-500 mr-2 mt-2 sm:mt-0">
-                      <input type="radio" class="input border mr-2" id="0" name="is_delivery_to_home" value="0" <% if @clients.is_delivery_to_home == false %>checked<% end %>>
-                      <label class="cursor-pointer select-none" for="0">Агуулахаас ирж авах</label>
-                    </div>
-                  </div>
-                </div>
-                <button class="btn btn-primary w-100 d-flex align-items-center justify-content-center" type="button" id="update_address_btn">Хадгалах
-                  <svg class="bi bi-arrow-right-short" width="24" height="24" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"></path>
-                  </svg>
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
+
       </div>
     </div>
   </div>

@@ -56,4 +56,9 @@ class DeliveriesController < ApplicationController
     puts new_arr.inspect
     render json: {data: new_arr, itemsCount: deliveries_count}
   end
+
+  def destroy
+    Delivery.find(params[:id]).destroy
+    render json: {'SMG':'Success'}
+  end
 end

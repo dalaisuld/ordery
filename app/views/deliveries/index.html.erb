@@ -92,7 +92,7 @@ var filterDay = null
             pageSize: 20,
             pageButtonCount: 5,
             sorting: true,
-            deleteConfirm: "Do you really want to delete the client?",
+            deleteConfirm: "Энэ хүргэлтийн хүсэлтийг устгахдаа итгэлтэй байнуу",
             pagerFormat: "Page: {first} {prev} {pages} {next} {last}     (showing {pageIndex} to {pageCount} of  {itemCount} entries)",
             pagePrevText: "Prev",
             pageNextText: "Next",
@@ -115,6 +115,30 @@ var filterDay = null
                         }
                     });
                 },
+
+                deleteItem: function (item) {
+                    return $.ajax({
+                        type: "DELETE",
+                        url: "/deliveries/" + item.id,
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                        },
+                        success: function (data){
+                            var $grid = $("#jsGrid");
+                            $grid.jsGrid("loadData");
+                            Toastify({
+                                text: "Амжилттай устгагдлаа",
+                                duration: 3000,
+                                newWindow: true,
+                                close: true,
+                                gravity: "bottom",
+                                position: "right",
+                                backgroundColor: "#91C714",
+                                stopOnFocus: true,
+                            }).showToast();
+                        }
+                    });
+                }
             },
             fields: [
                 {

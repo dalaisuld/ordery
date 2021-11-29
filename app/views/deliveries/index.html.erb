@@ -92,6 +92,7 @@ var filterDay = null
             pageSize: 20,
             pageButtonCount: 5,
             sorting: true,
+            deleteConfirm: "Do you really want to delete the client?",
             pagerFormat: "Page: {first} {prev} {pages} {next} {last}     (showing {pageIndex} to {pageCount} of  {itemCount} entries)",
             pagePrevText: "Prev",
             pageNextText: "Next",
@@ -155,6 +156,7 @@ var filterDay = null
                     title: "Төлөв",
                     type: "text"
                 },
+                { type: "control" }
             ],
             rowClick: function(args) {
                 location.href="/deliveries/"+args.item['id']

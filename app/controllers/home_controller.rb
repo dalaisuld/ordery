@@ -42,8 +42,6 @@ class HomeController < ApplicationController
       order_detail = OrderDetail.find_by(id: order_detail_id)
       if order_detail
         product = Product.find_by(id: order_detail.product_id)
-        order_detail.status = IS_DELIVERY
-        order_detail.save!
         delivery = Delivery.new
         delivery.address = address
         delivery.phone_number = phone_number
@@ -51,14 +49,14 @@ class HomeController < ApplicationController
         delivery.user_id = 1
         delivery.delivery_date = DateTime.now.strftime('%Y-%m-%d')
         delivery.save!
-        delivery_product = DeliveryProduct.new
-        delivery_product.delivery_id = delivery.id
-        delivery_product.order_detail_id = order_detail_id
-        delivery_product.product_name = product.name
-        delivery_product.quantity = product.quantity
-        delivery_product.price = product.price
-        delivery_product.cargo_price = order_detail.cargo_price
-        delivery_product.save!
+        # delivery_product = DeliveryProduct.new
+        # delivery_product.delivery_id = delivery.id
+        # delivery_product.order_detail_id = order_detail_id
+        # delivery_product.product_name = product.name
+        # delivery_product.quantity = product.quantity
+        # delivery_product.price = product.price
+        # delivery_product.cargo_price = order_detail.cargo_price
+        # delivery_product.save!
       end
     end
   end

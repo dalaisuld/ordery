@@ -115,6 +115,9 @@
         <li class="nav-item" role="presentation">
           <button class="btn" id="pwa-tab" data-bs-toggle="tab" data-bs-target="#orders" type="button" role="tab" aria-controls="orders" aria-selected="false">Шилжүүлгийн мэдээлэл</button>
         </li>
+        <li class="nav-item" role="presentation">
+          <button class="btn" id="pwa-tab" data-bs-toggle="tab" data-bs-target="#delivery" type="button" role="tab" aria-controls="orders" aria-selected="false">Хүргэлтийн захиалга</button>
+        </li>
       </ul>
       <div class="pt-3"></div>
       <div class="tab-content" id="affanTabs1Content" style="border: none">
@@ -150,7 +153,11 @@
                       <% elsif product.status == IS_CANCELED %>
                         <span class="badge mb-2 rounded-pill">Цуцалсан</span>
                       <% end %>
-                      <h6><%= product.name %> (<%= product.quantity %>ш)</h6>
+                      <h6>
+                        <% if product.status == IS_WILLING %>
+                          <input id="<%= product.order_detail_id %>" class="input  ml-auto border" type="checkbox" checked name="order-detail" data-order="<%= product.order_detail_id %>">
+                        <% end %>
+                        <label for="<%= product.order_detail_id %>"><%= product.name %> (<%= product.quantity %>ш)</label></h6>
                     </div>
                     <div class="timeline-icon mb-2">
                       <svg class="bi bi-basket" width="28" height="28" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -172,9 +179,9 @@
                 <p>Анхааруулга: Та барааныхаа төлөвийг сайн хараарай. Ирсэн бараа л хүргэлтэнд гарна.</p>
                 <form action="#" method="GET">
                   <div class="form-group">
-                    <textarea class="form-control" id="address" name="address" cols="3" rows="5" placeholder="Гэрийн хаягаа энд бичнэ үү!"><%= @clients.address %></textarea>
+                    <textarea class="form-control" id="delivery_address" name="address" cols="3" rows="5" placeholder="Гэрийн хаягаа энд бичнэ үү!"><%= @clients.address %></textarea>
                   </div>
-                  <button class="btn btn-primary w-100 d-flex align-items-center justify-content-center" type="button" id="update_address_btn">Хүргэлтийн захиалга үүсгэх
+                  <button class="btn btn-primary w-100 d-flex align-items-center justify-content-center" type="button" id="create_delivery_btn">Хүргэлтийн захиалга үүсгэх
                     <svg class="bi bi-arrow-right-short" width="24" height="24" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                       <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"></path>
                     </svg>
@@ -207,73 +214,47 @@
             <p class="mb-0">Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
           </div>
         </div>
-
+        <div class="tab-pane fade" id="delivery" role="tabpanel" aria-labelledby="delivery-tab">
+          <div class="notification-area">
+            <div class="container">
+              <% @deliveries.each.each_with_index do |delivery, counter| %>
+                <div class="alert unread custom-alert-3 alert-primary" role="alert">
+                  <i class="bi bi-truck"></i>
+                  <div class="alert-text w-75">
+                    <h6><%= delivery.address %></h6>
+                    <span class="text-truncate">Хүсэлт илгээсэн огноо: <%= delivery.created_at.strftime('%Y/%m/%d %H:%M:%S') %></span>
+                    <span class="text-truncate">Утасны дугаар: <%= delivery.phone_number %></span>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
   <div class="pb-3"></div>
 </div>
-  <!-- All JavaScript Files -->
-  <script src="/mobile/js/bootstrap.bundle.min.js"></script>
-  <script src="/mobile/js/jquery.min.js"></script>
-  <script src="/mobile/js/internet-status.js"></script>
-  <script src="/mobile/js/waypoints.min.js"></script>
-  <script src="/mobile/js/jquery.easing.min.js"></script>
-  <script src="/mobile/js/wow.min.js"></script>
-  <script src="/mobile/js/owl.carousel.min.js"></script>
-  <script src="/mobile/js/jquery.counterup.min.js"></script>
-  <script src="/mobile/js/jquery.countdown.min.js"></script>
-  <script src="/mobile/js/imagesloaded.pkgd.min.js"></script>
-  <script src="/mobile/js/isotope.pkgd.min.js"></script>
-  <script src="/mobile/js/jquery.magnific-popup.min.js"></script>
-  <script src="/mobile/js/dark-mode-switch.js"></script>
-  <script src="/mobile/js/ion.rangeSlider.min.js"></script>
-  <script src="/mobile/js/jquery.dataTables.min.js"></script>
-  <script src="/mobile/js/active.js"></script>
-  <!-- PWA -->
-  <script src="/mobile/js/pwa.js"></script>
+<!-- All JavaScript Files -->
+<script src="/mobile/js/bootstrap.bundle.min.js"></script>
+<script src="/mobile/js/jquery.min.js"></script>
+<script src="/mobile/js/internet-status.js"></script>
+<script src="/mobile/js/waypoints.min.js"></script>
+<script src="/mobile/js/jquery.easing.min.js"></script>
+<script src="/mobile/js/wow.min.js"></script>
+<script src="/mobile/js/owl.carousel.min.js"></script>
+<script src="/mobile/js/jquery.counterup.min.js"></script>
+<script src="/mobile/js/jquery.countdown.min.js"></script>
+<script src="/mobile/js/imagesloaded.pkgd.min.js"></script>
+<script src="/mobile/js/isotope.pkgd.min.js"></script>
+<script src="/mobile/js/jquery.magnific-popup.min.js"></script>
+<script src="/mobile/js/dark-mode-switch.js"></script>
+<script src="/mobile/js/ion.rangeSlider.min.js"></script>
+<script src="/mobile/js/jquery.dataTables.min.js"></script>
+<script src="/mobile/js/active.js"></script>
+<!-- PWA -->
+<script src="/mobile/js/pwa.js"></script>
 <script>
-    $("#update_address_btn").click(function () {
-        var url = window.location.pathname;
-        var phone_number = url.substring(url.lastIndexOf('/') + 1);
-        $.ajax({
-            url: "/home",
-            type: "PUT",
-            data: {
-                is_delivery_to_home: $("input[name=is_delivery_to_home]:checked").val(),
-                phone_number: phone_number,
-                address: $('textarea#address').val()
-            },
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
-            },
-            success: function (data) {
-                // Toastify({
-                //     text: "Хаяг амжилттай орууллаа",
-                //     duration: 3000,
-                //     newWindow: true,
-                //     close: true,
-                //     gravity: "bottom",
-                //     position: "right",
-                //     backgroundColor: "#0e2c88",
-                //     stopOnFocus: true,
-                // }).showToast();
-                location.reload();
-            },
-            error: function (data) {
-                alert("error");
-            }
-        });
-    });
-
-    $('#delivery_addr_type').change(function() {
-        console.log($(this).val())
-        if($(this).val()==='1'){
-            $("#delivery_address").text("")
-        }else if ($(this).val()==='0'){
-            $("#delivery_address").text($("#address").val())
-        }
-    });
 
     $("#create_delivery_btn").click(function () {
         var orderDetailIDs = [];
@@ -295,29 +276,10 @@
                 xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
             },
             success: function (data) {
-                Toastify({
-                    text: "Таны хүргэлт баталгаажлаа. Хөл хориотой холбоотойгоор хүргэлтийн ачаалал их байгаа тул 2 өдөртөө таны хүргэлт очно",
-                    duration: 10000,
-                    newWindow: true,
-                    close: true,
-                    gravity: "bottom",
-                    position: "right",
-                    backgroundColor: "#0e2c88",
-                    stopOnFocus: true,
-                }).showToast();
+                console.log('Хүргэлтийн захиалга амжилттай үүсгэлээ')
                 location.reload();
             },
             error: function (data) {
-                Toastify({
-                    text: "Зөвхөн бэлэн байгаа бараа хүргэлтэнд бүртгэх боломжтой.",
-                    duration: 10000,
-                    newWindow: true,
-                    close: true,
-                    gravity: "bottom",
-                    position: "right",
-                    backgroundColor: "#D32929",
-                    stopOnFocus: true,
-                }).showToast();
             }
         });
 

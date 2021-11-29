@@ -32,6 +32,7 @@ class DeliveriesController < ApplicationController
     deliveries.each do |delivery|
       new_arr.push({
                      id:delivery.id,
+                     client_id: Client.find_by_phone_number(delivery.phone_number),
                      phone_number: delivery.phone_number,
                      address: delivery.address,
                      delivery_date: delivery.delivery_date,

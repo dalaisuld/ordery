@@ -119,7 +119,7 @@ var filterDay = null
                 deleteItem: function (item) {
                     return $.ajax({
                         type: "DELETE",
-                        url: "/deliveries/" + item.id,
+                        url: "/clients/" + item.id,
                         beforeSend: function (xhr) {
                             xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
                         },
@@ -183,7 +183,7 @@ var filterDay = null
                 { type: "control" }
             ],
             rowClick: function(args) {
-                location.href="/deliveries/"+args.item['id']
+                location.href="/deliveries/"+args.item['client_id']
             }
         });
     }

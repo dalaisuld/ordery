@@ -323,8 +323,8 @@
         // Print bill
         $("#print_bill").click(function(){
             window.open(
-                window.location.href+'/print',
-                '_blank' // <- This is what makes it open in a new window.
+                window.location.href+'/print?ids=orderDetailIDs',
+                '_blank'
             );
         });
     });

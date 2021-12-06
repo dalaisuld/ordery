@@ -322,6 +322,10 @@
 
         // Print bill
         $("#print_bill").click(function(){
+            var orderDetailIDs = [];
+            $("#product-table input:checkbox:checked").map(function(){
+                orderDetailIDs.push($(this).val());
+            });
             window.open(
                 window.location.href+'/print?ids='+orderDetailIDs,
                 '_blank'

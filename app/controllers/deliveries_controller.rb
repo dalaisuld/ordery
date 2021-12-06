@@ -3,11 +3,6 @@ class DeliveriesController < ApplicationController
   def index
     @page_title = 'Хүргэлтийн жагсаалт'
     @page_delivery_active = true
-    # @orders = Order.joins('INNER JOIN order_details ON orders.id=order_details.order_id
-    #                       INNER JOIN clients ON orders.phone_number=clients.phone_number
-    #                       INNER JOIN products ON products.id=order_details.product_id')
-    # @orders = @orders.where('order_details.status=2').group('clients.phone_number, clients.address')
-    # @orders = @orders.select("clients.phone_number, clients.address, GROUP_CONCAT(distinct products.name separator ', ') as pr_name, GROUP_CONCAT(distinct order_details.id separator ',') as order_details, count(order_details.status)  as pr_count")
     @deliveries = Delivery.all
   end
 
@@ -35,8 +30,8 @@ class DeliveriesController < ApplicationController
                      client_id: Client.find_by_phone_number(delivery.phone_number).id,
                      phone_number: delivery.phone_number,
                      address: delivery.address,
+                     driver: delivery.driver,
                      delivery_date: delivery.delivery_date,
-                     products: DeliveriesHelper.delviery_products(delivery.id),
                      cargo: 'price',
                      status: case delivery.status
                              when 0
@@ -56,6 +51,12 @@ class DeliveriesController < ApplicationController
     end
     puts new_arr.inspect
     render json: {data: new_arr, itemsCount: deliveries_count}
+  end
+
+  def update
+    delivery = Delivery.find(params[:id])
+    delivery.update(driver: params[:driver])
+    render json: { data: 'success'}
   end
 
   def destroy

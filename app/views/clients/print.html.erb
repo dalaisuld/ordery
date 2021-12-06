@@ -47,7 +47,7 @@
           </td>
         </tr>
 
-        <% @products.each do |product| %>
+        <% @products_print.each do |product| %>
           <% if product.status != IS_DELIVERY || product.status != IS_WAITING || product.status != IS_CANCELED %>
             <tr class="service" style="font-size: 10px">
               <td class="tableitem">
@@ -57,7 +57,9 @@
                 <p class="itemtext"><%= product.quantity %></p>
               </td>
               <td class="tableitem">
-                <p class="itemtext cargo"><%= product.cargo_price %></p>
+                <p class="itemtext cargo">
+                  <%= number_to_currency(product.cargo_price, unit: "₮ ", strip_insignificant_zeros: true) %>
+                </p>
               </td>
               <td class="tableitem">
                 <p class="itemtext">
@@ -67,6 +69,23 @@
             </tr>
           <% end %>
         <% end %>
+        <tr class="service" style="font-size: 10px; font-weight: bold">
+          <td class="tableitem">
+            <p class="itemtext" style="float: right">Нийт каргонд төлөх дүн</p>
+          </td>
+          <td class="tableitem">
+            <p class="itemtext"></p>
+          </td>
+          <td class="tableitem">
+            <p class="itemtext cargo">
+              <%= number_to_currency(@total_cargo_price_print, unit: "₮ ", strip_insignificant_zeros: true) %>
+            </p>
+          </td>
+          <td class="tableitem">
+            <p class="itemtext">
+            </p>
+          </td>
+        </tr>
       </table>
     </div>
     <!--End Table-->

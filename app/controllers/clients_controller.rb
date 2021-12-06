@@ -12,8 +12,40 @@ class ClientsController < ApplicationController
   end
 
   def print
-    @page_clients_active = true
     @page_title = 'Хэрэглэгчийн жагсаалт'
+    puts "reques===>>> #{params[:ids].split(',')}"
+    @products_print = Order.joins('AS o
+        LEFT JOIN
+    order_details AS od ON o.id = od.order_id
+        LEFT JOIN
+    products AS p ON od.product_id = p.id').select('o.id as order_id,
+    od.id as product_id,
+    o.account_number,
+    o.amount AS transition_amount,
+    o.description,
+    o.transition_date,
+    p.name,
+    p.price AS product_price,
+    od.quantity,
+    od.price AS actual_price,
+    od.cargo_price,
+    od.status').where('o.phone_number = :q and od.id in (:ids)', q: @client.phone_number.strip.to_s, ids: params[:ids].split(",")).order('status')
+
+    # @total_cargo_price_print = @products_print.sum('p.price * p.quantity')
+    @total_cargo_price_print = OrderDetail.where(id: params[:ids].split(",")).sum('cargo_price * quantity')
+
+    # if params[:ids].present?
+    #   ids = params[:ids]
+    #   order_details = OrderDetail.find(ids)
+    #   order_details.each do |order|
+    #     puts "order #{order.product.name}"
+    #   end
+    #   puts "====[{ #{order_details}"
+    #   orders = ids.to_s.split(',')
+    #   orders.each do |order|
+    #     puts "=======>>#{order}"
+    #   end
+    # end
     render layout: false
   end
 

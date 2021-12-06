@@ -91,6 +91,7 @@ var filterDay = null
             pageLoading: true,
             pageSize: 20,
             pageButtonCount: 5,
+            editing: true,
             sorting: true,
             deleteConfirm: "Энэ хүргэлтийн хүсэлтийг устгахдаа итгэлтэй байнуу",
             pagerFormat: "Page: {first} {prev} {pages} {next} {last}     (showing {pageIndex} to {pageCount} of  {itemCount} entries)",
@@ -112,6 +113,31 @@ var filterDay = null
                         },
                         success: function (data){
                             // $('#clients_count').text(data['itemsCount']);
+                        }
+                    });
+                },
+
+                updateItem: function (item) {
+                    return $.ajax({
+                        type: "PUT",
+                        url: "/deliveries/" + item.id,
+                        data: item,
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                        },
+                        success: function (data){
+                            var $grid = $("#jsGrid");
+                            $grid.jsGrid("loadData");
+                            Toastify({
+                                text: "Амжилттай засагдлаа",
+                                duration: 3000,
+                                newWindow: true,
+                                close: true,
+                                gravity: "bottom",
+                                position: "right",
+                                backgroundColor: "#91C714",
+                                stopOnFocus: true,
+                            }).showToast();
                         }
                     });
                 },
@@ -147,28 +173,32 @@ var filterDay = null
                     width: 15,
                     align: "center",
                     type: "text",
+                    editing: false,
                 },
                 {
                     name: "phone_number",
                     title: "Дугаар",
+                    editing: false,
                     width: 50,
                     type: "text",
                     align: "center"
                 },
                 {
                     name: "address",
+                    editing: false,
                     title: "Хаяг",
                     width: 300,
                     type: "text",
                 },
                 {
-                    name: "products",
-                    title: "Бараа",
-                    width: 200,
+                    name: "driver",
+                    title: "Жолооч",
+                    width: 300,
                     type: "text",
                 },
                 {
                     name: "delivery_date",
+                    editing: false,
                     title: "Хүргүүлж авах огноо",
                     type: "text",
                     itemTemplate: function (value) {
@@ -177,6 +207,7 @@ var filterDay = null
                 },
                 {
                     name: "status",
+                    editing: false,
                     title: "Төлөв",
                     type: "text"
                 },

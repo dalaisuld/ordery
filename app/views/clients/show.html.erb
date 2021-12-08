@@ -19,7 +19,7 @@
     }
 </style>
 <div class="grid grid-cols-12 gap-6">
-  <div class="col-span-12 xxl:col-span-9 grid grid-cols-12 gap-6">
+  <div class="col-span-12 xxl:col-span-12 grid grid-cols-12 gap-6">
     <div class="col-span-12 lg:col-span-12 mt-5">
       <div class="intro-y box p-5">
         <div class="mt-3">
@@ -69,6 +69,7 @@
               <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">нийт</th>
               <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">карго</th>
               <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">төлөв</th>
+              <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">Хүлээлгэж өгсөн огноо</th>
             </tr>
             </thead>
             <tbody>
@@ -100,6 +101,7 @@
                     <span class='text-theme-6 block font-medium'>Цуцалсан</span>
                   <% end %>
                 </td>
+                <td class="border"><%= product.finish_date %></td>
               </tr>
             <%end %>
 

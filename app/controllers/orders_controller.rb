@@ -100,9 +100,10 @@ class OrdersController < ApplicationController
     order_details_ids.each do |order_detail_id|
       order_detail = OrderDetail.find_by(id: order_detail_id)
       next unless order_detail
-      product = Product.find_by(id: order_detail.product_id)
-      product.quantity = product.quantity + order_detail.quantity
-      product.save
+      if order_detail.status == IS_WAITING or order_detail.status == IS_FINISH or order_detail.status == IS_DELIVERY
+        product = Product.find_by(id: order_detail.product_id)
+        product.quantity = product.quantity + order_detail.quantity
+        product.save
       order_detail.status = IS_CANCELED
       order_detail.user_id = current_user.id
       order_detail.action_user_id = current_user.id

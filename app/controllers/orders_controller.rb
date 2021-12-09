@@ -104,6 +104,7 @@ class OrdersController < ApplicationController
         product = Product.find_by(id: order_detail.product_id)
         product.quantity = product.quantity + order_detail.quantity
         product.save
+      end
       order_detail.status = IS_CANCELED
       order_detail.user_id = current_user.id
       order_detail.action_user_id = current_user.id

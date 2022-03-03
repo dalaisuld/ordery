@@ -5,6 +5,7 @@ class ClientsController < ApplicationController
   def index
     @page_title = 'Хэрэглэгчийн жагсаалт'
     @page_clients_active = true
+    @pin_user = Client.where.not(pincode: [nil, ""]).count
   end
 
   def show

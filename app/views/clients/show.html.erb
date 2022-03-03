@@ -126,6 +126,85 @@
       </div>
     </div>
   </div>
+  <% @orders.each do |order| %>
+    <div class="col-span-12 xxl:col-span-12 grid grid-cols-12">
+      <div class="col-span-12 lg:col-span-12 mt-5">
+        <div class="intro-y box p-5">
+          <div class="mt-3">
+            <div class="grid grid-cols-12 gap-2">
+              <div class="col-span-3">
+                <label>Захиалгын дугаар</label>
+                <input class="input w-full border mt-2" value="<%= order.id %>" disabled>
+              </div>
+              <div class="col-span-3">
+                <label>Захиалга бүртгэсэн огноо</label>
+                <input class="input w-full border mt-2" value="<%= order.created_at.strftime('%Y-%m-%d %H:%M:%S') %>" disabled>
+              </div>
+              <div class="col-span-3">
+                <label>Гүйлгээний огноо</label>
+                <input class="input w-full border mt-2" value="<%= order.transition_date %>" disabled>
+              </div>
+              <div class="col-span-3">
+                <label>Ажилтан</label>
+                <input class="input w-full border mt-2" value="<%= User.find_by_id(order.user_id).email %>" disabled>
+              </div>
+            </div>
+          </div>
+          <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed mt-3"></div>
+          <div class="mt-3">
+            <div class="grid grid-cols-12 gap-2">
+              <div class="col-span-3">
+                <label>Дансны дугаар</label>
+                <input class="input w-full border mt-2" value="<%= order.account_number %>" disabled>
+              </div>
+              <div class="col-span-3">
+                <label>Утасны дугаар</label>
+                <input class="input w-full border mt-2" value="<%= order.phone_number %>" disabled>
+              </div>
+              <div class="col-span-6">
+                <label>Гүйлгээний утга</label>
+                <input class="input w-full border mt-2" value="<%= order.description %>" disabled>
+              </div>
+            </div>
+          </div>
+          <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed mt-3"></div>
+
+          <div class="overflow-x-auto">
+            <table class="table">
+              <thead>
+              <tr>
+                <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">#</th>
+                <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">Бүтээгдэхүүн</th>
+                <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">нэгж үнэ</th>
+                <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">тоо ширхэг</th>
+                <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">нийт</th>
+                <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">карго</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% OrderDetail.where(order_id: order.id).each do |order_detail| %>
+                <tr>
+                  <td class="border"><%= order_detail.id %></td>
+                  <td class="border"><%=order_detail.product.name %></td>
+                  <td class="border"><%= number_to_currency(order_detail.price, unit: "₮ ", strip_insignificant_zeros: true) %></td>
+                  <td class="border"><%=order_detail.quantity %></td>
+                  <td class="border"><%= number_to_currency(order_detail.price * order_detail.quantity, unit: "₮ ", strip_insignificant_zeros: true) %></td>
+                  <td class="border"><%= number_to_currency(order_detail.cargo_price, unit: "₮ ", strip_insignificant_zeros: true) %> x <%= order_detail.quantity %> = <%= number_to_currency(order_detail.cargo_price * order_detail.quantity, unit: "₮ ", strip_insignificant_zeros: true) %></td>
+                </tr>
+              <%end %>
+              <tr>
+                <td colspan="4" class="border"><div class="lg:text-right font-extrabold">Шилжүүлсэн мөнгөн дүн: <%= number_to_currency(order.amount, unit: "₮ ", strip_insignificant_zeros: true) %></div></td>
+                <td class="border"><div class="font-extrabold"><%= number_to_currency(@total_product_price, unit: "₮ ", strip_insignificant_zeros: true) %></div></td>
+                <td class="border"><div class="font-extrabold"><%= number_to_currency(@total_cargo_price, unit: "₮ ", strip_insignificant_zeros: true) %></div></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  <% end %>
 
 </div>
 <script>

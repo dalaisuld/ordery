@@ -194,10 +194,10 @@
               <%end %>
               <tr>
                 <td colspan="4" class="border"><div class="lg:text-right font-extrabold">Шилжүүлсэн мөнгөн дүн: <%= number_to_currency(order.amount, unit: "₮ ", strip_insignificant_zeros: true) %></div></td>
-                <td class="border"><div class="font-extrabold"><%= number_to_currency(@total_product_price, unit: "₮ ", strip_insignificant_zeros: true) %></div></td>
-                <td class="border"><div class="font-extrabold"><%= number_to_currency(@total_cargo_price, unit: "₮ ", strip_insignificant_zeros: true) %></div></td>
+                <td class="border"><div class="font-extrabold"><%= number_to_currency(OrderDetail.where(order_id: order.id).sum('price * quantity'), unit: "₮ ", strip_insignificant_zeros: true) %></div></td>
+                <td class="border"><div class="font-extrabold"><%= number_to_currency(OrderDetail.where(order_id: order.id).sum('cargo_price * quantity'), unit: "₮ ", strip_insignificant_zeros: true) %></div></td>
               </tr>
-              </tbody>
+              </tbody>ss
             </table>
           </div>
 

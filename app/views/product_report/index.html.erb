@@ -18,15 +18,18 @@
       ">
       <tr>
         <th class="whitespace-nowrap">Бүтээгдэхүүн</th>
-        <th class="text-center whitespace-nowrap">Нийт</th>
-        <th class="text-center whitespace-nowrap">Захиалсан</th>
+        <th class="text-center whitespace-nowrap">Нийт захиалга</th>
+        <th class="text-center whitespace-nowrap">Захиалсан тоо</th>
+        <th class="text-center whitespace-nowrap">Ирсэн тоо</th>
         <th class="text-center whitespace-nowrap">Хүлээгдэж байгаа</th>
-        <th class="text-center whitespace-nowrap">Бараа бэлэн</th>
-        <th class="text-center whitespace-nowrap">Хүргэлтэнд</th>
-        <th class="text-center whitespace-nowrap">Цуцалсан</th>
+        <th class="text-center whitespace-nowrap">Дэлгүүрт бэлэн</th>
+        <th class="text-center whitespace-nowrap">Агуулах үлдэгдэл</th>
+        <th class="text-center whitespace-nowrap">Хүргэлтэнд гарсан</th>
         <th class="text-center whitespace-nowrap">Хүлээлгэж өгсөн</th>
-        <th class="text-center whitespace-nowrap">Агуулхад</th>
-        <th class="text-center whitespace-nowrap">Илүү бараа</th>
+        <th class="text-center whitespace-nowrap">Цуцалсан</th>
+        <th class="text-center whitespace-nowrap">Илүү ба дүтуу бараа</th>
+        <th class="text-center whitespace-nowrap">Акталсан</th>
+        <th class="text-center whitespace-nowrap">Зарсан</th>
         <th class="text-center whitespace-nowrap">Зарах</th>
       </tr>
       </thead>
@@ -46,6 +49,9 @@
           <td class="text-center"><%= product.is_finish %></td>
           <td class="text-center"><%= product.quantity %></td>
           <td class="text-center"><%= product.quantity - product.is_willing %></td>
+          <td class="text-center">-</td>
+          <td class="text-center">-</td>
+          <td class="text-center">-</td>
           <td>
             <% if (product.quantity.to_i - product.is_willing.to_i) > 0 %>
               <button class="button mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white" onclick="sellPrd('<%= product.name %>', '<%= product.id %>','<%= product.price %>', '<%= product.quantity - product.is_willing %>')">Зарах</button>

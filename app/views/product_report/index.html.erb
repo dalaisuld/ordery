@@ -53,7 +53,7 @@
           <td class="text-center">-</td>
           <td class="text-center"><%= product.sold_count %></td>
           <td>
-            <% if (product.quantity.to_i - product.is_willing.to_i) > 0 %>
+            <% if (product.ordered_count - product.all_product + (product.received_count - product.ordered_count) + product.is_cancelled - product.sold_count) > 0 %>
               <button class="button mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white" onclick="sellPrd('<%= product.name %>', '<%= product.id %>','<%= product.price %>', '<%= product.quantity - product.is_willing %>')">Зарах</button>
             <% else %>
               --

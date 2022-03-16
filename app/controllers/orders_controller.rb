@@ -57,7 +57,7 @@ class OrdersController < ApplicationController
       order_detail = OrderDetail.find_by(id: order_detail_id)
       next unless order_detail
       product = Product.find_by(id: order_detail.product_id)
-      product.quantity = product.quantity - order_detail.quantity
+      # product.quantity = product.quantity - order_detail.quantity
       product.save
       order_detail.status = IS_DELIVERY
       order_detail.is_take_from_warehouse = false
@@ -79,7 +79,7 @@ class OrdersController < ApplicationController
       order_detail = OrderDetail.find_by(id: order_detail_id)
       next unless order_detail
       product = Product.find_by(id: order_detail.product_id)
-      product.quantity = product.quantity - order_detail.quantity
+      # product.quantity = product.quantity - order_detail.quantity
       product.save
       order_detail.status = IS_FINISH
       order_detail.is_take_from_warehouse = true
@@ -102,7 +102,7 @@ class OrdersController < ApplicationController
       next unless order_detail
       if order_detail.status == IS_WAITING or order_detail.status == IS_FINISH or order_detail.status == IS_DELIVERY
         product = Product.find_by(id: order_detail.product_id)
-        product.quantity = product.quantity + order_detail.quantity
+        # product.quantity = product.quantity + order_detail.quantity
         product.save
       end
       order_detail.status = IS_CANCELED
@@ -121,7 +121,7 @@ class OrdersController < ApplicationController
       order_detail = OrderDetail.find_by(id: order_detail_id)
       next unless order_detail
       product = Product.find_by(id: order_detail.product_id)
-      product.quantity = product.quantity - order_detail.quantity
+      # product.quantity = product.quantity - order_detail.quantity
       product.save
       order_detail.status = IS_FINISH
       order_detail.finish_date = Time.now.strftime('%Y-%m-%d')

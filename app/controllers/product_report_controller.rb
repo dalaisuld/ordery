@@ -9,7 +9,7 @@ class ProductReportController < ApplicationController
                           SUM(case when od.status = 2 then od.quantity else 0 end) as is_delivery,
                           SUM(case when od.status = 3 then od.quantity else 0 end) as is_finish,
                           SUM(case when od.status = 4 then od.quantity else 0 end) as is_cancelled')
-                            .group('p.id, p.name')
+                            .group('p.id, p.name').order('p.id DESC')
   end
 
   def sell_product

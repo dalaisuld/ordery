@@ -26,7 +26,7 @@ class ProductsController < ApplicationController
 
   def update
     product = Product.find(params[:id])
-    product.update({category_id: params[:category_id], user_id: current_user.id, name: params[:name], price: params[:price], total_amount: params[:quantity].to_i * params[:price].to_i, quantity: params[:quantity], ordered_count: params[:ordered_count], cargo: params[:cargo], unit: params[:unit], received_count: params[:received_count]})
+    product.update({category_id: params[:category_id], user_id: current_user.id, name: params[:name], price: params[:price], total_amount: params[:quantity].to_i * params[:price].to_i, quantity: params[:quantity], ordered_count: params[:ordered_count], cargo: params[:cargo], unit: params[:unit], received_count: params[:received_count], rejected: params[:rejected]})
     LogsHelper.create("Product дээр бүтээгдэхүүн шинэчлэлээ #{product.id}", current_user.id)
     quantity =  params[:quantity]
     products = OrderDetail.where('status  IN (0,1) and product_id = :id', id: product.id)

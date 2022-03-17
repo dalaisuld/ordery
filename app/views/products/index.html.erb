@@ -184,6 +184,20 @@
                         param: [0, 100000]
                     }
                 },
+                {
+                    name: "rejected",
+                    type: "number",
+                    title: "Акталсан тоо",
+                    align: "center",
+                    filtering: false,
+                    validate: {
+                        validator: "range",
+                        message: function(value, item) {
+                            return "The client age should be between 21 and 80. Entered age is \"" + value + "\" is out of specified range.";
+                        },
+                        param: [0, 100000]
+                    }
+                },
 
                 {
                     name: "received_count",

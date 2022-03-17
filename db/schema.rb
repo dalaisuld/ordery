@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_15_000451) do
+ActiveRecord::Schema.define(version: 2022_03_17_093414) do
 
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -109,6 +109,7 @@ ActiveRecord::Schema.define(version: 2022_03_15_000451) do
     t.integer "cargo"
     t.integer "received_count", default: 0
     t.integer "sold_count", default: 0
+    t.integer "rejected", default: 0
   end
 
   create_table "site_configs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|

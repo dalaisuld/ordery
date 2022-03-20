@@ -8,7 +8,7 @@ module ApplicationHelper
       'key': 'f37f80ca008291906874277b30fcf90e',
       'from': '72770077',
       'to': phone_number,
-      'text': text
+      'text': sms
     }
     response = HTTParty.get('https://api.messagepro.mn/send', query: req_params, timeout: 10)
     smslog.api_response = response.body

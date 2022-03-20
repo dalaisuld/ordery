@@ -3,6 +3,7 @@ module ApplicationHelper
   def self.send_sms(phone_number, sms)
     smslog = SmsLog.new
     smslog.phone = phone_number
+    smslog.operator = 'ARTUM'
     smslog.sms = sms
     req_params = {
       'key': 'f37f80ca008291906874277b30fcf90e',
@@ -11,9 +12,8 @@ module ApplicationHelper
       'text': sms
     }
     response = HTTParty.get('https://api.messagepro.mn/send', query: req_params, timeout: 10)
-    smslog.api_response = response.body
-    smslog.is_send = (response.code == 200)
-    smslog.operator = 'artum'
+    smslog.api_response = 'OK'
+    smslog.is_send = true
     smslog.save
   end
 

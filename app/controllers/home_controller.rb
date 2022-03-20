@@ -28,6 +28,12 @@ class HomeController < ApplicationController
     od.price AS actual_price,
     od.cargo_price,
     od.status').where('o.phone_number = :q', q: "#{params[:phone_number]}").order('o.id')
+      @total_sent = 0
+      @products.each do |product|
+        if product.status == IS_WILLING
+          @total_sent = @total_sent + (product.cargo_price.to_i * product.quantity.to_i)
+        end
+      end
     else
       render layout: false
     end
@@ -40,8 +46,16 @@ class HomeController < ApplicationController
     client = Client.find_by(phone_number: phone_number)
     if client.present?
       client.address = address
-      client.save()
+      client.save
+      delivery = Delivery.new
+      delivery.phone_number = phone_number
+      delivery.address = address
+      delivery.delivery_date = Time.now.strftime('%Y-%m-%d')
+      delivery.user_id = current_user.id
+      delivery.save
+      flash[:alert] = 'Хүргэлтийн захиалга амжилттай үүсгэлээ'
     end
+    render json: { message: "success"}, status: 200
   end
 
   def reset

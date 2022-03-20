@@ -176,8 +176,12 @@
                 <p>Та бараагаа хүргүүлж авах бол ДҮҮРЭГ, ХОРОО гэрийн хаяг тодорхой бичээрэй.</p>
                 <p>Анхааруулга: Та барааныхаа төлөвийг сайн хараарай. Ирсэн бараа л хүргэлтэнд гарна.</p>
                 <p>Та хүргэлтийн төлбөр болон каргоны төлбөрөө доорх дансруу шилжүүлнэ үү!. Төлбөр баталгаажсанаас хойш ачааллаас хамааран 1-3 хоногт хүргэгдэнэ</p>
-                <p>Хаан банк <strong>5300848589</strong>  Г. Цэрэнпагам</p>
-                <div>
+                <span>Банк: <strong>Хаан банк</strong></span><br>
+                <span>Данс: <strong>5300848589</strong></span><br>
+                <span>Хүлээн авагч: <strong>Г. Цэрэнпагам</strong></span><br>
+                <span>Шилжүүлэх дүн:  <strong><%= number_to_currency(@total_sent.to_i + 4000, unit: "₮ ", strip_insignificant_zeros: true) %></strong><small>(Карго + Хүргэлт 4,000 ₮)</small></span><br>
+                <span>Гүйлгээний утга: <strong><%= @clients.phone_number %></strong></span><br>
+                <div class="mt-2">
                   <div class="form-group">
                     <textarea class="form-control" id="delivery_address" name="address" cols="3" rows="5" placeholder="Бараагаа хүргүүлэн авах хаяг аа оруулна уу"><%= @clients.address %></textarea>
                   </div>
@@ -276,7 +280,7 @@
                 xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
             },
             success: function (data) {
-                console.log('Хүргэлтийн захиалга амжилттай үүсгэлээ')
+                alert('Хүргэлийн захиалга амжилттай үүсгэлээ')
                 location.reload();
             },
             error: function (data) {

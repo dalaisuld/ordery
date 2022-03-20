@@ -122,7 +122,6 @@
       <div class="tab-content" id="affanTabs1Content" style="border: none">
         <div class="tab-pane fade show active" id="products" role="tabpanel" aria-labelledby="products-tab">
           <div class="container">
-            <h4 class="mb-2">Хүргэлт баталгаажсанаас хойш 1-3 хоногт багтаан очно.</h4>
             <% @products.each.each_with_index do |product, counter| %>
               <div class="card timeline-card
                   <% if product.status == IS_WAITING %>
@@ -176,16 +175,18 @@
               <div class="card-body">
                 <p>Та бараагаа хүргүүлж авах бол ДҮҮРЭГ, ХОРОО гэрийн хаяг тодорхой бичээрэй.</p>
                 <p>Анхааруулга: Та барааныхаа төлөвийг сайн хараарай. Ирсэн бараа л хүргэлтэнд гарна.</p>
-                <form action="#" method="GET">
+                <p>Та хүргэлтийн төлбөр болон каргоны төлбөрөө доорх дансруу шилжүүлнэ үү!. Төлбөр баталгаажсанаас хойш ачааллаас хамааран 1-3 хоногт хүргэгдэнэ</p>
+                <p>Хаан банк <strong>5300848589</strong>  Г. Цэрэнпагам</p>
+                <div>
                   <div class="form-group">
-                    <textarea class="form-control" id="delivery_address" name="address" cols="3" rows="5" placeholder="Гэрийн хаягаа энд бичнэ үү!"><%= @clients.address %></textarea>
+                    <textarea class="form-control" id="delivery_address" name="address" cols="3" rows="5" placeholder="Бараагаа хүргүүлэн авах хаяг аа оруулна уу"><%= @clients.address %></textarea>
                   </div>
-                  <button class="btn btn-warning w-100 d-flex align-items-center justify-content-center" type="button" id="create_delivery_btn">Хаяг хадгалах
+                  <button class="btn btn-warning w-100 d-flex align-items-center justify-content-center" type="button" id="create_delivery_btn">Хүргэлт үүсгэх
                     <svg class="bi bi-arrow-right-short" width="24" height="24" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                       <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"></path>
                     </svg>
                   </button>
-                </form>
+                </div>
               </div>
             </div>
           </div>

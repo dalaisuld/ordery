@@ -181,6 +181,8 @@
                 <span>Хүлээн авагч: <strong>Г. Цэрэнпагам</strong></span><br>
                 <span>Шилжүүлэх дүн:  <strong><%= number_to_currency(@total_sent.to_i + 4000, unit: "₮ ", strip_insignificant_zeros: true) %></strong><small>(Карго + Хүргэлт 4,000 ₮)</small></span><br>
                 <span>Гүйлгээний утга: <strong><%= @clients.phone_number %></strong></span><br>
+
+                <span class="mt-1">Холбоо барих: <strong>90905448</strong></span>
                 <div class="mt-2">
                   <div class="form-group">
                     <textarea class="form-control" id="delivery_address" name="address" cols="3" rows="5" placeholder="Бараагаа хүргүүлэн авах хаяг аа оруулна уу"><%= @clients.address %></textarea>

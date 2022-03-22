@@ -51,7 +51,6 @@ class HomeController < ApplicationController
       delivery.phone_number = phone_number
       delivery.address = address
       delivery.delivery_date = Time.now.strftime('%Y-%m-%d')
-      delivery.user_id = current_user.id
       delivery.save
       flash[:alert] = 'Хүргэлтийн захиалга амжилттай үүсгэлээ'
     end

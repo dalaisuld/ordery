@@ -86,6 +86,14 @@
             </p>
           </td>
         </tr>
+        <tr class="service" style="font-size: 12px;">
+          <td colspan="4">
+            <% if @client.address.present? %>
+              <%= @client.address %>
+            <% end %>
+
+          </td>
+        </tr>
       </table>
     </div>
     <!--End Table-->

@@ -47,13 +47,19 @@ class HomeController < ApplicationController
     if client.present?
       client.address = address
       client.save
-      delivery = Delivery.new
-      delivery.phone_number = phone_number
-      delivery.address = address
-      delivery.delivery_date = Time.now.strftime('%Y-%m-%d')
-      delivery.user_id = client.id
-      delivery.save
-      flash[:alert] = 'Хүргэлтийн захиалга амжилттай үүсгэлээ'
+
+      check_delivery = Delivery.find_by(phone_number: phone_number)
+      if check_delivery.present?
+        render json: { message: "Хүргэлт бүртгэгдсэн байна"}, status: 400
+      else
+        delivery = Delivery.new
+        delivery.phone_number = phone_number
+        delivery.address = address
+        delivery.delivery_date = Time.now.strftime('%Y-%m-%d')
+        delivery.user_id = client.id
+        delivery.save
+        flash[:alert] = 'Хүргэлтийн захиалга амжилттай үүсгэлээ'
+      end
     end
     render json: { message: "success"}, status: 200
   end

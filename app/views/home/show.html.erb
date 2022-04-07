@@ -263,6 +263,10 @@
 <script src="/mobile/js/pwa.js"></script>
 <script>
 
+    function isEmpty( el ){
+        return !$.trim(el.html())
+    }
+
     $("#create_delivery_btn").click(function () {
         var orderDetailIDs = [];
         $("input:checkbox[name='order-detail']").each(function(){
@@ -271,26 +275,30 @@
         var address = $("#delivery_address").val();
         var phone_number = "<%= @clients.phone_number %>"
 
-        $.ajax({
-            url: "/home/set_delivery_client",
-            type: "POST",
-            data: {
-                orderDetailIDs: '',
-                phone_number: phone_number,
-                address: address
-            },
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
-            },
-            success: function (data) {
-                alert('Хүргэлийн захиалга амжилттай үүсгэлээ')
-                // location.reload();
-            },
-            error: function (data) {
-                alert('Алдаа гарлаа')
-            }
-        });
+        if(address==='' || isEmpty(address)){
+            alert('Хаяг оруулна уу')
+        }else{
+            $.ajax({
+                url: "/home/set_delivery_client",
+                type: "POST",
+                data: {
+                    orderDetailIDs: '',
+                    phone_number: phone_number,
+                    address: address
+                },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                },
+                success: function (data) {
+                    alert('Хүргэлийн захиалга амжилттай үүсгэлээ')
+                    // location.reload();
+                },
+                error: function (data) {
+                    alert('Захиалга бүртгэлтэй байна')
+                }
+            });
 
+        }
     });
 </script>
 </body>

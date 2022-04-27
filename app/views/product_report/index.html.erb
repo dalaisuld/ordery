@@ -44,12 +44,12 @@
           <td class="text-center"><%= product.ordered_count %></td>
           <td class="text-center"><%= product.received_count %></td>
           <td class="text-center"><%= product.received_count - product.ordered_count %></td>
-          <td class="text-center"><%= product.received_count - product.quantity - product.is_delivery - product.is_finish - product.sold_count - product.rejected %></td>
+          <td class="text-center"><%= product.received_count - product.quantity - product.is_delivery - product.is_finish - product.sold_count %></td>
           <td class="text-center"><%= product.quantity %></td>
           <td class="text-center"><%= product.is_delivery %></td>
           <td class="text-center"><%= product.is_finish %></td>
           <td class="text-center"><%= product.is_cancelled %></td>
-          <td class="text-center"><%= product.ordered_count - product.all_product + (product.received_count - product.ordered_count) + product.is_cancelled - product.sold_count %></td>
+          <td class="text-center"><%= product.ordered_count - product.all_product + (product.received_count - product.ordered_count) + product.is_cancelled - product.sold_count  - product.rejected%></td>
           <td class="text-center"><%= product.rejected %></td>
           <td class="text-center"><%= product.sold_count %></td>
           <td>

@@ -6,8 +6,8 @@ module ApplicationHelper
     smslog.operator = 'ARTUM'
     smslog.sms = sms
     req_params = {
-      'key': 'f37f80ca008291906874277b30fcf90e',
-      'from': '72770077',
+      'key': '8b30740f48c9518a2e1c6c22df7713d1',
+      'from': '72725448',
       'to': phone_number,
       'text': sms
     }

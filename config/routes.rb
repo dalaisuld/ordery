@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'incomplete/index'
   get 'product_report/index'
   get 'deliveries/index'
   root to: 'home#index'
@@ -14,6 +15,7 @@ Rails.application.routes.draw do
   put 'home', to: 'home#update'
 
   get 'product_report', to: 'product_report#index'
+  get 'sells', to: 'sells#index'
 
   get 'clients/:id/print', to: 'clients#print'
 

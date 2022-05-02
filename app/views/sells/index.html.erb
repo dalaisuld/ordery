@@ -3,12 +3,12 @@
     <h2 class="text-lg font-medium truncate mr-5">
       Захиалга авсан бүтээгдэхүүн
     </h2>
-    <form action="<%= product_report_path %>" method="get" class="flex items-center sm:ml-auto mt-3 sm:mt-0">
-        <div class="form-group">
-          <input type="text" class="input w-full border flex-1 mr-5" name="q" placeholder="Барааны нэр" value="<%= params[:q] %>">
-        </div>
-        <button type="submit" class="button box flex items-center text-gray-700 dark:text-gray-300 ml-3"><i data-feather="search" class="hidden sm:block w-4 h-4 mr-2"></i>Хайх</button>
-        <button onclick="location.href='<%= product_report_path %>'" class="ml-3 button box flex items-center text-gray-700 dark:text-gray-300"> <i data-feather="file-text" class="hidden sm:block w-4 h-4 mr-2"></i> хайлт цэвэрлэх </button>
+    <form action="<%= sells_path %>" method="get" class="flex items-center sm:ml-auto mt-3 sm:mt-0">
+      <div class="form-group">
+        <input type="text" class="input w-full border flex-1 mr-5" name="q" placeholder="Барааны нэр" value="<%= params[:q] %>">
+      </div>
+      <button type="submit" class="button box flex items-center text-gray-700 dark:text-gray-300 ml-3"><i data-feather="search" class="hidden sm:block w-4 h-4 mr-2"></i>Хайх</button>
+      <button onclick="location.href='<%= sells_path %>'" class="ml-3 button box flex items-center text-gray-700 dark:text-gray-300"> <i data-feather="file-text" class="hidden sm:block w-4 h-4 mr-2"></i> хайлт цэвэрлэх </button>
     </form>
   </div>
   <div class="intro-y overflow-auto lg:overflow-visible mt-8 sm:mt-0">
@@ -38,31 +38,33 @@
       </thead>
       <tbody>
       <% @ordered_products.each do |product| %>
-        <tr class="intro-x">
-          <td>
-            <a href="" class="font-medium"><%= product.name %></a>
-            <div class="text-gray-600 text-xs whitespace-nowrap mt-0.5"><%= number_to_currency(product.price, unit: "₮", strip_insignificant_zeros: true)%></div>
-          </td>
-          <td class="text-center"><%= product.all_product %></td>
-          <td class="text-center"><%= product.ordered_count %></td>
-          <td class="text-center"><%= product.received_count %></td>
-          <td class="text-center"><%= product.received_count - product.ordered_count %></td>
-          <td class="text-center"><%= product.received_count - product.quantity - product.is_delivery - product.is_finish - product.sold_count %></td>
-          <td class="text-center"><%= product.quantity %></td>
-          <td class="text-center"><%= product.is_delivery %></td>
-          <td class="text-center"><%= product.is_finish %></td>
-          <td class="text-center"><%= product.is_cancelled %></td>
-          <td class="text-center"><%= product.ordered_count - product.all_product + (product.received_count - product.ordered_count) + product.is_cancelled - product.sold_count  - product.rejected%></td>
-          <td class="text-center"><%= product.rejected %></td>
-          <td class="text-center"><%= product.sold_count %></td>
-          <td>
-            <% if (product.ordered_count - product.all_product + (product.received_count - product.ordered_count) + product.is_cancelled - product.sold_count) > 0 %>
-              <button class="button mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white" onclick="sellPrd('<%= product.name %>', '<%= product.id %>','<%= product.price %>', '<%= product.ordered_count - product.all_product + (product.received_count - product.ordered_count) + product.is_cancelled - product.sold_count %>')">Зарах</button>
-            <% else %>
-              --
-            <% end %>
-          </td>
-        </tr>
+        <% if (product.ordered_count - product.all_product + (product.received_count - product.ordered_count) + product.is_cancelled - product.sold_count) > 0 %>
+          <tr class="intro-x">
+            <td>
+              <a href="" class="font-medium"><%= product.name %></a>
+              <div class="text-gray-600 text-xs whitespace-nowrap mt-0.5"><%= number_to_currency(product.price, unit: "₮", strip_insignificant_zeros: true)%></div>
+            </td>
+            <td class="text-center"><%= product.all_product %></td>
+            <td class="text-center"><%= product.ordered_count %></td>
+            <td class="text-center"><%= product.received_count %></td>
+            <td class="text-center"><%= product.received_count - product.ordered_count %></td>
+            <td class="text-center"><%= product.received_count - product.quantity - product.is_delivery - product.is_finish - product.sold_count %></td>
+            <td class="text-center"><%= product.quantity %></td>
+            <td class="text-center"><%= product.is_delivery %></td>
+            <td class="text-center"><%= product.is_finish %></td>
+            <td class="text-center"><%= product.is_cancelled %></td>
+            <td class="text-center"><%= product.ordered_count - product.all_product + (product.received_count - product.ordered_count) + product.is_cancelled - product.sold_count  - product.rejected%></td>
+            <td class="text-center"><%= product.rejected %></td>
+            <td class="text-center"><%= product.sold_count %></td>
+            <td>
+              <% if (product.ordered_count - product.all_product + (product.received_count - product.ordered_count) + product.is_cancelled - product.sold_count) > 0 %>
+                <button class="button mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white" onclick="sellPrd('<%= product.name %>', '<%= product.id %>','<%= product.price %>', '<%= product.ordered_count - product.all_product + (product.received_count - product.ordered_count) + product.is_cancelled - product.sold_count %>')">Зарах</button>
+              <% else %>
+                --
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
       <% end %>
       </tbody>
     </table>

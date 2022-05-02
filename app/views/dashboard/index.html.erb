@@ -78,31 +78,51 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y">
-          <div class="intro-y box p-5 mt-3">
-            <div class="mt-1">
-              <div class="flex items-center">
-                <div class="w-2 h-2 bg-theme-11 rounded-full mr-3"></div>
-                <span class="truncate">Ажилтан</span>
-                <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-                <span class="font-medium xl:ml-auto">Каргоны төлбөр</span>
-              </div>
-              <% @reports.each do |report| %>
-                <div class="flex items-center mt-4">
-                  <div class="w-2 h-2 bg-theme-1 rounded-full mr-3"></div>
-                  <span class="truncate"><%= ApplicationHelper.getUserName(report[0])  %></span>
-                  <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-                  <span class="font-medium xl:ml-auto"><%= number_to_currency(report[1], unit: "₮ ", strip_insignificant_zeros: true) %></span>
+          <form action="<%= dashboard_index_path %>" method="get">
+            <h2 class="intro-y text-lg font-medium mt-10">
+              Тайлангийн огноо :
+              <input type="text" name="date" class="datepicker form-control pl-12" data-single-mode="true" value="<%= @current_date %>">
+              <button type="submit" class="button button--sm text-white bg-theme-1 mr-2">Тайлан харах</button>
+            </h2>
+          </form>
+          <div class="grid grid-cols-12 gap-6">
+            <div class="col-span-12 sm:col-span-12 xl:col-span-12 intro-y">
+              <div class="intro-y box p-5 mt-3">
+                <div class="mt-1">
+                  <div class="flex items-center">
+                    <div class="w-2 h-2 bg-theme-11 rounded-full mr-3"></div>
+                    <span class="truncate">Ажилтан</span>
+                    <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+                    <span class="font-medium xl:ml-auto">Каргоны төлбөр</span>
+                  </div>
+                  <% @reports.each do |report| %>
+                    <div class="flex items-center mt-4">
+                      <div class="w-2 h-2 bg-theme-1 rounded-full mr-3"></div>
+                      <span class="truncate"><%= ApplicationHelper.getUserName(report[0])  %></span>
+                      <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+                      <span class="font-medium xl:ml-auto"><%= number_to_currency(report[1], unit: "₮ ", strip_insignificant_zeros: true) %></span>
+                    </div>
+                  <% end %>
+                  <div class="flex items-center mt-4">
+                    <div class="w-2 h-2 bg-theme-6 rounded-full mr-3"></div>
+                    <span class="truncate">Өнөөдрийн нийт карго:</span>
+                    <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+                    <span class="font-medium xl:ml-auto"><%= number_to_currency(@cargo_today, unit: "₮ ", strip_insignificant_zeros: true) %></span>
+                  </div>
+                  <div class="flex items-center mt-4">
+                    <div class="w-2 h-2 bg-theme-6 rounded-full mr-3"></div>
+                    <span class="truncate">Өнөөдрийн нийт бэлэн зарсан бараа:</span>
+                    <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+                    <span class="font-medium xl:ml-auto"><%= number_to_currency(@sold_total, unit: "₮ ", strip_insignificant_zeros: true) %></span>
+                  </div>
                 </div>
-              <% end %>
-              <div class="flex items-center mt-4">
-                <div class="w-2 h-2 bg-theme-6 rounded-full mr-3"></div>
-                <span class="truncate">Өнөөдрийн нийт карго:</span>
-                <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-                <span class="font-medium xl:ml-auto"><%= number_to_currency(@cargo_today, unit: "₮ ", strip_insignificant_zeros: true) %></span>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </div>

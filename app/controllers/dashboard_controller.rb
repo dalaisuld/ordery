@@ -13,8 +13,19 @@ class DashboardController < ApplicationController
     @products = Product.count
     @customers = Client.count
 
-    @reports = OrderDetail.where(finish_date: Time.now.strftime('%Y-%m-%d')).group('action_user_id').sum(:cargo_price)
-    @cargo_today = OrderDetail.where(finish_date: Time.now.strftime('%Y-%m-%d')).sum(:cargo_price)
+    # @reports = OrderDetail.where(finish_date: Time.now.strftime('%Y-%m-%d')).group('action_user_id').sum(:cargo_price)
+    # @cargo_today = OrderDetail.where(finish_date: Time.now.strftime('%Y-%m-%d')).sum(:cargo_price)
+
+
+    @current_date = params[:date]
+    if @current_date.present?
+      puts 'date selected'
+    else
+      @current_date = Time.now.strftime('%Y-%m-%d')
+    end
+    @reports = OrderDetail.where(finish_date: @current_date).group('action_user_id').sum(:cargo_price)
+    @cargo_today = OrderDetail.where(finish_date: @current_date).sum(:cargo_price)
+    @sold_total = Sold.where(sold_date: @current_date).sum(:price)
 
   end
 

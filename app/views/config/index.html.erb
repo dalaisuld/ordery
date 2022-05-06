@@ -1,12 +1,12 @@
-<form action="">
+<form action="<%= config_path %>" method="post">
   <div class="mt-2">
     <div class="form-check form-switch">
-      <input id="delivery-status" name="delivery-status" class="form-check-input" type="checkbox">
+      <input id="delivery-status" name="delivery-status" class="form-check-input" type="checkbox" <% if @site_config.delivery_status == true %>checked<%end %>>
       <label class="form-check-label" for="delivery-status">Хүргэлийн захиалга нээх</label>
     </div>
   </div>
   <label for="description">
-    <textarea class="input w-full border mt-2" id="description" rows="4"></textarea>
+    <textarea class="input w-full border mt-2" id="description" rows="4"><%= @site_config.delivery_text %></textarea>
   </label>
   <button type="submit" class="button mb-2 flex items-center justify-center bg-theme-9 text-white">
     Хадгалах

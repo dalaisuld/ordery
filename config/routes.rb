@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   get 'product_report', to: 'product_report#index'
   get 'sells', to: 'sells#index'
+  get 'config', to: 'config#index'
 
   get 'clients/:id/print', to: 'clients#print'
 

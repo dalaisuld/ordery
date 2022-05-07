@@ -8,6 +8,7 @@ class HomeController < ApplicationController
 
   def show
     if params[:phone_number].present? && params[:pin_code].present?
+      @config = SiteConfig.first
       @orders = Order.where(phone_number: params[:phone_number])
       @clients = Client.find_by(phone_number: params[:phone_number], pincode: params[:pin_code])
       @deliveries = Delivery.where(phone_number: params[:phone_number])
@@ -70,14 +71,15 @@ class HomeController < ApplicationController
 
   def reset_pin_code
     phone_number = params[:phone_number]
+    pin_code = params[:pin_code]
     client = Client.find_by(phone_number: phone_number)
-    if client.present?
-      pincode = rand(1000..9999)
-      client.update(pincode: pincode)
-      ApplicationHelper.send_sms(phone_number, "Tanii pin code: #{pincode.to_s} http://big-mall.mn")
+    if client.present? and client.pincode == nil
+      # pincode = rand(1000..9999)
+      client.update(pincode: pin_code)
+      ApplicationHelper.send_sms(phone_number, "Tanii pin code: #{pin_code.to_s} http://big-mall.mn")
       render json: { message: 'success'}, status: 200
     else
-      render json: { message: 'Бүртгэлгүй хэрэглэгч'}, status: 401
+      render json: { message: 'Та өмнө нь пин код авсан байна. '}, status: 401
     end
   end
 

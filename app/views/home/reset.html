@@ -145,9 +145,9 @@
                         <input class="form-control form-control-clicked" id="phone_number" type="text" placeholder="Утасны дугаар" name="phone_number">
                     </div>
                     <div class="form-group">
-                        <input class="form-control form-control-clicked" id="pin_code" type="text" placeholder="pin code" name="pin_code">
+                        <input class="form-control form-control-clicked" id="pin_code" type="text" placeholder="Пин код" name="pin_code">
                     </div>
-                    <input class="btn btn-warning" type="submit" id="reset_pin" value="КОД ИЛГЭЭХ" >
+                    <input class="btn btn-warning" type="submit" id="reset_pin" value="КОД ИЛГЭЭХ">
                 </div>
         </div>
     </div>
@@ -188,20 +188,21 @@
                 type: "POST",
                 data: {
                     phone_number: $("#phone_number").val(),
+                    pin_code: $("#pin_code").val(),
                 },
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
                 },
                 success: function (data) {
                     console.log("Таны дугаарлуу PIN CODE илгээлээ")
-                    alert('Таны дугаарлуу PIN CODE илгээлээ')
+                    alert('Таны Пин код идэвхжлээ. Дахин өөрчлөх боломжгүй тул пин код оо сайтар хадгалана уу')
                     window.location.href='/'
                 },
                 error: function (data) {
                     if (data.status === 400){
 
                     } else if(data.status === 401){
-                        alert("Бүртгэлгүй хэрэглэгч байна")
+                        alert("Та өмнө нь пин код авсан эсвэл таны дугаар бүтгэгдээгүй байна.")
                     }
                 }
             });

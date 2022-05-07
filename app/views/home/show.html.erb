@@ -125,7 +125,7 @@
           <div class="container">
             <% @products.each.each_with_index do |product, counter| %>
 
-              <% if product.status != IS_FINISH %>
+              <% if product.status != IS_FINISH || product.status == IS_CANCELED%>
                 <div class="card timeline-card
                   <% if product.status == IS_WAITING %>
                     bg-warning

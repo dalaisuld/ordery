@@ -8,6 +8,6 @@ class ReportsController < ApplicationController
     end
     @reports = OrderDetail.where(finish_date: @current_date).group('action_user_id').sum(:cargo_price)
     @cargo_today = OrderDetail.where(finish_date: @current_date).sum(:cargo_price)
-    @sold_total = Sold.where(sold_date: @current_date).sum(:price)
+    @sold_total = Sold.where(sold_date: @current_date).sum('price * quantity')
   end
 end

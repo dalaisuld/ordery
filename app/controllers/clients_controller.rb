@@ -1,6 +1,6 @@
 class ClientsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_model, only: %i[show update print print_cancel]
+  before_action :set_model, only: %i[show update print print_cancel print_delivery]
 
   def index
     @page_title = 'Хэрэглэгчийн жагсаалт'
@@ -35,6 +35,27 @@ class ClientsController < ApplicationController
 
 
   def print_cancel
+    @products_print = Order.joins('AS o
+        LEFT JOIN
+    order_details AS od ON o.id = od.order_id
+        LEFT JOIN
+    products AS p ON od.product_id = p.id').select('o.id as order_id,
+    od.id as product_id,
+    o.account_number,
+    o.amount AS transition_amount,
+    o.description,
+    o.transition_date,
+    p.name,
+    p.price AS product_price,
+    od.quantity,
+    od.price AS actual_price,
+    od.cargo_price,
+    od.status').where('o.phone_number = :q and od.id in (:ids)', q: @client.phone_number.strip.to_s, ids: params[:ids].split(",")).order('status')
+    @total_cargo_price_print = OrderDetail.where(id: params[:ids].split(",")).sum('cargo_price * quantity')
+    render layout: false
+  end
+
+  def print_delivery
     @products_print = Order.joins('AS o
         LEFT JOIN
     order_details AS od ON o.id = od.order_id

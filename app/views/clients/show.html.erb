@@ -123,11 +123,15 @@
             <i data-feather="trash" class="w-4 h-4 mr-2"></i> Захиалга цуцлах
           </button>
 
-          <button id="print_bill" class="button mr-2 ml-8 mb-2 flex items-center justify-center bg-theme-9 text-white">
-            <i data-feather="save" class="w-4 h-4 mr-2"></i> Баримт хэвлэх
+          <button id="print_delivery_bill" class="button mr-2 ml-8 mb-2 flex items-center justify-center bg-theme-9 text-white">
+            <i data-feather="save" class="w-4 h-4 mr-2"></i> Хүргэлтийн баримт хэвлэх
           </button>
 
-          <button id="print_cancel_bill" class="button mr-2 ml-8 mb-2 flex items-center justify-center bg-theme-9 text-white">
+          <button id="print_bill" class="button mr-2 ml-8 mb-2 flex items-center justify-center bg-theme-1 text-white">
+            <i data-feather="save" class="w-4 h-4 mr-2"></i> Хүлээлгэж өгсөн баримт хэвлэх
+          </button>
+
+          <button id="print_cancel_bill" class="button mr-2 ml-8 mb-2 flex items-center justify-center bg-theme-6 text-white">
             <i data-feather="save" class="w-4 h-4 mr-2"></i> Цуцалсан баримт хэвлэх
           </button>
 
@@ -390,6 +394,18 @@
             });
             window.open(
                 window.location.href+'/print_cancel?ids='+orderDetailIDs,
+                '_blank'
+            );
+        });
+
+        // Print delivery bill
+        $("#print_delivery_bill").click(function(){
+            var orderDetailIDs = [];
+            $("#product-table input:checkbox:checked").map(function(){
+                orderDetailIDs.push($(this).val());
+            });
+            window.open(
+                window.location.href+'/print_delivery?ids='+orderDetailIDs,
                 '_blank'
             );
         });

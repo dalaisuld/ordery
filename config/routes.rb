@@ -22,6 +22,7 @@ Rails.application.routes.draw do
 
   get 'clients/:id/print', to: 'clients#print'
   get 'clients/:id/print_cancel', to: 'clients#print_cancel'
+  get 'clients/:id/print_delivery', to: 'clients#print_delivery'
 
   devise_for :users, controllers: { sessions: "sessions" }
   resources :users

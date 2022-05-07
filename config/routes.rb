@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'cargo_price/index'
   get 'incomplete/index'
   get 'product_report/index'
   get 'deliveries/index'

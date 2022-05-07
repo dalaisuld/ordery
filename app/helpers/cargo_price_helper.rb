@@ -1,0 +1,2 @@
+module CargoPriceHelper
+end

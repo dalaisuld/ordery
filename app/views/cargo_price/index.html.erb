@@ -1,0 +1,45 @@
+<div class="col-span-12 mt-6">
+  <div class="intro-y block sm:flex items-center h-10">
+    <h2 class="text-lg font-medium truncate mr-5">
+      Захиалаад ирсэн бараа ба каргоны төлбөр
+    </h2>
+    <form action="<%= cargo_price_index_path %>" method="get" class="flex items-center sm:ml-auto mt-3 sm:mt-0">
+      <div class="form-group">
+        <input type="text" class="input w-full border flex-1 mr-5" name="q" placeholder="Барааны нэр" value="<%= params[:q] %>">
+      </div>
+      <button type="submit" class="button box flex items-center text-gray-700 dark:text-gray-300 ml-3"><i data-feather="search" class="hidden sm:block w-4 h-4 mr-2"></i>Хайх</button>
+      <button onclick="location.reload()" class="ml-3 button box flex items-center text-gray-700 dark:text-gray-300"> <i data-feather="file-text" class="hidden sm:block w-4 h-4 mr-2"></i> хайлт цэвэрлэх </button>
+    </form>
+  </div>
+  <div class="intro-y overflow-auto lg:overflow-visible mt-8 sm:mt-0">
+    <table class="table table-report sm:mt-2">
+      <thead style="
+      position: sticky;
+        top: 0;
+        z-index: 99999999;
+        background-color: #ee9b00;
+      ">
+      <tr>
+        <th class="whitespace-nowrap">Бүтээгдэхүүн</th>
+        <th class="text-center">Ирсэн тоо</th>
+        <th class="text-center">Карго</th>
+        <th class="text-center">Нийт</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @products.each do |product| %>
+        <tr class="intro-x">
+          <td>
+            <a href="" class="font-medium"><%= product.name %></a>
+            <div class="text-gray-600 text-xs whitespace-nowrap mt-0.5"><%= number_to_currency(product.price, unit: "₮", strip_insignificant_zeros: true)%></div>
+          </td>
+
+          <td class="text-center"><%= product.received_count %></td>
+          <td class="text-center"><%= number_to_currency(product.cargo, unit: "₮", strip_insignificant_zeros: true)%></td>
+          <td class="text-center"><%= number_to_currency(product.cargo * product.received_count, unit: "₮", strip_insignificant_zeros: true)%></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

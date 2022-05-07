@@ -30,30 +30,36 @@
         <div class="menu__title"> Хянах самбар </div>
       </a>
     </li>
-
     <li>
       <a href="<%= users_path %>" class="menu">
         <div class="menu__icon"> <i data-feather="users"></i> </div>
         <div class="menu__title"> Ажилтны бүртгэл </div>
       </a>
     </li>
-
-
     <li>
       <a href="<%= products_path %>" class="menu">
         <div class="menu__icon"> <i data-feather="edit"></i> </div>
         <div class="menu__title"> Бараа бүртгэл </div>
       </a>
     </li>
-
     <li>
       <a href="<%= product_report_index_path %>" class="menu">
         <div class="menu__icon"> <i data-feather="users"></i> </div>
         <div class="menu__title"> Барааны тайлан </div>
       </a>
     </li>
-
-
+    <li>
+      <a href="<%= sells_path %>" class="menu">
+        <div class="menu__icon"> <i data-feather="shopping-bag"></i> </div>
+        <div class="menu__title"> Зарах бараа </div>
+      </a>
+    </li>
+    <li>
+      <a href="<%= incomplete_index_path %>" class="menu">
+        <div class="menu__icon"> <i data-feather="shopping-bag"></i> </div>
+        <div class="menu__title"> Дутуу бараа </div>
+      </a>
+    </li>
     <li>
       <a href="<%= orders_path %>" class="menu">
         <div class="menu__icon"> <i data-feather="file-text"></i> </div>
@@ -66,21 +72,36 @@
         <div class="menu__title"> Хэрэглэгч </div>
       </a>
     </li>
-
+    <li>
+      <a href="<%= deliveries_path %>" class="menu">
+        <div class="menu__icon"> <i data-feather="truck"></i> </div>
+        <div class="menu__title"> Хүргэлт </div>
+      </a>
+    </li>
     <li>
       <a href="<%= sms_logs_path %>" class="menu">
         <div class="menu__icon"> <i data-feather="message-circle"></i> </div>
         <div class="menu__title"> Sms log </div>
       </a>
     </li>
-
+    <li>
+      <a href="<%= reports_path %>" class="menu">
+        <div class="menu__icon"> <i data-feather="award"></i> </div>
+        <div class="menu__title"> Тайлан </div>
+      </a>
+    </li>
     <li>
       <a href="<%= deliveries_path %>" class="menu">
         <div class="menu__icon"> <i data-feather="message-circle"></i> </div>
         <div class="menu__title"> Хүргэлт </div>
       </a>
     </li>
-
+    <li>
+      <a href="<%= config_path %>" class="menu">
+        <div class="menu__icon"> <i data-feather="settings"></i> </div>
+        <div class="menu__title"> Тохиргоо </div>
+      </a>
+    </li>
     <li>
       <a href="<%= logs_path %>" class="menu">
         <div class="menu__icon"> <i data-feather="file-text"></i> </div>
@@ -105,30 +126,24 @@
           <div class="side-menu__title"> Хянах самбар </div>
         </a>
       </li>
-
       <li>
         <a href="<%= users_path %>" class="side-menu <% if @page_users_active %>side-menu--active <% end %>">
           <div class="side-menu__icon"> <i data-feather="users"></i> </div>
           <div class="side-menu__title"> Ажилтны бүртгэл </div>
         </a>
       </li>
-
       <li>
         <a href="<%= products_path %>" class="side-menu <% if @page_products_active %>side-menu--active <% end %>">
           <div class="side-menu__icon"> <i data-feather="edit"></i> </div>
           <div class="side-menu__title"> Бараа бүртгэл </div>
         </a>
       </li>
-
-
       <li>
         <a href="<%= product_report_index_path %>" class="side-menu <% if @page_product_report_active %>side-menu--active <% end %>">
           <div class="side-menu__icon"> <i data-feather="shopping-bag"></i> </div>
           <div class="side-menu__title"> Барааны тайлан </div>
         </a>
       </li>
-
-
       <li>
         <a href="<%= sells_path %>" class="side-menu <% if @page_sells_active %>side-menu--active <% end %>">
           <div class="side-menu__icon"> <i data-feather="shopping-bag"></i> </div>
@@ -141,38 +156,30 @@
           <div class="side-menu__title"> Дутуу бараа </div>
         </a>
       </li>
-
-
-
-
       <li>
         <a href="<%= orders_path %>" class="side-menu <% if @page_orders_active %>side-menu--active <% end %>">
           <div class="side-menu__icon"> <i data-feather="file-text"></i> </div>
           <div class="side-menu__title"> Захиалгын түүх </div>
         </a>
       </li>
-
       <li>
         <a href="<%= clients_path %>" class="side-menu <% if @page_clients_active %>side-menu--active <% end %>">
           <div class="side-menu__icon"> <i data-feather="user-check"></i> </div>
           <div class="side-menu__title"> Хэрэглэгч </div>
         </a>
       </li>
-
       <li>
         <a href="<%= deliveries_path %>" class="side-menu <% if @page_delivery_active %>side-menu--active <% end %>">
           <div class="side-menu__icon"> <i data-feather="truck"></i> </div>
           <div class="side-menu__title"> Хүргэлт </div>
         </a>
       </li>
-
       <li>
         <a href="<%= sms_logs_path %>" class="side-menu <% if @page_sms_active %>side-menu--active <% end %>">
           <div class="side-menu__icon"> <i data-feather="message-circle"></i> </div>
           <div class="side-menu__title"> Sms log </div>
         </a>
       </li>
-
       <li>
         <a href="<%= reports_path %>" class="side-menu <% if @page_report_active %>side-menu--active <% end %>">
           <div class="side-menu__icon"> <i data-feather="award"></i> </div>

@@ -127,6 +127,10 @@
             <i data-feather="save" class="w-4 h-4 mr-2"></i> Баримт хэвлэх
           </button>
 
+          <button id="print_cancel_bill" class="button mr-2 ml-8 mb-2 flex items-center justify-center bg-theme-9 text-white">
+            <i data-feather="save" class="w-4 h-4 mr-2"></i> Цуцалсанбаримт хэвлэх
+          </button>
+
         </div>
 
       </div>
@@ -374,6 +378,18 @@
             });
             window.open(
                 window.location.href+'/print?ids='+orderDetailIDs,
+                '_blank'
+            );
+        });
+
+        // Print cancellation bill
+        $("#print_cancel_bill").click(function(){
+            var orderDetailIDs = [];
+            $("#product-table input:checkbox:checked").map(function(){
+                orderDetailIDs.push($(this).val());
+            });
+            window.open(
+                window.location.href+'/print_cancel?ids='+orderDetailIDs,
                 '_blank'
             );
         });

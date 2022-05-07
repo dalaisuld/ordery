@@ -1,0 +1,116 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+    #invoice-POS{
+        font-family: 'Roboto', sans-serif;
+    }
+    #table {
+        font-size: 10px;
+    }
+</style>
+
+<div id="invoice-POS">
+
+  <center id="top">
+    <div class="logo"></div>
+    <div class="info">
+      <h4>Цуцалсан бараа</h4>
+    </div>
+    <!--End Info-->
+  </center>
+  <!--End InvoiceTop-->
+
+  <div id="mid">
+    <div class="info">
+      <p>
+        Захиалагч : <%= @client.phone_number %></br>
+      </p>
+    </div>
+  </div>
+  <p style="font-size: 12px">Огноо: <%= Time.now.strftime('%Y-%m-%d %H:%M') %></p>
+  <!--End Invoice Mid-->
+
+  <div id="bot">
+
+    <div id="table">
+      <table>
+        <tr class="tabletitle" style="font-size: 14px">
+          <td class="item">
+            <h5>Бараа</h5>
+          </td>
+          <td class="Hours">
+            <h5>Т/Ш</h5>
+          </td>
+          <td class="Hours">
+            <h5>Карго</h5>
+          </td>
+          <td class="Rate">
+            <h5>Нийт</h5>
+          </td>
+        </tr>
+
+        <% @products_print.each do |product| %>
+          <% if product.status != IS_DELIVERY || product.status != IS_WAITING || product.status != IS_CANCELED %>
+            <tr class="service" style="font-size: 10px">
+              <td class="tableitem">
+                <p class="itemtext"><%= product.name %> (<%= number_to_currency(product.actual_price, unit: "₮ ", strip_insignificant_zeros: true) %>)</p>
+              </td>
+              <td class="tableitem">
+                <p class="itemtext"><%= product.quantity %></p>
+              </td>
+              <td class="tableitem">
+                <p class="itemtext cargo">
+                  <%= number_to_currency(product.cargo_price, unit: "₮ ", strip_insignificant_zeros: true) %>
+                </p>
+              </td>
+              <td class="tableitem">
+                <p class="itemtext">
+                  <%= number_to_currency(product.actual_price.to_i * product.quantity.to_i + product.cargo_price, unit: "₮ ", strip_insignificant_zeros: true) %>
+                </p>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+        <tr class="service" style="font-size: 10px; font-weight: bold">
+          <td class="tableitem">
+            <p class="itemtext" style="float: right">Нийт каргонд төлөх дүн</p>
+          </td>
+          <td class="tableitem">
+            <p class="itemtext"></p>
+          </td>
+          <td class="tableitem">
+            <p class="itemtext cargo">
+              <%= number_to_currency(@total_cargo_price_print, unit: "₮ ", strip_insignificant_zeros: true) %>
+            </p>
+          </td>
+          <td class="tableitem">
+            <p class="itemtext">
+            </p>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <!--End Table-->
+
+  </div>
+  <!--End InvoiceBot-->
+</div>
+<!--End Invoice-->
+
+<script type="text/javascript" charset="utf-8">
+    var totals=[0,0,0];
+    $(document).ready(function(){
+
+        var $dataRows=$("#table tr:not('.totalColumn, .titlerow')");
+
+        $dataRows.each(function() {
+            $(this).find('.rowDataSd').each(function(i){
+                totals[i]+=parseInt( $(this).html());
+            });
+        });
+        $("#product-table td.totalCol").each(function(i){
+            $(this).html("Нийт:"+totals[i]);
+        });
+
+    });
+
+</script>

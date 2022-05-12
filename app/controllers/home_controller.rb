@@ -71,10 +71,10 @@ class HomeController < ApplicationController
 
   def reset_pin_code
     phone_number = params[:phone_number]
-    pin_code = params[:pin_code]
+    # pin_code = params[:pin_code]
     client = Client.find_by(phone_number: phone_number)
     if client.present? and client.pincode == nil
-      # pincode = rand(1000..9999)
+      pin_code = rand(1000..9999)
       client.update(pincode: pin_code)
       ApplicationHelper.send_sms(phone_number, "Tanii pin code: #{pin_code.to_s} http://big-mall.mn")
       render json: { message: 'success'}, status: 200

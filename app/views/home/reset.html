@@ -143,10 +143,10 @@
                     <div class="form-group">
                         <input class="form-control form-control-clicked" id="phone_number" type="text" placeholder="Утасны дугаар" name="phone_number">
                     </div>
-                    <div class="form-group">
-                        <input class="form-control form-control-clicked" id="pin_code" type="text" placeholder="Пин код" name="pin_code">
-                    </div>
-                    <input class="btn btn-warning" type="submit" id="reset_pin" value="КОД ИЛГЭЭХ">
+<!--                    <div class="form-group">-->
+<!--                        <input class="form-control form-control-clicked" id="pin_code" type="text" placeholder="Пин код" name="pin_code">-->
+<!--                    </div>-->
+                    <input class="btn btn-warning" type="submit" id="reset_pin" value="КОД АВАХ">
                 </div>
         </div>
     </div>
@@ -187,7 +187,7 @@
                 type: "POST",
                 data: {
                     phone_number: $("#phone_number").val(),
-                    pin_code: $("#pin_code").val(),
+                    // pin_code: $("#pin_code").val(),
                 },
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))

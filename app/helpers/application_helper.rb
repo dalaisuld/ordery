@@ -97,6 +97,8 @@ module ApplicationHelper
   end
 
   def self.getUserName(user_id)
-    "#{User.find(user_id).first_name } #{User.find(user_id).last_name}"
+    return  ""
+    # puts "=================>>> #{user_id}"
+    # "#{User.find(user_id).first_name } #{User.find(user_id).last_name}"
   end
 end

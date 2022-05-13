@@ -67,7 +67,7 @@
                 <td class="border"><%= number_to_currency(product.actual_price, unit: "₮ ", strip_insignificant_zeros: true) %></td>
                 <td class="border"><%= product.quantity %></td>
                 <td class="border <% if product.status == IS_WILLING %> rowDataSd <% end %>"><%= product.actual_price.to_i * product.quantity.to_i %></td>
-                <td class="border <% if product.status == IS_WILLING %> rowDataSd <% end %>"><%= product.cargo_price %></td>
+                <td class="border <% if product.status == IS_WILLING %> rowDataSd <% end %>"><%= product.cargo_price * product.quantity.to_i %></td>
                 <td class="border <% if product.status == IS_WILLING %> rowDataSd <% end %>"><%= product.actual_price.to_i * product.quantity.to_i + product.cargo_price %></td>
                 <td class="border">
                   <% if product.status == IS_WAITING %>

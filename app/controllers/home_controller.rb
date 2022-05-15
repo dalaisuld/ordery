@@ -60,7 +60,6 @@ class HomeController < ApplicationController
       delivery.user_id = client.id
       delivery.save
       flash[:alert] = 'Хүргэлтийн захиалга амжилттай үүсгэлээ'
-      end
     end
     render json: { message: "success"}, status: 200
   end

@@ -38,7 +38,7 @@
       </thead>
       <tbody>
       <% @ordered_products.each do |product| %>
-        <% if (product.ordered_count - product.all_product + (product.received_count - product.ordered_count) + product.is_cancelled - product.sold_count) > 0 %>
+        <% if (product.ordered_count - product.all_product + (product.received_count - product.ordered_count) + product.is_cancelled - product.sold_count - product.rejected) > 0 %>
           <tr class="intro-x">
             <td>
               <a href="" class="font-medium"><%= product.name %></a>

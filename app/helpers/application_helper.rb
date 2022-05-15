@@ -96,9 +96,17 @@ module ApplicationHelper
     '₮ %.2f' % amount
   end
 
+
+  def self.get_report(start_date, end_date, product_id)
+    OrderDetail.where(:finish_date => start_date..end_date, :product_id => product_id).sum('cargo_price * quantity')
+  end
+
   def self.getUserName(user_id)
     # return  ""
     # puts "=================>>> #{user_id}"
     "#{User.find(user_id).first_name } #{User.find(user_id).last_name}"
   end
+
+
+
 end

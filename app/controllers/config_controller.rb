@@ -11,6 +11,7 @@ class ConfigController < ApplicationController
     @site_config = SiteConfig.first
     @site_config.delivery_status = params[:delivery_status]
     @site_config.delivery_text = params[:delivery_text]
+    @site_config.delivery_description = params[:delivery_description]
     @site_config.save
     flash[:notice] = 'Амжилттай хадгаллаа'
     redirect_to config_path

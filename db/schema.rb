@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_06_042032) do
+ActiveRecord::Schema.define(version: 2022_05_15_084517) do
 
   create_table "auth_group", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", limit: 150, null: false
@@ -205,6 +205,7 @@ ActiveRecord::Schema.define(version: 2022_05_06_042032) do
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "delivery_status", default: false
     t.string "delivery_text", default: ""
+    t.string "delivery_description"
   end
 
   create_table "sms_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|

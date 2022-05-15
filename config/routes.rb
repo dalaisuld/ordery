@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get 'dashboard/index'
   # get 'home/:phone_number', to: 'home#show'
   post 'home', to: 'home#show'
+  get 'home', to: 'home#show'
   get 'reset', to: 'home#reset'
   post 'home/reset_pin_code', to: 'home#reset_pin_code'
   post 'home/set_delivery_client', to: 'home#set_delivery_client'

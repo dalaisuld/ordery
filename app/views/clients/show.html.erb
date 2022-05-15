@@ -111,29 +111,30 @@
           </div>
         </div>
         <div class="w-full flex mt-3">
-          <button id="delivery_submit" class="button mr-2 mb-2 flex items-center justify-center bg-theme-9 text-white">
-            <i data-feather="truck" class="w-4 h-4 mr-2"></i> Хүргэлтэнд гаргах
+          
+          <button id="take_products" class="button mr-2 mb-2 flex items-center justify-center bg-theme-9 text-white">
+            <i data-feather="shopping-cart" class="w-4 h-4 mr-2"></i> Бараа хүлээлгэн өгөх
           </button>
 
-          <button id="take_products" class="button mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white">
-            <i data-feather="shopping-cart" class="w-4 h-4 mr-2"></i> Бараа хүлээлгэн өгөх
+          <button id="delivery_submit" class="button mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white">
+            <i data-feather="truck" class="w-4 h-4 mr-2"></i> Хүргэлтэнд гаргах
           </button>
 
           <button id="cancel_products" class="button mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white">
             <i data-feather="trash" class="w-4 h-4 mr-2"></i> Захиалга цуцлах
           </button>
 
-          <button id="print_delivery_bill" class="button mr-2 ml-8 mb-2 flex items-center justify-center bg-theme-9 text-white">
-            <i data-feather="save" class="w-4 h-4 mr-2"></i> Хүргэлтийн баримт хэвлэх
-          </button>
+<!--          <button id="print_delivery_bill" class="button mr-2 ml-8 mb-2 flex items-center justify-center bg-theme-9 text-white">-->
+<!--            <i data-feather="save" class="w-4 h-4 mr-2"></i> Хүргэлтийн баримт хэвлэх-->
+<!--          </button>-->
 
-          <button id="print_bill" class="button mr-2 ml-8 mb-2 flex items-center justify-center bg-theme-1 text-white">
-            <i data-feather="save" class="w-4 h-4 mr-2"></i> Хүлээлгэж өгсөн баримт хэвлэх
-          </button>
+<!--          <button id="print_bill" class="button mr-2 ml-8 mb-2 flex items-center justify-center bg-theme-1 text-white">-->
+<!--            <i data-feather="save" class="w-4 h-4 mr-2"></i> Хүлээлгэж өгсөн баримт хэвлэх-->
+<!--          </button>-->
 
-          <button id="print_cancel_bill" class="button mr-2 ml-8 mb-2 flex items-center justify-center bg-theme-6 text-white">
-            <i data-feather="save" class="w-4 h-4 mr-2"></i> Цуцалсан баримт хэвлэх
-          </button>
+<!--          <button id="print_cancel_bill" class="button mr-2 ml-8 mb-2 flex items-center justify-center bg-theme-6 text-white">-->
+<!--            <i data-feather="save" class="w-4 h-4 mr-2"></i> Цуцалсан баримт хэвлэх-->
+<!--          </button>-->
 
         </div>
 
@@ -273,7 +274,10 @@
                         backgroundColor: "#91C714",
                         stopOnFocus: true,
                     }).showToast();
-                    location.reload();
+                    window.open(
+                        window.location.href+'/print_delivery?ids='+orderDetailIDs,
+                        '_blank'
+                    );
                 },
                 error: function(data){
                     closeLoader();
@@ -312,7 +316,10 @@
                         backgroundColor: "#91C714",
                         stopOnFocus: true,
                     }).showToast();
-                    location.reload();
+                    window.open(
+                        window.location.href+'/print?ids='+orderDetailIDs,
+                        '_blank'
+                    );
                 },
                 error: function(data){
                     closeLoader();
@@ -351,6 +358,10 @@
                         backgroundColor: "#91C714",
                         stopOnFocus: true,
                     }).showToast();
+                    window.open(
+                        window.location.href+'/print_cancel?ids='+orderDetailIDs,
+                        '_blank'
+                    );
                 },
                 error: function(data){
                     closeLoader();

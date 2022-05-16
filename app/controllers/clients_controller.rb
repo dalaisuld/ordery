@@ -15,10 +15,12 @@ class ClientsController < ApplicationController
   def print
     @count = 1
     site_config = SiteConfig.first
-    if site_config.sys_date == Time.now.strftime('%Y-%m-%d')
+    if site_config.sys_date.to_s == Time.now.strftime('%Y-%m-%d').to_s
       @count = site_config.bill_count
+      @count = @count + 1
+      site_config.update(bill_count: @count)
     else
-
+      site_config.update(sys_date: Time.now.strftime('%Y-%m-%d'), bill_count: 1)
     end
     @products_print = Order.joins('AS o
         LEFT JOIN
@@ -42,6 +44,15 @@ class ClientsController < ApplicationController
 
 
   def print_cancel
+    @count = 1
+    site_config = SiteConfig.first
+    if site_config.sys_date.to_s == Time.now.strftime('%Y-%m-%d').to_s
+      @count = site_config.bill_count_cancel
+      @count = @count + 1
+      site_config.update(bill_count_cancel: @count)
+    else
+      site_config.update(sys_date: Time.now.strftime('%Y-%m-%d'), bill_count_cancel: 1)
+    end
     @products_print = Order.joins('AS o
         LEFT JOIN
     order_details AS od ON o.id = od.order_id
@@ -63,6 +74,15 @@ class ClientsController < ApplicationController
   end
 
   def print_delivery
+    @count = 1
+    site_config = SiteConfig.first
+    if site_config.sys_date.to_s == Time.now.strftime('%Y-%m-%d').to_s
+      @count = site_config.bill_count_delivery
+      @count = @count + 1
+      site_config.update(bill_count_delivery: @count)
+    else
+      site_config.update(sys_date: Time.now.strftime('%Y-%m-%d'), bill_count_delivery: 1)
+    end
     @products_print = Order.joins('AS o
         LEFT JOIN
     order_details AS od ON o.id = od.order_id

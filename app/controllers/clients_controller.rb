@@ -13,6 +13,13 @@ class ClientsController < ApplicationController
   end
 
   def print
+    @count = 1
+    site_config = SiteConfig.first
+    if site_config.sys_date == Time.now.strftime('%Y-%m-%d')
+      @count = site_config.bill_count
+    else
+
+    end
     @products_print = Order.joins('AS o
         LEFT JOIN
     order_details AS od ON o.id = od.order_id

@@ -88,7 +88,7 @@
         <input type="number" id="sell_quantity" required min="1" value="1" class="input w-full border mt-2 flex-1" placeholder="Тоо ширхэг">
       </div>
       <div class="col-span-12 sm:col-span-12"><label>Зарах үнэ</label>
-        <input type="number" id="sell_price" required min="1" value="1" class="input w-full border mt-2 flex-1" placeholder="Зарах үнэ" readonly>
+        <input type="number" id="sell_price" required  value="1" class="input w-full border mt-2 flex-1" placeholder="Зарах үнэ">
       </div>
     </div>
     <div class="px-5 py-3 text-right border-t border-gray-200 dark:border-dark-5">
@@ -100,12 +100,29 @@
 
 <script type="text/javascript" charset="utf-8">
 
+    // $(document).on('keydown', '#sell_price', function() {
+    //     var _this = $(this);
+    //     var min = parseInt(_this.attr('min')) || 1; // if min attribute is not defined, 1 is default
+    //     var max = parseInt(_this.attr('max')) || 10000000; // if max attribute is not defined, 100 is default
+    //     var val = parseInt(_this.val()) || (min - 1); // if input char is not a number the value will be (min - 1) so first condition will be true
+    //     if (val < min)
+    //         _this.val(min);
+    //     if (val > max)
+    //         _this.val(max);
+    // });
+
     function sellPrd(product_name, product_id, sell_price, potential_balance){
         console.log(product_name)
         cash("#sell_product").val(product_name)
         cash("#sell_price").val(sell_price)
         cash("#product_id").val(product_id)
         cash("#potential_balance").val(potential_balance)
+
+
+        $("#sell_price").attr({
+            "min" : sell_price
+        });
+
         cash("#sellProduct").modal("show");
     }
 

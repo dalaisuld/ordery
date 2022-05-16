@@ -44,5 +44,17 @@ class CargoPriceController < ApplicationController
             AND pr.received_count > 0 AND pr.cargo > 0
     GROUP BY od.product_id order by pr.id desc;"
     @records_array = ActiveRecord::Base.connection.execute(sql)
+
+    @total = 0
+    @total_range = 0
+    @total_remainder = 0
+
+    @records_array.each do |report|
+      @total = @total + report[4]
+      @total_range = @total_range + report[6]
+      @total_remainder = @total_remainder + (report[7]*report[3])
+    end
+
+
   end
 end

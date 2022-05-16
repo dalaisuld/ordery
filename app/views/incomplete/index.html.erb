@@ -33,7 +33,6 @@
         <th class="text-center">Илүү ба дүтуу</th>
         <th class="text-center">Акталсан</th>
         <th class="text-center">Зарсан</th>
-        <th class="text-center">Зарах</th>
       </tr>
       </thead>
       <tbody>
@@ -56,13 +55,6 @@
             <td class="text-center"><%= product.ordered_count - product.all_product + (product.received_count - product.ordered_count) + product.is_cancelled - product.sold_count  - product.rejected%></td>
             <td class="text-center"><%= product.rejected %></td>
             <td class="text-center"><%= product.sold_count %></td>
-            <td>
-              <% if (product.ordered_count - product.all_product + (product.received_count - product.ordered_count) + product.is_cancelled - product.sold_count) > 0 %>
-                <button class="button mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white" onclick="sellPrd('<%= product.name %>', '<%= product.id %>','<%= product.price %>', '<%= product.ordered_count - product.all_product + (product.received_count - product.ordered_count) + product.is_cancelled - product.sold_count %>')">Зарах</button>
-              <% else %>
-                --
-              <% end %>
-            </td>
           </tr>
         <% end %>
       <% end %>
@@ -70,75 +62,3 @@
     </table>
   </div>
 </div>
-
-<div class="modal" id="sellProduct">
-  <div class="modal__content">
-    <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
-      <h2 class="font-medium text-base mr-auto">Бэлэн бараа зарах</h2>
-    </div>
-    <div class="p-5 grid grid-cols-12 gap-4 gap-y-3">
-      <div class="col-span-12 sm:col-span-12"><label>Барааны нэр</label>
-        <input type="text" id="sell_product" required value="" class="input w-full border mt-2 flex-1" placeholder="Барааны нэр" readonly>
-      </div>
-      <input type="hidden" id="product_id" value="">
-      <div class="col-span-12 sm:col-span-12"><label>Боломжит үлдэгдэл</label>
-        <input type="number" id="potential_balance" required  value="1" class="input w-full border mt-2 flex-1" placeholder="Боломжит үлдэгдэл" readonly>
-      </div>
-      <div class="col-span-12 sm:col-span-12"><label>Зарах тоо ширхэг</label>
-        <input type="number" id="sell_quantity" required min="1" value="1" class="input w-full border mt-2 flex-1" placeholder="Тоо ширхэг">
-      </div>
-      <div class="col-span-12 sm:col-span-12"><label>Зарах үнэ</label>
-        <input type="number" id="sell_price" required min="1" value="1" class="input w-full border mt-2 flex-1" placeholder="Зарах үнэ">
-      </div>
-    </div>
-    <div class="px-5 py-3 text-right border-t border-gray-200 dark:border-dark-5">
-      <button type="button" data-dismiss="modal" class="button w-20 border text-gray-700 dark:border-dark-5 dark:text-gray-300 mr-1">Болих</button>
-      <button type="button" class="button w-20 bg-theme-1 text-white" id="submit_sellProduct">Зарах</button>
-    </div>
-  </div>
-</div>
-
-<script type="text/javascript" charset="utf-8">
-
-    function sellPrd(product_name, product_id, sell_price, potential_balance){
-        console.log(product_name)
-        cash("#sell_product").val(product_name)
-        cash("#sell_price").val(sell_price)
-        cash("#product_id").val(product_id)
-        cash("#potential_balance").val(potential_balance)
-        cash("#sellProduct").modal("show");
-    }
-
-    $("#submit_sellProduct").click(function(){
-        $.ajax({
-            url: "/product_report/sell",
-            type: "POST",
-            data:{
-                sell_quantity: $("#sell_quantity").val(),
-                sell_price: $("#sell_price").val(),
-                product_id: $("#product_id").val(),
-            },
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
-            },
-            success: function(data) {
-                cash("#sellProduct").modal("hide");
-                Toastify({
-                    text: "Барааг амжилттай зарлаа",
-                    duration: 3000,
-                    newWindow: true,
-                    close: true,
-                    gravity: "bottom",
-                    position: "right",
-                    backgroundColor: "#91C714",
-                    stopOnFocus: true,
-                }).showToast();
-            },
-            error: function(data){
-                alert(data.message)
-            }
-        });
-
-    });
-
-</script>

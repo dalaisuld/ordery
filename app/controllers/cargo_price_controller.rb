@@ -32,7 +32,7 @@ class CargoPriceController < ApplicationController
             P.id = pr.id) AS total,
     SUM(od.quantity) AS zarsan,
     SUM(od.cargo_price * od.quantity) AS zarsan_niit,
-    (pr.received_count - (select sum(order_details.quantity)
+    (pr.received_count - pr.rejected - pr.sold_count - (select sum(order_details.quantity)
     FROM
         order_details WHERE finish_date <= '#{Time.now.strftime('%Y-%m-%d')}' and order_details.product_id = pr.id)) as uldegdel
     FROM

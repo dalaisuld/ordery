@@ -44,7 +44,5 @@ class CargoPriceController < ApplicationController
             AND pr.received_count > 0 AND pr.cargo > 0
     GROUP BY od.product_id order by pr.id desc;"
     @records_array = ActiveRecord::Base.connection.execute(sql)
-    puts @records_array
-
   end
 end

@@ -34,7 +34,7 @@ class CargoPriceController < ApplicationController
     SUM(od.cargo_price * od.quantity) AS zarsan_niit,
     (pr.received_count - (select sum(order_details.quantity)
     FROM
-        order_details WHERE finish_date <= '#{@end_date}' and order_details.product_id = pr.id)) as uldegdel
+        order_details WHERE finish_date <= '#{Time.now.strftime('%Y-%m-%d')}' and order_details.product_id = pr.id)) as uldegdel
     FROM
         order_details AS od
             INNER JOIN

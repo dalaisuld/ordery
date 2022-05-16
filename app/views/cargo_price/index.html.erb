@@ -45,10 +45,10 @@
             <a href="" class="font-medium"><%= product[1] %></a>
           </td>
           <td class="text-center"><%= product[2] %></td>
-          <td class="text-center"><%= product[3] %></td>
-          <td class="text-center"><%= product[4] %></td>
+          <td class="text-center"><%= number_to_currency(product[3], unit: "₮ ", strip_insignificant_zeros: true) %></td>
+          <td class="text-center"><%= number_to_currency(product[4], unit: "₮ ", strip_insignificant_zeros: true) %></td>
           <td class="text-center"><%= product[5] %></td>
-          <td class="text-center"><%= product[6] %></td>
+          <td class="text-center"><%= number_to_currency(product[6], unit: "₮ ", strip_insignificant_zeros: true) %></td>
           <td class="text-center"><%= product[7] %></td>
 
         </tr>

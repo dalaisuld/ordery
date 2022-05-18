@@ -31,6 +31,7 @@
         <th class="text-center">Ирсэн тоо</th>
         <th class="text-center">Карго</th>
         <th class="text-center">Нийт</th>
+        <th class="text-center">Х/Ө нийт</th>
         <th class="text-center">Хүлээлгэж өгсөн</th>
         <th class="text-center">Хүлээлгэж өгсөн төлбөр</th>
         <th class="text-center">Үлдэгдэл</th>
@@ -53,17 +54,18 @@
       <% @records_array.each do |product| %>
 
         <tr class="intro-x">
-          <td><%= product[0] %></td>
+          <td><%= product[0] %></td>  <!--ID-->
           <td>
-            <a href="" class="font-medium"><%= product[1] %></a>
+            <a href="" class="font-medium"><%= product[1] %></a> <!--Бүтээгдэхүүн-->
           </td>
-          <td class="text-center"><%= product[2] %></td>
-          <td class="text-center"><%= number_to_currency(product[3], unit: "₮ ", strip_insignificant_zeros: true) %></td>
-          <td class="text-center"><%= number_to_currency(product[4], unit: "₮ ", strip_insignificant_zeros: true) %></td>
-          <td class="text-center"><%= product[5] %></td>
-          <td class="text-center"><%= number_to_currency(product[6], unit: "₮ ", strip_insignificant_zeros: true) %></td>
-          <td class="text-center"><%= product[7] %></td>
-          <td class="text-center"><%= number_to_currency(product[7] * product[3], unit: "₮ ", strip_insignificant_zeros: true) %></td>
+          <td class="text-center"><%= product[2] %></td> <!--Ирсэн тоо-->
+          <td class="text-center"><%= number_to_currency(product[3], unit: "₮ ", strip_insignificant_zeros: true) %></td> <!--Карго -->
+          <td class="text-center"><%= number_to_currency(product[4], unit: "₮ ", strip_insignificant_zeros: true) %></td><!--Нийт-->
+          <td class="text-center"><%= product[5] %></td> <!--ХӨ нийт тоо-->
+          <td class="text-center"><%= product[6] %></td><!--Хүлээлгэж өгсөн-->
+          <td class="text-center"><%= number_to_currency(product[7], unit: "₮ ", strip_insignificant_zeros: true) %></td> <!--Хүлээлгэж өгсөн төлбөр-->
+          <td class="text-center"><%= product[8] %></td> <!--Үлдэгдэл-->
+          <td class="text-center"><%= number_to_currency(product[8] * product[4], unit: "₮ ", strip_insignificant_zeros: true) %></td> <!--Үлдсэн төлбөр-->
         </tr>
       <% end %>
       </tbody>

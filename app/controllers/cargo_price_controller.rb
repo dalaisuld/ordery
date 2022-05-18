@@ -30,6 +30,15 @@ class CargoPriceController < ApplicationController
             products P
         WHERE
             P.id = pr.id) AS total,
+    (SELECT
+            SUM(order_details.quantity)
+        FROM
+            order_details
+                INNER JOIN
+            products ON order_details.product_id = products.id
+        WHERE
+            order_details.finish_date <= '#{Time.now.strftime('%Y-%m-%d')}'
+                AND products.id = pr.id) AS all_time,
     SUM(od.quantity) AS zarsan,
     SUM(od.cargo_price * od.quantity) AS zarsan_niit,
     (pr.received_count - pr.rejected - pr.sold_count - (select sum(order_details.quantity)

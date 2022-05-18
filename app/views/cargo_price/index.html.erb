@@ -47,6 +47,7 @@
         <td class="text-center">-</td>
         <td class="text-center"><%= number_to_currency(@total, unit: "₮ ", strip_insignificant_zeros: true) %></td>
         <td class="text-center">-</td>
+        <td class="text-center">-</td>
         <td class="text-center"><%= number_to_currency(@total_range, unit: "₮ ", strip_insignificant_zeros: true) %></td>
         <td class="text-center">-</td>
         <td class="text-center"><%= number_to_currency(@total_remainder, unit: "₮ ", strip_insignificant_zeros: true) %></td>
@@ -65,7 +66,7 @@
           <td class="text-center"><%= product[6] %></td><!--Хүлээлгэж өгсөн-->
           <td class="text-center"><%= number_to_currency(product[7], unit: "₮ ", strip_insignificant_zeros: true) %></td> <!--Хүлээлгэж өгсөн төлбөр-->
           <td class="text-center"><%= product[8] %></td> <!--Үлдэгдэл-->
-          <td class="text-center"><%= number_to_currency(product[8] * product[4], unit: "₮ ", strip_insignificant_zeros: true) %></td> <!--Үлдсэн төлбөр-->
+          <td class="text-center"><%= number_to_currency(product[8] * product[3], unit: "₮ ", strip_insignificant_zeros: true) %></td> <!--Үлдсэн төлбөр-->
         </tr>
       <% end %>
       </tbody>

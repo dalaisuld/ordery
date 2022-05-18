@@ -3,8 +3,8 @@ class CargoPriceController < ApplicationController
     @page_cargo_price_active = true
 
 
-    if params[:@start_date].present? and params[:end_date].present?
-      @start_date = params[:@start_date]
+    if params[:start_date].present? and params[:end_date].present?
+      @start_date = params[:start_date]
       @end_date = params[:end_date]
     else
       @start_date = (Time.now - 1.month).strftime('%Y-%m-%d')

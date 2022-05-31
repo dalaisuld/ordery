@@ -53,10 +53,8 @@
                     <td>
                       <a href="" class="font-medium whitespace-nowrap"><%= product.name %></a>
                       <div class="text-gray-600 text-xs whitespace-nowrap mt-0.5"><%= number_to_currency(product.actual_price, unit: "₮ ", strip_insignificant_zeros: true) %> x <%= product.quantity %> = <%= number_to_currency(product.actual_price.to_i * product.quantity.to_i, unit: "₮ ", strip_insignificant_zeros: true) %></div>
-                    </td>
-                    <td class="text-center"><%= number_to_currency(product.transition_amount, unit: "₮ ", strip_insignificant_zeros: true) %></td>
-                    <td class="text-center"><%= number_to_currency(product.cargo_price, unit: "₮ ", strip_insignificant_zeros: true) %></td>
-                    <td class="table-report__action w-56">
+                      <div class="text-gray-600 text-xs whitespace-nowrap mt-0.5">Шилжүүлсэн: <%= number_to_currency(product.transition_amount, unit: "₮ ", strip_insignificant_zeros: true) %></div>
+                      <div class="text-gray-600 text-xs whitespace-nowrap mt-0.5">Карго: <%= number_to_currency(product.cargo_price, unit: "₮ ", strip_insignificant_zeros: true) %></div>
                       <% if product.status == IS_WAITING %>
                         <div class="flex justify-center items-center">
                           <a class="flex items-center text-theme-12" href="">

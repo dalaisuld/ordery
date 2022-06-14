@@ -5,7 +5,7 @@ default: &default
   database: <%= ENV['DB_NAME'] || 'ordery' %>
   username: <%= ENV['DB_USER'] || 'deploy' %>
   password: <%= ENV['DB_PASS'] || 'dellF912;'%>
-  host: <%= ENV['DB_HOST'] || '159.89.197.33'%>
+  host: <%= ENV['DB_HOST'] || '174.138.23.91'%>
   url: <%= ENV['DB_URL'] %>
   reconnect: true
 

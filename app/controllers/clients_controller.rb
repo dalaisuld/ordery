@@ -138,6 +138,8 @@ class ClientsController < ApplicationController
     p.price AS product_price,
     od.quantity,
     od.take_date,
+    od.delivery_date,
+    od.finish_date,
     od.price AS actual_price,
     od.cargo_price,
     od.status').where('o.phone_number = :q', q: @client.phone_number.strip.to_s).order('status')

@@ -75,11 +75,11 @@
                   <% elsif product.status == IS_WILLING %>
                     <span class='block font-medium'>Бараа ирсэн</span>
                   <% elsif product.status == IS_DELIVERY %>
-                    <span class='text-theme-1 block font-medium'>Хүргэлтэнд гарсан</span>
+                    <span class='text-theme-1 block font-medium'>Хүргэлтэнд гарсан</span><%= product.delivery_date.strftime('%Y-%m-%d %H:%M') %>
                   <% elsif product.status == IS_FINISH %>
                     <span class='text-theme-9 block font-medium'>Хүлээлгэж өгсөн</span><%= product.take_date.strftime('%Y-%m-%d %H:%M') %>
                   <% elsif product.status == IS_CANCELED %>
-                    <span class='text-theme-6 block font-medium'>Цуцалсан</span>
+                    <span class='text-theme-6 block font-medium'>Цуцалсан</span><%= product.finish_date.strftime('%Y-%m-%d') %>
                   <% end %>
                 </td>
               </tr>

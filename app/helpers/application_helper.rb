@@ -102,9 +102,13 @@ module ApplicationHelper
   end
 
   def self.getUserName(user_id)
-    # return  ""
-    # puts "=================>>> #{user_id}"
-    "#{User.find(user_id).first_name } #{User.find(user_id).last_name}"
+
+    begin
+      "#{User.find(user_id).first_name } #{User.find(user_id).last_name}"
+    rescue => e
+      "-"
+    end
+
   end
 
 

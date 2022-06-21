@@ -68,26 +68,6 @@
 </div>
 
 <div class="page-content-wrapper">
-  <!-- Hero Slides -->
-  <div class="owl-carousel-one owl-carousel">
-    <!-- Single Hero Slide -->
-    <div class="single-hero-slide" style="background-color: #f1b10f !important">
-      <div class="slide-content h-100 d-flex align-items-center text-center">
-        <div class="container">
-          <h3 class="text-black mb-1" data-animation="fadeInUp" data-delay="100ms" data-wow-duration="1000ms">BIG MALL</h3>
-          <h6 class="text-black mb-4" data-animation="fadeInUp" data-delay="400ms" data-wow-duration="1000ms">Үйлдвэрийн бөөний үнээр-Захиалгын бараа ✅✅✅.</h6><a class="btn btn-creative btn-secondary" href="https://www.facebook.com/groups/228007805310125/hashtags" target="_blank" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms">Бараа захиалах</a>
-        </div>
-      </div>
-    </div>
-    <div class="single-hero-slide" style="background-color: #f1b10f !important">
-      <div class="slide-content h-100 d-flex align-items-center text-center">
-        <div class="container">
-          <h3 class="text-black mb-1" data-animation="fadeInUp" data-delay="100ms" data-wow-duration="1000ms">BIG MALL</h3>
-          <h6 class="text-black mb-4" data-animation="fadeInUp" data-delay="400ms" data-wow-duration="1000ms">Үйлдвэрийн бөөний үнээр-Захиалгын бараа ✅✅✅.</h6><a class="btn btn-creative btn-secondary" href="https://www.facebook.com/groups/228007805310125/hashtags" target="_blank" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms">Бараа захиалах</a>
-        </div>
-      </div>
-    </div>
-  </div>
   <div class="pt-3"></div>
   <div class="container">
     <!-- User Information-->
@@ -180,8 +160,8 @@
                   <p>Анхааруулга: Та барааныхаа төлөвийг сайн хараарай. Ирсэн бараа л хүргэлтэнд гарна.</p>
                   <p>Та хүргэлтийн төлбөр болон каргоны төлбөрөө доорх дансруу шилжүүлнэ үү!. Төлбөр баталгаажсанаас хойш ачааллаас хамааран 1-3 хоногт хүргэгдэнэ</p>
                   <span>Банк: <strong>Хаан банк</strong></span><br>
-                  <span>Данс: <strong>5300848589</strong></span><br>
-                  <span>Хүлээн авагч: <strong>Г. Цэрэнпагам</strong></span><br>
+                  <span>Данс: <strong>5304 529 772</strong></span><br>
+                  <span>Хүлээн авагч: <strong>Санчир</strong></span><br>
                   <span>Шилжүүлэх дүн:  <strong><%= number_to_currency(@total_sent.to_i + 5000, unit: "₮ ", strip_insignificant_zeros: true) %></strong><small>(<%= @config.delivery_description %>) </small></span><br>
                   <span>Гүйлгээний утга: <strong><%= @clients.phone_number %> хүргэлт</strong></span><br>
 
@@ -190,7 +170,7 @@
                     <div class="form-group">
                       <textarea class="form-control" id="delivery_address" name="address" cols="3" rows="5" placeholder="Бараагаа хүргүүлэн авах хаяг аа оруулна уу"><%= @clients.address %></textarea>
                     </div>
-                    <button class="btn btn-warning w-100 d-flex align-items-center justify-content-center" type="button" id="create_delivery_btn">Хүргэлтийн захиалга өгөх
+                    <button class="btn btn-primary w-100 d-flex align-items-center justify-content-center" type="button" id="create_delivery_btn">Хүргэлтийн захиалга өгөх
                       <svg class="bi bi-arrow-right-short" width="24" height="24" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"></path>
                       </svg>

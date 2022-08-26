@@ -60,7 +60,7 @@ class CargoPriceController < ApplicationController
 
     @records_array.each do |report|
       @total = @total + report[4]
-      @total_range = @total_range + report[6]
+      @total_range = @total_range + report[7]
       @total_remainder = @total_remainder + (report[7]*report[3])
     end
 

@@ -10,6 +10,7 @@ class CargoPriceController < ApplicationController
       @start_date = (Time.now - 1.month).strftime('%Y-%m-%d')
       @end_date = Time.now.strftime('%Y-%m-%d')
     end
+    
 
     # @products = Product.all
     # @products = @products.where.not(cargo: [nil])
@@ -50,7 +51,6 @@ class CargoPriceController < ApplicationController
         products AS pr ON od.product_id = pr.id
     WHERE
         od.finish_date BETWEEN '#{@start_date}' AND '#{@end_date}'
-            AND pr.received_count > 0 AND pr.cargo > 0
     GROUP BY od.product_id order by pr.id desc;"
     @records_array = ActiveRecord::Base.connection.execute(sql)
 
@@ -67,3 +67,8 @@ class CargoPriceController < ApplicationController
 
   end
 end
+
+
+#WHERE
+#         od.finish_date BETWEEN '#{@start_date}' AND '#{@end_date}'
+#             AND pr.received_count > 0 AND pr.cargo > 0

@@ -38,4 +38,26 @@
       </div>
     </div>
   </div>
+
+  <div class="col-span-6 sm:col-span-6 xl:col-span-6 intro-y">
+    <div class="intro-y box p-5 mt-3">
+      <div class="mt-1">
+        <div class="flex items-center">
+          <div class="w-2 h-2 bg-theme-11 rounded-full mr-3"></div>
+          <span class="truncate">Барааны нэр</span>
+          <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+          <span class="font-medium xl:ml-auto">Тоо ширхэг</span>
+        </div>
+        <% @sold_products.each do |product| %>
+          <div class="flex items-center mt-4">
+            <div class="w-2 h-2 bg-theme-1 rounded-full mr-3"></div>
+            <span class="truncate"><%= product[0] %></span>
+            <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
+            <span class="font-medium xl:ml-auto"><%= product[1] %></span>
+          </div>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
 </div>

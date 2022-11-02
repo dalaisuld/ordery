@@ -23,7 +23,7 @@ class ItemsImport
 
   def save(user_id)
     begin
-      count = 1
+      count = -3
       spreadsheet = open_spreadsheet
       header = spreadsheet.row(2)
       ActiveRecord::Base.transaction do
@@ -68,7 +68,7 @@ class ItemsImport
       end
       return true
     rescue => message
-      return  count
+      return  "#{count} -р мөрөнд алдаа гарсан байна"
     end
   end
 end

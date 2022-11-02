@@ -23,10 +23,12 @@ class ItemsImport
 
   def save(user_id)
     begin
+      count = 1
       spreadsheet = open_spreadsheet
       header = spreadsheet.row(2)
       ActiveRecord::Base.transaction do
         (3..spreadsheet.last_row).map do |i|
+          count = count + i
           row = Hash[[header, spreadsheet.row(i)].transpose]
           if spreadsheet.row(i)[1] != 0
 
@@ -66,7 +68,7 @@ class ItemsImport
       end
       return true
     rescue => message
-      return  message
+      return  count
     end
   end
 end

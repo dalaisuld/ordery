@@ -23,7 +23,7 @@ class ItemsImport
 
   def save(user_id)
     begin
-      count = -3
+      count = -1
       spreadsheet = open_spreadsheet
       header = spreadsheet.row(2)
       ActiveRecord::Base.transaction do

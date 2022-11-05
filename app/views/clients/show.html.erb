@@ -53,37 +53,37 @@
             </tr>
             </thead>
             <tbody>
-            <% @products.each do |product| %>
-              <tr>
-                <td class="border">
-                  <% if product.status == IS_CANCELED %>
-                    -
-                  <% else %>
-                    <input type="checkbox" name="product_ids" value="<%= product.product_id %>">
-                  <% end %>
-                </td>
-                <td class="border"><a href="/orders/<%= product.order_id %>" class="text-theme-1 block font-normal" target="_blank"><%= product.order_id %></a></td>
-                <td class="border"><%= product.name %></td>
-                <td class="border"><%= number_to_currency(product.actual_price, unit: "₮ ", strip_insignificant_zeros: true) %></td>
-                <td class="border"><%= product.quantity %></td>
+            <%# @products.each do |product| %>
+<!--              <tr>-->
+<!--                <td class="border">-->
+                  <%# if product.status == IS_CANCELED %>
+<!--                    --->
+                  <%# else %>
+<!--                    <input type="checkbox" name="product_ids" value="<%#= product.product_id %>">-->
+                  <%# end %>
+<!--                </td>-->
+<!--                <td class="border"><a href="/orders/<%#= product.order_id %>" class="text-theme-1 block font-normal" target="_blank"><%#= product.order_id %></a></td>-->
+<!--                <td class="border"><%#= product.name %></td>-->
+<!--                <td class="border"><%#= number_to_currency(product.actual_price, unit: "₮ ", strip_insignificant_zeros: true) %></td>-->
+<!--                <td class="border"><%#= product.quantity %></td>-->
 <!--                <td class="border <%# if product.status == IS_WILLING %> rowDataSd <%# end %>"><%#= product.actual_price.to_i * product.quantity.to_i %></td>-->
 <!--                <td class="border <%# if product.status == IS_WILLING %> rowDataSd <%# end %>"><%#= product.cargo_price * product.quantity.to_i %></td>-->
 <!--                <td class="border <%# if product.status == IS_WILLING %> rowDataSd <%# end %>"><%#= product.actual_price.to_i * product.quantity.to_i + product.cargo_price %></td>-->
-                <td class="border">
-                  <% if product.status == IS_WAITING %>
-                    <span class='text-theme-12 block font-medium'>Хүлээгдэж байгаа</span>
-                  <% elsif product.status == IS_WILLING %>
-                    <span class='block font-medium'>Бараа ирсэн</span>
-                  <% elsif product.status == IS_DELIVERY %>
-                    <span class='text-theme-1 block font-medium'>Хүргэлтэнд гарсан</span><%= product.delivery_date.strftime('%Y-%m-%d %H:%M') %>
-                  <% elsif product.status == IS_FINISH %>
-                    <span class='text-theme-9 block font-medium'>Хүлээлгэж өгсөн</span><%if product.take_date %><%= product.take_date.strftime('%Y-%m-%d %H:%M') %><%end %>
-                  <% elsif product.status == IS_CANCELED %>
-                    <span class='text-theme-6 block font-medium'>Цуцалсан</span>
-                  <% end %>
-                </td>
-              </tr>
-            <% end %>
+<!--                <td class="border">-->
+                  <%# if product.status == IS_WAITING %>
+<!--                    <span class='text-theme-12 block font-medium'>Хүлээгдэж байгаа</span>-->
+                  <%# elsif product.status == IS_WILLING %>
+<!--                    <span class='block font-medium'>Бараа ирсэн</span>-->
+                  <%# elsif product.status == IS_DELIVERY %>
+<!--                    <span class='text-theme-1 block font-medium'>Хүргэлтэнд гарсан</span><%#= product.delivery_date.strftime('%Y-%m-%d %H:%M') %>-->
+                  <%# elsif product.status == IS_FINISH %>
+<!--                    <span class='text-theme-9 block font-medium'>Хүлээлгэж өгсөн</span><%#if product.take_date %><%#= product.take_date.strftime('%Y-%m-%d %H:%M') %><%#end %>-->
+                  <%# elsif product.status == IS_CANCELED %>
+<!--                    <span class='text-theme-6 block font-medium'>Цуцалсан</span>-->
+                  <%# end %>
+<!--                </td>-->
+<!--              </tr>-->
+            <%# end %>
             <tr class="totalColumn">
               <td colspan="5" class="border"><div class="lg:text-right font-extrabold"></div></td>
               <td class="border totalCol"><div class="font-extrabold">Нийт барааны <%=@total_cargo_price %></div></td>

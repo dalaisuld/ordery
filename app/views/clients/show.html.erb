@@ -92,10 +92,14 @@
               <td class="border"><div class="font-extrabold"></div></td>
             </tr>
             <tr></tr>
+            </tbody>
+          </table>
+          <table class="table" id="product-table">
+            <tbody>
             <tr>
-              <td class="border">Шилжүүлэх дүн: <%= @total_product_price %></td>
-              <td class="border">Шилжүүлсэн дүн: <%= @total_sent_amount %></td>
-              <td class="border">Зөрүү: <%= @total_sent_amount - @total_product_price %>
+              <td class="border">Шилжүүлэх дүн: <%= number_to_currency(@total_product_price, unit: "₮ ", strip_insignificant_zeros: true) %></td>
+              <td class="border">Шилжүүлсэн дүн: <%= number_to_currency(@total_sent_amount, unit: "₮ ", strip_insignificant_zeros: true) %></td>
+              <td class="border">Зөрүү: <%= number_to_currency(@total_sent_amount - @total_product_price, unit: "₮ ", strip_insignificant_zeros: true) %>
                 <br>
                 <a style="color: blue" target="_blank" href="/clients/<%= params[:id] %>/orders">Бүх шилжүүлгийн мэдээлэл харах >>></a>
               </td>

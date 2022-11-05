@@ -123,7 +123,7 @@ class ClientsController < ApplicationController
   private
   def set_model
     @client = Client.find(params[:id])
-    @orders = Order.where(phone_number: @client.phone_number)
+    # @orders = Order.where(phone_number: @client.phone_number)
     @products = Order.joins('AS o
         LEFT JOIN
     order_details AS od ON o.id = od.order_id
@@ -144,11 +144,11 @@ class ClientsController < ApplicationController
     od.cargo_price,
     od.status').where('o.phone_number = :q', q: @client.phone_number.strip.to_s).order('status')
 
-    @total_cargo_price = 10
+    @total_cargo_price = @products.sum('p.price * p.quantity')
 
     # Нийт шилжүүлсэн мөнгөн дүн
-    @total_sent_amount = 10
-    @total_product_price = 10
+    @total_sent_amount = @orders.sum('amount')
+    @total_product_price = @products.sum('p.price * od.quantity')
     # @total_product_price = OrderDetail.where(order_id: params[:id]).sum('price * quantity')
 
   end

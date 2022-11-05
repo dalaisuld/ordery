@@ -147,7 +147,7 @@ class ClientsController < ApplicationController
     @total_cargo_price = @products.sum('p.price * p.quantity')
 
     # Нийт шилжүүлсэн мөнгөн дүн
-    @total_sent_amount = @orders.sum('amount')
+    @total_sent_amount = 10
     @total_product_price = @products.sum('p.price * od.quantity')
     # @total_product_price = OrderDetail.where(order_id: params[:id]).sum('price * quantity')
 

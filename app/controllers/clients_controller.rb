@@ -145,13 +145,13 @@ class ClientsController < ApplicationController
     od.status').where('o.phone_number = :q', q: @client.phone_number.strip.to_s).order('status')
 
     # @total_cargo_price = @products.sum('p.price * p.quantity')
-    @total_cargo_price = "0"
+    @total_cargo_price = 10
 
     # Нийт шилжүүлсэн мөнгөн дүн
-    @total_sent_amount = "0"
+    @total_sent_amount = 10
     # @total_sent_amount = @orders.sum('amount')
     # @total_product_price = @products.sum('p.price * od.quantity')
-    @total_product_price = '0'
+    @total_product_price = 10
     # @total_product_price = OrderDetail.where(order_id: params[:id]).sum('price * quantity')
 
   end

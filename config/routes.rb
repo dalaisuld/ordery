@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   get 'config', to: 'config#index'
   post 'config/update', to: 'config#update'
 
+  get 'clients/:id/orders', to: 'clients#orders'
   get 'clients/:id/print', to: 'clients#print'
   get 'clients/:id/print_cancel', to: 'clients#print_cancel'
   get 'clients/:id/print_delivery', to: 'clients#print_delivery'

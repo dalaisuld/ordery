@@ -110,6 +110,12 @@ class ClientsController < ApplicationController
   end
 
 
+  def orders
+    @client = Client.find(params[:id])
+    @orders = Order.where(phone_number: @client.phone_number)
+  end
+
+
   def list
     order_by = 'id desc'
     if params[:sortField].present? && params[:sortOrder].present?

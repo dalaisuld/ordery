@@ -79,7 +79,7 @@
                   <% elsif product.status == IS_FINISH %>
                     <span class='text-theme-9 block font-medium'>Хүлээлгэж өгсөн</span><%if product.take_date %><%= product.take_date.strftime('%Y-%m-%d %H:%M') %><%end %>
                   <% elsif product.status == IS_CANCELED %>
-                    <span class='text-theme-6 block font-medium'>Цуцалсан</span>
+                    <span class='text-theme-6 block font-medium'>Цуцалсан <%if product.updated_at %><%= product.updated_at.strftime('%Y-%m-%d %H:%M') %><%end %></span>
                   <% end %>
                 </td>
               </tr>

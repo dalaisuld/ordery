@@ -145,6 +145,7 @@ class ClientsController < ApplicationController
     od.quantity,
     od.take_date,
     od.delivery_date,
+    od.updated_at,
     od.finish_date,
     od.price AS actual_price,
     od.cargo_price,
